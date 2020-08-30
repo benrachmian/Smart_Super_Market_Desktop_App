@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}SDM-item" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}SDM-customer" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "sdmItem"
+    "sdmCustomer"
 })
-@XmlRootElement(name = "SDM-items")
-public class SDMItems {
+@XmlRootElement(name = "SDM-customers")
+public class SDMCustomers {
 
-    @XmlElement(name = "SDM-item", required = true)
-    protected List<SDMItem> sdmItem;
+    @XmlElement(name = "SDM-customer", required = true)
+    protected List<SDMCustomer> sdmCustomer;
 
     /**
-     * Gets the value of the sdmItem property.
+     * Gets the value of the sdmCustomer property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sdmItem property.
+     * This is why there is not a <CODE>set</CODE> method for the sdmCustomer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSDMItem().add(newItem);
+     *    getSDMCustomer().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SDMItem }
+     * {@link SDMCustomer }
      * 
      * 
      */
-    public List<SDMItem> getSDMItem() {
-        if (sdmItem == null) {
-            sdmItem = new ArrayList<SDMItem>();
+    public List<SDMCustomer> getSDMCustomer() {
+        if (sdmCustomer == null) {
+            sdmCustomer = new ArrayList<SDMCustomer>();
         }
-        return this.sdmItem;
+        return this.sdmCustomer;
     }
 
 }

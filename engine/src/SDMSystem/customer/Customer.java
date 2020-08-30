@@ -2,16 +2,22 @@ package SDMSystem.customer;
 
 
 import SDMSystem.HasSerialNumber;
+import SDMSystem.location.LocationUtility;
+import SDMSystem.location.Locationable;
 
-public class Customer implements HasSerialNumber<Integer> {
+import java.awt.*;
 
-    private static int generatedSerialNumber = 1000;
+public class Customer implements HasSerialNumber<Integer>, Locationable {
+
+    //private static int generatedSerialNumber = 1000;
     private final String customerName;
-    private final int customerSerialNumber;
+    private final int customerId;
+    private final Point customerLocation;
 
-    public Customer(String customerName) {
+    public Customer(String customerName, int customerId, Point customerLocation) {
         this.customerName = customerName;
-        this.customerSerialNumber = generatedSerialNumber++;
+        this.customerId = customerId;
+        this.customerLocation = customerLocation;
     }
 
     public String getCustomerName() {
@@ -21,6 +27,16 @@ public class Customer implements HasSerialNumber<Integer> {
 
     @Override
     public Integer getSerialNumber() {
-        return customerSerialNumber;
+        return customerId;
+    }
+
+    @Override
+    public Point getLocation() {
+        return customerLocation;
+    }
+
+    @Override
+    public float getDistanceFrom(Point target) {
+        return LocationUtility.calcDistance(this.customerLocation,target);
     }
 }

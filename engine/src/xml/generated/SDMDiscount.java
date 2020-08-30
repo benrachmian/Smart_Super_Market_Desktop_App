@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element ref="{}SDM-items"/>
- *         &lt;element ref="{}SDM-stores"/>
- *         &lt;element ref="{}SDM-customers"/>
+ *         &lt;element ref="{}name"/>
+ *         &lt;element ref="{}if-you-buy"/>
+ *         &lt;element ref="{}then-you-get"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,86 +40,86 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
 
 })
-@XmlRootElement(name = "super-duper-market-descriptor")
-public class SuperDuperMarketDescriptor {
+@XmlRootElement(name = "SDM-discount")
+public class SDMDiscount {
 
-    @XmlElement(name = "SDM-items", required = true)
-    protected SDMItems sdmItems;
-    @XmlElement(name = "SDM-stores", required = true)
-    protected SDMStores sdmStores;
-    @XmlElement(name = "SDM-customers", required = true)
-    protected SDMCustomers sdmCustomers;
+    @XmlElement(required = true)
+    protected String name;
+    @XmlElement(name = "if-you-buy", required = true)
+    protected IfYouBuy ifYouBuy;
+    @XmlElement(name = "then-you-get", required = true)
+    protected ThenYouGet thenYouGet;
 
     /**
-     * Gets the value of the sdmItems property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
-     *     {@link SDMItems }
+     *     {@link String }
      *     
      */
-    public SDMItems getSDMItems() {
-        return sdmItems;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the sdmItems property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
-     *     {@link SDMItems }
+     *     {@link String }
      *     
      */
-    public void setSDMItems(SDMItems value) {
-        this.sdmItems = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the sdmStores property.
+     * Gets the value of the ifYouBuy property.
      * 
      * @return
      *     possible object is
-     *     {@link SDMStores }
+     *     {@link IfYouBuy }
      *     
      */
-    public SDMStores getSDMStores() {
-        return sdmStores;
+    public IfYouBuy getIfYouBuy() {
+        return ifYouBuy;
     }
 
     /**
-     * Sets the value of the sdmStores property.
+     * Sets the value of the ifYouBuy property.
      * 
      * @param value
      *     allowed object is
-     *     {@link SDMStores }
+     *     {@link IfYouBuy }
      *     
      */
-    public void setSDMStores(SDMStores value) {
-        this.sdmStores = value;
+    public void setIfYouBuy(IfYouBuy value) {
+        this.ifYouBuy = value;
     }
 
     /**
-     * Gets the value of the sdmCustomers property.
+     * Gets the value of the thenYouGet property.
      * 
      * @return
      *     possible object is
-     *     {@link SDMCustomers }
+     *     {@link ThenYouGet }
      *     
      */
-    public SDMCustomers getSDMCustomers() {
-        return sdmCustomers;
+    public ThenYouGet getThenYouGet() {
+        return thenYouGet;
     }
 
     /**
-     * Sets the value of the sdmCustomers property.
+     * Sets the value of the thenYouGet property.
      * 
      * @param value
      *     allowed object is
-     *     {@link SDMCustomers }
+     *     {@link ThenYouGet }
      *     
      */
-    public void setSDMCustomers(SDMCustomers value) {
-        this.sdmCustomers = value;
+    public void setThenYouGet(ThenYouGet value) {
+        this.thenYouGet = value;
     }
 
 }

@@ -1,6 +1,5 @@
 package xml;
 
-import SDMSystem.system.SDMSystem;
 import xml.generated.SuperDuperMarketDescriptor;
 
 import javax.xml.bind.JAXBContext;
@@ -21,11 +20,11 @@ public class XMLHelper {
     private XMLHelper() {
     }
 
-    public static void FromXmlFileToObject(String filePath, SDMSystem sdmSystem) throws FileNotFoundException, JAXBException {
+    public static SuperDuperMarketDescriptor FromXmlFileToObject(String filePath) throws FileNotFoundException, JAXBException {
        // try {
             InputStream inputStream = new FileInputStream(new File(filePath));
-            SuperDuperMarketDescriptor superDuperMarketDescriptor = deserializeFrom(inputStream);
-            sdmSystem.loadSystem(superDuperMarketDescriptor);
+            return deserializeFrom(inputStream);
+            //sdmSystem.loadSystem(superDuperMarketDescriptor);
 //        } catch (JAXBException | FileNotFoundException e) {
 //            e.printStackTrace();
 //        }

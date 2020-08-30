@@ -14,13 +14,12 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@SDMMaintyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.SDMMainControllers">
    <left>
-      <Accordion BorderPane.alignment="CENTER">
+      <Accordion fx:id="systemAccordion" BorderPane.alignment="CENTER">
         <panes>
           <TitledPane animated="false" text="Customers">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Accordion layoutX="14.0" layoutY="14.0" />
                         <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
@@ -28,35 +27,31 @@
           </TitledPane>
           <TitledPane animated="false" text="Stores">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="storeListView" onMouseClicked="#customerItemClicked" />
+                     </children></AnchorPane>
             </content>
-               <graphic>
-                  <Accordion />
-               </graphic>
           </TitledPane>
           <TitledPane animated="false" text="Products">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="productsListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" />
+                     </children></AnchorPane>
             </content>
           </TitledPane>
             <TitledPane animated="false" text="Orders">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" />
+                     </children></AnchorPane>
                </content>
             </TitledPane>
         </panes>
       </Accordion>
    </left>
-   <bottom>
-      <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Show Map" />
-         </children>
-         <opaqueInsets>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </opaqueInsets>
-      </HBox>
-   </bottom>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -77,7 +72,14 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <Button fx:id="tryButtton" mnemonicParsing="false" text="Try" BorderPane.alignment="CENTER" />
-   </center>
+   <bottom>
+      <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Show Map" />
+         </children>
+         <opaqueInsets>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </opaqueInsets>
+      </HBox>
+   </bottom>
 </BorderPane>

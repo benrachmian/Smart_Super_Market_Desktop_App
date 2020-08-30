@@ -1,6 +1,8 @@
 package SDMSystem.store;
 
 import SDMSystem.HasSerialNumber;
+import SDMSystem.discount.Discount;
+import SDMSystem.location.LocationUtility;
 import SDMSystem.location.Locationable;
 import SDMSystem.order.Order;
 import SDMSystem.product.Product;
@@ -25,6 +27,7 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
     private final Collection<Order> ordersFromStore;
     //private final Collection<Feedback> storeFeedbacks;
     private float totalProfitFromDelivery;
+    private final Collection<Discount> storeDiscounts;
 
     public Store(Point storeLocation, float ppk, String storeName) { //ctor
         this.productsInStore = new HashMap<>();
@@ -35,9 +38,11 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         this.ordersFromStore = new HashSet<>();
         //this.storeFeedbacks = null;
         this.totalProfitFromDelivery = 0;
+        this.storeDiscounts = new LinkedList<>();
     }
 
-    public Store(int storeSerialNumber, Point storeLocation, float ppk, String storeName) { //ctor
+    public Store(int storeSerialNumber, Point storeLocation, float ppk, String storeName, Collection<Discount> storeDiscounts) {
+        this.storeDiscounts = storeDiscounts; //ctor
         this.productsInStore = new HashMap<>();
         this.storeLocation = storeLocation;
         this.ppk = ppk;
@@ -92,11 +97,7 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
 
     @Override
     public float getDistanceFrom(Point target) {
-        int a = Math.abs(target.x - this.storeLocation.x);
-        int b = Math.abs(target.y - this.storeLocation.y);
-        double aPower2 = Math.pow(a, 2);
-        double bPower2 = Math.pow(b, 2);
-        return (float) Math.sqrt(aPower2 + bPower2);
+        return LocationUtility.calcDistance(this.storeLocation,target);
     }
 
     @Override

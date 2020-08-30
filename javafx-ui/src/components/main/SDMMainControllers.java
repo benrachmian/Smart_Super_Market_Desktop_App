@@ -1,43 +1,90 @@
 package components.main;
 
 import SDMSystem.system.SDMSystem;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.order.DTOOrder;
+import SDMSystemDTO.product.DTOProduct;
+import SDMSystemDTO.store.DTOStore;
+
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.Observable;
-import java.util.ResourceBundle;
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class SDMMainControllers {
 
-    @FXML private ListView<String> customerListView;
-    @FXML private Button tryButtton;
+    @FXML private ListView<DTOCustomer> customerListView;
+    @FXML private ListView<DTOStore> storeListView;
+    @FXML private ListView<DTOProduct> productsListView;
+    @FXML private ListView<DTOOrder> ordersListView;
     @FXML private MenuItem loadSystemXmlMenuItem;
+    @FXML private Accordion systemAccordion;
+
+
 
     private SDMSystem sdmSystem;
     private Stage primaryStage;
+    private SimpleStringProperty selectedFileProperty;
+    private SimpleBooleanProperty isFileSelected;
+
+
+    public SDMMainControllers() {
+        selectedFileProperty = new SimpleStringProperty();
+        isFileSelected = new SimpleBooleanProperty(false);
+    }
 
     @FXML
     public void initialize(){
-        customerListView.getItems().add("bennnn");
-        customerListView.getItems().add("mikeee");
+        //customerListView.getItems().add("bennnn");
+        //customerListView.getItems().add("mikeee");
+        DTOStore store = new DTOStore(null,null,4,4,"ben",4);
+        storeListView.getItems().add(store);
+        storeListView.getItems().add(store);
+
+//        ListView<String> storeOption = new ListView<>();
+//        storeOption.getItems().add("Update store");
+//        TitledPane newStore = new TitledPane("Store1",storeOption);
+//        storesAccordion.getPanes().add(newStore);
+//        newStore = new TitledPane("Store2",storeOption);
+//        storesAccordion.getPanes().add(newStore);
+//        newStore = new TitledPane("Store3",storeOption);
+//        storesAccordion.getPanes().add(newStore);
+
     }
 
     @FXML
     void loadSystemXmlMenuItemAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select XML file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files","*.xml"));
+        File selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if(selectedFile == null){
+            return;
+        }
+
+        String absolutePath = selectedFile.getAbsolutePath();
+        selectedFileProperty.set(absolutePath);
+        isFileSelected.set(true);
+        try {
+            sdmSystem.loadSystem(absolutePath);
+        } catch (FileNotFoundException | JAXBException | RuntimeException e) {
+            showLoadingFileError(e.getMessage());
+        }
+    }
+
+    private void showLoadingFileError(String errorMsg){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText("Look, an Information Dialog");
-        alert.setContentText("I have a great message for you!");
+        alert.setTitle("Error");
+        alert.setHeaderText(errorMsg);
+        alert.setContentText("Please try different file");
         alert.showAndWait();
     }
 
@@ -45,16 +92,7 @@ public class SDMMainControllers {
 
     @FXML
     void customerItemClicked(MouseEvent event) {
-        if(customerListView.getSelectionModel().getSelectedItem().equals("bennnn")){
-            tryButtton.setText("Ben");
 
-        }
-        else if(customerListView.getSelectionModel().getSelectedItem().equals("mikeee")){
-            tryButtton.setText("mikeee");
-        }
-        else{
-            tryButtton.setText("other");
-        }
     }
 
     public void setSdmSystem(SDMSystem sdmSystem) {

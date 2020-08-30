@@ -1,5 +1,10 @@
 package SDMSystem.system;
 
+import SDMSystem.customer.Customer;
+import SDMSystem.discount.Discount;
+import SDMSystem.discount.DiscountKind;
+import SDMSystem.discount.Offer;
+import SDMSystem.location.Locationable;
 import SDMSystem.order.DynamicOrder;
 import SDMSystem.order.StaticOrder;
 import SDMSystem.product.Product;
@@ -14,8 +19,10 @@ import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
 import SDMSystemDTO.product.WayOfBuying;
 import javafx.util.Pair;
+import xml.XMLHelper;
 import xml.generated.*;
 
+import javax.xml.bind.JAXBException;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -26,13 +33,18 @@ public class SDMSystem {
     public static final int MIN_COORDINATE = 1;
     //In order to create two different way to find a store - by serial number and by location
     private StoresInSystem storesInSystem;
+    private CustomersInSystem customersInSystem;
     private Map<Integer,Product> productsInSystem;
     private Map<Integer, Order> ordersInSystem;
+    private Map<Point, Locationable> customersAndStoresLocationMap;
+    //private Map<Integer, Customer> customersInSystem;
 
     public SDMSystem() {
         storesInSystem = new StoresInSystem();
         productsInSystem = new HashMap<>();
         ordersInSystem = new HashMap<>();
+        customersInSystem = new CustomersInSystem();
+        customersAndStoresLocationMap = new HashMap<>();
     }
 
 
@@ -46,30 +58,44 @@ public class SDMSystem {
     public void addStoreToSystem(Store newStore) {
         Point newStoreLocation = newStore.getStoreLocation();
         //if the store doesn't exist
-        storesInSystem.addStoreToSystem(newStore,newStoreLocation);
-
+        if(!checkIfLocationIsUnique(newStoreLocation)){
+            throw new RuntimeException("There is already a store/customer in that location!");
+        }
+        else {
+            storesInSystem.addStoreToSystem(newStore, newStoreLocation);
+            customersAndStoresLocationMap.put(newStoreLocation,newStore);
+        }
     }
 
 
-    public void loadSystem(SuperDuperMarketDescriptor superDuperMarketDescriptor) {
+    public void loadSystem(String filePath) throws FileNotFoundException, JAXBException {
+        SuperDuperMarketDescriptor superDuperMarketDescriptor = XMLHelper.FromXmlFileToObject(filePath);
         StoresInSystem oldStoresInSystem = this.storesInSystem;
         Map<Integer, Product> oldProductsInSystem = this.productsInSystem;
         Map<Integer, Order> oldOrdersInSystem = this.ordersInSystem;
+        CustomersInSystem oldCustomersInSystem = this.customersInSystem;
+        Map<Point, Locationable> oldCustomersAndStoresLocationMap = this.customersAndStoresLocationMap;
         storesInSystem = new StoresInSystem();
         productsInSystem = new HashMap<>();
         ordersInSystem = new HashMap<>();
+        customersInSystem = new CustomersInSystem();
         try {
             loadProducts(superDuperMarketDescriptor.getSDMItems());
             loadStores(superDuperMarketDescriptor.getSDMStores());
             scanForProductsWithoutStore();
+            loadCustomers(superDuperMarketDescriptor.getSDMCustomers());
         }
         catch (Exception e){
             storesInSystem = oldStoresInSystem;
             productsInSystem = oldProductsInSystem;
             ordersInSystem = oldOrdersInSystem;
+            customersInSystem = oldCustomersInSystem;
+            customersAndStoresLocationMap = oldCustomersAndStoresLocationMap;
             throw e;
         }
     }
+
+
 
     private void scanForProductsWithoutStore() {
         for(Product product : productsInSystem.values()){
@@ -79,16 +105,127 @@ public class SDMSystem {
         }
     }
 
+    private void loadCustomers(SDMCustomers sdmCustomers) {
+        Customer loadedCustomer;
+        List<SDMCustomer> sdmCustomersList = sdmCustomers.getSDMCustomer();
+        for(SDMCustomer sdmCustomer : sdmCustomersList){
+            loadedCustomer = new Customer(
+                    sdmCustomer.getName(),
+                    sdmCustomer.getId(),
+                    getLoadedLocation(sdmCustomer.getLocation()));
+            addCustomerToSystem(loadedCustomer);
+        }
+    }
+
+    private void addCustomerToSystem(Customer loadedCustomer) {
+        Point newCustomerLocation = loadedCustomer.getLocation();
+        if(!checkIfLocationIsUnique(newCustomerLocation)){
+            throw new RuntimeException("There is already a store/customer in that location!");
+        }
+        else {
+            customersInSystem.addCustomerToSystem(loadedCustomer, newCustomerLocation);
+            customersAndStoresLocationMap.put(newCustomerLocation,loadedCustomer);
+        }
+    }
+
     private void loadStores(SDMStores sdmStores) {
         Store loadedStore;
         List<SDMStore> sdmStoreList = sdmStores.getSDMStore();
         for (SDMStore sdmStore : sdmStoreList) {
-            Point loadedStoreLocation = getLoadedStoreLocation(sdmStore.getLocation());
-            loadedStore = new Store(sdmStore.getId(),loadedStoreLocation,sdmStore.getDeliveryPpk(),sdmStore.getName());
+            Point loadedStoreLocation = getLoadedLocation(sdmStore.getLocation());
+            Collection<Discount> loadedDiscounts = getLoadedDiscounts(sdmStore.getSDMDiscounts(), sdmStore.getSDMPrices().getSDMSell());
+            loadedStore = new Store(sdmStore.getId(),loadedStoreLocation,sdmStore.getDeliveryPpk(),sdmStore.getName(), loadedDiscounts);
             addStoreToSystem(loadedStore);
             List<SDMSell> sdmSellList = sdmStore.getSDMPrices().getSDMSell();
             loadProductsToStore(sdmSellList,loadedStore);
         }
+    }
+
+
+    private Collection<Discount> getLoadedDiscounts(SDMDiscounts sdmDiscounts, List<SDMSell> productsTheStoreSelling) {
+        Collection<Discount> discounts = null;
+        if(sdmDiscounts != null) {
+            discounts = new LinkedList<>();
+            for (SDMDiscount sdmDiscount : sdmDiscounts.getSDMDiscount()) {
+               // checkIfProductInSystemAndThrowException(sdmDiscount.getIfYouBuy().getItemId());
+               // checkIfProductInStoreAndThrowException(sdmDiscount.getIfYouBuy().getItemId(), storeSerialNumber);
+                checkLoadedProductInDiscountAndThrowException(sdmDiscount.getIfYouBuy().getItemId(), productsTheStoreSelling, sdmDiscount.getName());
+                Discount newDiscount = new Discount(
+                        sdmDiscount.getName(),
+                        new Pair<>(sdmDiscount.getIfYouBuy().getItemId(), sdmDiscount.getIfYouBuy().getQuantity()),
+                        getDiscountKind(sdmDiscount.getThenYouGet().getOperator()),
+                        getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName())
+                );
+                discounts.add(newDiscount);
+            }
+        }
+
+        return discounts;
+    }
+
+    private void checkLoadedProductInDiscountAndThrowException(int productSerialNumber, List<SDMSell> productsInStore, String discountName) {
+        if(!productsInSystem.containsKey(productSerialNumber)){
+            throw new RuntimeException(String.format("The product %d in the discount %s is not in the system!", productSerialNumber, discountName));
+        }
+            if(!isProductInSDMSellList(productSerialNumber, productsInStore)) {
+                throw new RuntimeException(String.format("The product %d in the discount %s is not in the store!", productSerialNumber, discountName));
+            }
+    }
+
+    private boolean isProductInSDMSellList(int productSerialNumber, List<SDMSell> productsInStore) {
+        boolean res = false;
+        for(SDMSell product : productsInStore){
+            if(product.getItemId() == productSerialNumber){
+                res = true;
+                break;
+            }
+        }
+
+        return res;
+    }
+
+//    private void checkIfProductInStoreAndThrowException(int productSerialNumber, int storeSerialNumber) {
+//        Store storeSellingTheProduct = storesInSystem.getStoreInSystem(storeSerialNumber);
+//        if(!storeSellingTheProduct.isAvailableInStore(productSerialNumber)){
+//            throw new ExistenceException(false,productSerialNumber,"Product","store");
+//        }
+//    }
+
+//    private void checkIfProductInSystemAndThrowException(int productSerialNumber) {
+//        if(!productsInSystem.containsKey(productSerialNumber)){
+//            throw new ExistenceException(false,productSerialNumber,"Product","system");
+//        }
+//    }
+
+    private Collection<Offer> getOffers(List<SDMOffer> sdmOffers, List<SDMSell> productsTheStoreSelling, String discountName) {
+        Collection<Offer> offers = new LinkedList<>();
+        for(SDMOffer sdmOffer : sdmOffers){
+            checkLoadedProductInDiscountAndThrowException(sdmOffer.getItemId(),productsTheStoreSelling, discountName);
+            offers.add(new Offer(
+                    sdmOffer.getItemId(),
+                    sdmOffer.getQuantity(),
+                    sdmOffer.getForAdditional()));
+        }
+
+        return offers;
+    }
+
+    private DiscountKind getDiscountKind(String operator) {
+        DiscountKind res;
+        switch (operator){
+            case ("ONE-OF"):
+                res = DiscountKind.ONE_OF;
+                break;
+
+            case ("ALL-OR-NOTHING"):
+                res = DiscountKind.ALL_OR_NOTHING;
+                break;
+            default:
+                res = DiscountKind.IRRELEVANT;
+                break;
+        }
+
+        return res;
     }
 
     private void loadProductsToStore(List<SDMSell> sdmSellList, Store loadedStore) {
@@ -104,15 +241,15 @@ public class SDMSystem {
         }
     }
 
-    private Point getLoadedStoreLocation(Location location) {
-        Point loadedStoreLocation = new Point(location.getX(),location.getY());
+    private Point getLoadedLocation(Location location) {
+        Point loadedLocation = new Point(location.getX(),location.getY());
         LocationValidation.checkLocationValidation2D(
-                loadedStoreLocation,
+                loadedLocation,
                 MIN_COORDINATE,
                 MAX_COORDINATE,
                 MIN_COORDINATE,
                 MAX_COORDINATE);
-        return loadedStoreLocation;
+        return loadedLocation;
     }
 
     private void loadProducts(SDMItems sdmItems) {
@@ -417,7 +554,7 @@ public class SDMSystem {
     public boolean checkIfLocationIsUnique(Point userLocation) {
 //        Collection<Point> storesLocation = createStoresLocationCollection();
 //        return LocationValidation.checkIfUniqueLocation(userLocation,storesLocation);
-        return !storesInSystem.getStoresInSystemByLocation().containsKey(userLocation);
+        return !customersAndStoresLocationMap.containsKey(userLocation);
     }
 
     private Collection<Point> createStoresLocationCollection() {

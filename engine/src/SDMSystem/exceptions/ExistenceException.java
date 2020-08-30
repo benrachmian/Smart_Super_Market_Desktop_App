@@ -9,11 +9,11 @@ public class ExistenceException extends RuntimeException{
     private final String EXCEPTION_MESSAGE_EXIST = "%s %d already exists in the %s...";
     private final String EXCEPTION_MESSAGE_NOT_EXIST = "%s %d doesn't exist in the %s...";
 
-    public ExistenceException(boolean doesExist ,int productSerialNumber, String objectKind, String productRelevance) {
+    public ExistenceException(boolean doesExist ,int objectSerialNumber, String objectKind, String objectRelevance) {
         this.doesExist = doesExist;
-        this.objectSerialNumber = productSerialNumber;
+        this.objectSerialNumber = objectSerialNumber;
         this.objectKind = objectKind;
-        this.objectRelevance = productRelevance;
+        this.objectRelevance = objectRelevance;
     }
 
     public int getObjectSerialNumber(){

@@ -38,6 +38,7 @@ public class DTOStore {
         return productsInStore.get(productSerialNumber);
     }
 
+
     public Map<Integer, DTOProductInStore> getProductsInStore() {
         return productsInStore;
     }

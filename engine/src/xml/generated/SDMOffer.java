@@ -24,8 +24,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="price" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="quantity" use="required" type="{http://www.w3.org/2001/XMLSchema}double" />
  *       &lt;attribute name="item-id" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="for-additional" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -35,28 +36,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "SDM-sell")
-public class SDMSell {
+@XmlRootElement(name = "SDM-offer")
+public class SDMOffer {
 
-    @XmlAttribute(name = "price", required = true)
-    protected int price;
+    @XmlAttribute(name = "quantity", required = true)
+    protected double quantity;
     @XmlAttribute(name = "item-id", required = true)
     protected int itemId;
+    @XmlAttribute(name = "for-additional", required = true)
+    protected int forAdditional;
 
     /**
-     * Gets the value of the price property.
+     * Gets the value of the quantity property.
      * 
      */
-    public int getPrice() {
-        return price;
+    public double getQuantity() {
+        return quantity;
     }
 
     /**
-     * Sets the value of the price property.
+     * Sets the value of the quantity property.
      * 
      */
-    public void setPrice(int value) {
-        this.price = value;
+    public void setQuantity(double value) {
+        this.quantity = value;
     }
 
     /**
@@ -73,6 +76,22 @@ public class SDMSell {
      */
     public void setItemId(int value) {
         this.itemId = value;
+    }
+
+    /**
+     * Gets the value of the forAdditional property.
+     * 
+     */
+    public int getForAdditional() {
+        return forAdditional;
+    }
+
+    /**
+     * Sets the value of the forAdditional property.
+     * 
+     */
+    public void setForAdditional(int value) {
+        this.forAdditional = value;
     }
 
 }

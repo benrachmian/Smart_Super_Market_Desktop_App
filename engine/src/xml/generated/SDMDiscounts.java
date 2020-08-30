@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}SDM-item" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}SDM-discount" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "sdmItem"
+    "sdmDiscount"
 })
-@XmlRootElement(name = "SDM-items")
-public class SDMItems {
+@XmlRootElement(name = "SDM-discounts")
+public class SDMDiscounts {
 
-    @XmlElement(name = "SDM-item", required = true)
-    protected List<SDMItem> sdmItem;
+    @XmlElement(name = "SDM-discount", required = true)
+    protected List<SDMDiscount> sdmDiscount;
 
     /**
-     * Gets the value of the sdmItem property.
+     * Gets the value of the sdmDiscount property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sdmItem property.
+     * This is why there is not a <CODE>set</CODE> method for the sdmDiscount property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSDMItem().add(newItem);
+     *    getSDMDiscount().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SDMItem }
+     * {@link SDMDiscount }
      * 
      * 
      */
-    public List<SDMItem> getSDMItem() {
-        if (sdmItem == null) {
-            sdmItem = new ArrayList<SDMItem>();
+    public List<SDMDiscount> getSDMDiscount() {
+        if (sdmDiscount == null) {
+            sdmDiscount = new ArrayList<SDMDiscount>();
         }
-        return this.sdmItem;
+        return this.sdmDiscount;
     }
 
 }
