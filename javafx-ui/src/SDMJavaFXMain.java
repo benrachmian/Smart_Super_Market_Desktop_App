@@ -30,7 +30,7 @@ public class SDMJavaFXMain extends Application {
 
         //set stage
         primaryStage.setTitle("Super Duper Market System");
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 1100, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

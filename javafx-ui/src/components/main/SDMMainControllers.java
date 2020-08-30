@@ -7,11 +7,13 @@ import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -27,7 +29,7 @@ public class SDMMainControllers {
     @FXML private ListView<DTOOrder> ordersListView;
     @FXML private MenuItem loadSystemXmlMenuItem;
     @FXML private Accordion systemAccordion;
-
+    @FXML private AnchorPane customerAccordionAnchorPane;
 
 
     private SDMSystem sdmSystem;
@@ -43,21 +45,11 @@ public class SDMMainControllers {
 
     @FXML
     public void initialize(){
-        //customerListView.getItems().add("bennnn");
-        //customerListView.getItems().add("mikeee");
-       /* DTOStore store = new DTOStore(null,null,4,4,"ben",4);
-        storeListView.getItems().add(store);
-        storeListView.getItems().add(store);*/
-
-//        ListView<String> storeOption = new ListView<>();
-//        storeOption.getItems().add("Update store");
-//        TitledPane newStore = new TitledPane("Store1",storeOption);
-//        storesAccordion.getPanes().add(newStore);
-//        newStore = new TitledPane("Store2",storeOption);
-//        storesAccordion.getPanes().add(newStore);
-//        newStore = new TitledPane("Store3",storeOption);
-//        storesAccordion.getPanes().add(newStore);
-
+        //systemAccordion.disableProperty().bind(isFileSelected.not());
+        customerListView.setPlaceholder(new Label("No content yet"));
+        storeListView.setPlaceholder(new Label("No content yet"));
+        productsListView.setPlaceholder(new Label("No content yet"));
+        ordersListView.setPlaceholder(new Label("No content yet"));
     }
 
     @FXML
