@@ -45,9 +45,9 @@ public class SDMMainControllers {
     public void initialize(){
         //customerListView.getItems().add("bennnn");
         //customerListView.getItems().add("mikeee");
-        DTOStore store = new DTOStore(null,null,4,4,"ben",4);
+       /* DTOStore store = new DTOStore(null,null,4,4,"ben",4);
         storeListView.getItems().add(store);
-        storeListView.getItems().add(store);
+        storeListView.getItems().add(store);*/
 
 //        ListView<String> storeOption = new ListView<>();
 //        storeOption.getItems().add("Update store");
@@ -75,8 +75,33 @@ public class SDMMainControllers {
         isFileSelected.set(true);
         try {
             sdmSystem.loadSystem(absolutePath);
+            initMainAccordion();
         } catch (FileNotFoundException | JAXBException | RuntimeException e) {
             showLoadingFileError(e.getMessage());
+        }
+    }
+
+    private void initMainAccordion() {
+        initCustomersInAccordion();
+        initStoresInAccordion();
+        initProductsInAccordion();
+    }
+
+    private void initProductsInAccordion() {
+        for(DTOProduct product : sdmSystem.getProductsInSystem().values()){
+            productsListView.getItems().add(product);
+        }
+    }
+
+    private void initStoresInAccordion() {
+        for(DTOStore store : sdmSystem.getStoresInSystemBySerialNumber().values()){
+            storeListView.getItems().add(store);
+        }
+    }
+
+    private void initCustomersInAccordion() {
+        for(DTOCustomer customer : sdmSystem.getCustomers().values()){
+            customerListView.getItems().add(customer);
         }
     }
 

@@ -26,4 +26,12 @@ public class CustomersInSystem {
             throw new RuntimeException("There is already a customer in that location!");
         }
     }
+
+    public Map<Integer, Customer> getCustomersInSystemBySerialNumber() {
+        return customersInSystemBySerialNumber;
+    }
+
+    public Map<Point, Customer> getCustomersInSystemByLocation() {
+        return customersInSystemByLocation;
+    }
 }

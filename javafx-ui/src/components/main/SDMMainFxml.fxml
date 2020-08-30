@@ -18,7 +18,7 @@
         <panes>
           <TitledPane animated="false" text="Customers">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
                         <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
@@ -27,33 +27,36 @@
           </TitledPane>
           <TitledPane animated="false" text="Stores">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="storeListView" onMouseClicked="#customerItemClicked" />
-                     </children></AnchorPane>
+                        <ListView fx:id="storeListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="Products">
+          <TitledPane animated="false" prefWidth="202.0" text="Products">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="productsListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" />
-                     </children></AnchorPane>
+                        <ListView fx:id="productsListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
             </content>
           </TitledPane>
             <TitledPane animated="false" text="Orders">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" />
-                     </children></AnchorPane>
+                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </TitledPane>
         </panes>
       </Accordion>
    </left>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefWidth="714.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

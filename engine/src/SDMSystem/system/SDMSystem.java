@@ -13,6 +13,7 @@ import SDMSystem.order.Order;
 import SDMSystem.store.Store;
 import SDMSystem.exceptions.*;
 import SDMSystem.validation.*;
+import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
@@ -717,5 +718,14 @@ public class SDMSystem {
 
     public int getNumOfOrders() {
         return ordersInSystem.size();
+    }
+
+    public Map<Integer,DTOCustomer> getCustomers() {
+        Map<Integer,DTOCustomer> dtoCustomers = new HashMap<>();
+        for(Customer customer : customersInSystem.getCustomersInSystemBySerialNumber().values()){
+            dtoCustomers.put(customer.getSerialNumber(),customer.createDTOCustomer());
+        }
+
+        return dtoCustomers;
     }
 }

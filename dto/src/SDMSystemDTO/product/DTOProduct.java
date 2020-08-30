@@ -20,6 +20,11 @@ public class DTOProduct {
         this.amountSoldInAllStores = amountSoldInAllStores;
     }
 
+    @Override
+    public String toString() {
+        return productName;
+    }
+
     public int getProductSerialNumber() {
         return productSerialNumber;
     }

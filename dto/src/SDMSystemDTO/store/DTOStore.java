@@ -16,6 +16,10 @@ public class DTOStore {
     //private Collection<DTOFeedback> storeFeedbacks;
     private final float totalProfitFromDelivery;
 
+    @Override
+    public String toString() {
+        return storeName;
+    }
 
     public DTOStore(Map<Integer, DTOProductInStore> productsInStore,
                     Point storeLocation,
