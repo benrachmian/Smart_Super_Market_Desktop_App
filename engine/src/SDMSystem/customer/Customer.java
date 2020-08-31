@@ -4,9 +4,13 @@ package SDMSystem.customer;
 import SDMSystem.HasSerialNumber;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.location.Locationable;
+import SDMSystem.order.Order;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.order.DTOOrder;
 
 import java.awt.*;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class Customer implements HasSerialNumber<Integer>, Locationable {
 
@@ -14,17 +18,22 @@ public class Customer implements HasSerialNumber<Integer>, Locationable {
     private final String customerName;
     private final int customerId;
     private final Point customerLocation;
+    private Collection<Order> ordersMade;
 
     public Customer(String customerName, int customerId, Point customerLocation) {
         this.customerName = customerName;
         this.customerId = customerId;
         this.customerLocation = customerLocation;
+        this.ordersMade = new LinkedList<>();
     }
 
     public String getCustomerName() {
         return customerName;
     }
 
+    public Collection<Order> getOrdersMade() {
+        return ordersMade;
+    }
 
     @Override
     public Integer getSerialNumber() {
@@ -42,6 +51,11 @@ public class Customer implements HasSerialNumber<Integer>, Locationable {
     }
 
     public DTOCustomer createDTOCustomer(){
-        return new DTOCustomer(this.customerName,this.customerId,this.customerLocation);
+        Collection<DTOOrder> dtoOrders = new LinkedList<>();
+        ordersMade.forEach(
+                (order) -> dtoOrders.add(order.createDTOOrderFromOrder())
+        );
+        return new DTOCustomer(this.customerName,this.customerId,this.customerLocation, dtoOrders);
     }
+
 }

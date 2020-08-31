@@ -34,4 +34,8 @@ public class CustomersInSystem {
     public Map<Point, Customer> getCustomersInSystemByLocation() {
         return customersInSystemByLocation;
     }
+
+    public Customer getCustomer(int customerSerialNumber) {
+        return customersInSystemBySerialNumber.get(customerSerialNumber);
+    }
 }

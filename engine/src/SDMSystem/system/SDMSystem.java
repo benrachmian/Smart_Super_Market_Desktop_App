@@ -728,4 +728,24 @@ public class SDMSystem {
 
         return dtoCustomers;
     }
+
+    public float getOrdersProductCostAverage(int customerSerialNumber) {
+        Customer customer = customersInSystem.getCustomer(customerSerialNumber);
+        float sum = 0;
+        for(Order order : customer.getOrdersMade()){
+            sum += order.getProductsCost();
+        }
+
+        return sum / customer.getOrdersMade().size();
+    }
+
+    public float getOrdersDeliveryCostAverage(int customerSerialNumber) {
+        Customer customer = customersInSystem.getCustomer(customerSerialNumber);
+        float sum = 0;
+        for(Order order : customer.getOrdersMade()){
+            sum += order.getDeliveryCost();
+        }
+
+        return sum / customer.getOrdersMade().size();
+    }
 }

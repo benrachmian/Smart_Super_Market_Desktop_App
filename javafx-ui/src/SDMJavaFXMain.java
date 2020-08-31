@@ -32,6 +32,7 @@ public class SDMJavaFXMain extends Application {
 
 
         loadProductDetailsComponent(sdmMainControllers);
+        loadCustomerDetailsComponent(sdmMainControllers);
 
         //set stage
         primaryStage.setTitle("Super Duper Market System");
@@ -49,6 +50,21 @@ public class SDMJavaFXMain extends Application {
         try {
             sdmMainControllers.setProductsDetailsGridPane(loader.load());
             sdmMainControllers.setProductDetailsController(loader.getController());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadCustomerDetailsComponent(SDMMainControllers sdmMainControllers ) {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource("/components/details/customersDetails/customersDetails.fxml");
+        loader.setLocation(mainFXML);
+        try {
+            sdmMainControllers.setCustomersDetailsGridPane(loader.load());
+            sdmMainControllers.setCustomerDetailsController(loader.getController());
 
         } catch (IOException e) {
             e.printStackTrace();

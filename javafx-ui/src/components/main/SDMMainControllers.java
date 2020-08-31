@@ -7,6 +7,7 @@ import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
 import common.SDMResourcesConstants;
+import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -46,7 +48,9 @@ public class SDMMainControllers {
     private SimpleStringProperty selectedFileProperty;
     private SimpleBooleanProperty isFileSelected;
     private GridPane productsDetailsGridPane;
+    private GridPane customersDetailsGridPane;
     private ProductDetailsController productDetailsController;
+    private CustomerDetailsController customerDetailsController;
 
 
     public SDMMainControllers() {
@@ -72,9 +76,20 @@ public class SDMMainControllers {
 
     }
 
+    public void setCustomersDetailsGridPane(GridPane customersDetailsGridPane) {
+        this.customersDetailsGridPane = customersDetailsGridPane;
+        customersDetailsGridPane.setAlignment(Pos.CENTER);
+
+    }
+
     public void setProductDetailsController(ProductDetailsController productDetailsController) {
         this.productDetailsController = productDetailsController;
         productDetailsController.setSdmSystem(sdmSystem);
+    }
+
+    public void setCustomerDetailsController(CustomerDetailsController customerDetailsController) {
+        this.customerDetailsController = customerDetailsController;
+        customerDetailsController.setSdmSystem(sdmSystem);
     }
 
     @FXML
@@ -134,6 +149,10 @@ public class SDMMainControllers {
 
     @FXML
     void customerItemClicked(MouseEvent event) {
+        if(customerListView.getSelectionModel().getSelectedIndex() != -1) {
+            mainBorderPane.setCenter(customersDetailsGridPane);
+            customerDetailsController.updateGrid(customerListView.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
@@ -143,6 +162,8 @@ public class SDMMainControllers {
             productDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
         }
     }
+
+
 
 
     public void setSdmSystem(SDMSystem sdmSystem) {
