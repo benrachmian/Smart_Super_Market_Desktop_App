@@ -6,20 +6,28 @@ import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
+import common.SDMResourcesConstants;
+import components.details.productsDetails.ProductDetailsController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 public class SDMMainControllers {
 
@@ -30,12 +38,15 @@ public class SDMMainControllers {
     @FXML private MenuItem loadSystemXmlMenuItem;
     @FXML private Accordion systemAccordion;
     @FXML private AnchorPane customerAccordionAnchorPane;
+    @FXML private BorderPane mainBorderPane;
 
 
     private SDMSystem sdmSystem;
     private Stage primaryStage;
     private SimpleStringProperty selectedFileProperty;
     private SimpleBooleanProperty isFileSelected;
+    private GridPane productsDetailsGridPane;
+    private ProductDetailsController productDetailsController;
 
 
     public SDMMainControllers() {
@@ -50,6 +61,20 @@ public class SDMMainControllers {
         storeListView.setPlaceholder(new Label("No content yet"));
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
+
+
+
+    }
+
+    public void setProductsDetailsGridPane(GridPane productsDetailsGridPane) {
+        this.productsDetailsGridPane = productsDetailsGridPane;
+        productsDetailsGridPane.setAlignment(Pos.CENTER);
+
+    }
+
+    public void setProductDetailsController(ProductDetailsController productDetailsController) {
+        this.productDetailsController = productDetailsController;
+        productDetailsController.setSdmSystem(sdmSystem);
     }
 
     @FXML
@@ -109,8 +134,16 @@ public class SDMMainControllers {
 
     @FXML
     void customerItemClicked(MouseEvent event) {
-
     }
+
+    @FXML
+    void productItemClicked(MouseEvent event) {
+        if(productsListView.getSelectionModel().getSelectedIndex() != -1) {
+            mainBorderPane.setCenter(productsDetailsGridPane);
+            productDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
+        }
+    }
+
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
