@@ -164,8 +164,6 @@ public class SDMMainControllers {
     }
 
 
-
-
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
     }

@@ -16,12 +16,12 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
     private static int generatedSerialNumber = 1000;
     private Date orderDate;
     private final Collection<Pair<Float,ProductInStore>> productsInOrder;
-    //private Customer whoOrdered;
     private float productsCost;
     private final float deliveryCost;
     private int orderSerialNumber;
     private int amountOfProducts;
     private int amountOfProductsKinds;
+    //private Customer whoOrdered;
 
 
     public Order(Date orderDate,
