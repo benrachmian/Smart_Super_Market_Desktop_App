@@ -1,6 +1,7 @@
 package SDMSystem.order;
 
 import SDMSystem.HasSerialNumber;
+import SDMSystem.customer.Customer;
 import SDMSystem.product.ProductInStore;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
@@ -14,22 +15,27 @@ import java.util.LinkedList;
 
 public abstract class Order implements Serializable, HasSerialNumber<Integer> {
     private static int generatedSerialNumber = 1000;
-    private Date orderDate;
-    private final Collection<Pair<Float,ProductInStore>> productsInOrder;
-    private float productsCost;
-    private final float deliveryCost;
-    private int orderSerialNumber;
-    private int amountOfProducts;
-    private int amountOfProductsKinds;
-    //private Customer whoOrdered;
+    protected Date orderDate;
+    protected final Collection<Pair<Float,ProductInStore>> productsInOrder;
+    protected float productsCost;
+    protected final float deliveryCost;
+    protected int orderSerialNumber;
+    protected int amountOfProducts;
+    protected int amountOfProductsKinds;
+    protected Customer whoOrdered;
+    protected Order mainOrder;
 
 
     public Order(Date orderDate,
-                 Collection<Pair<Float,ProductInStore>> productsInOrder,
+                 Collection<Pair<Float, ProductInStore>> productsInOrder,
                  float productsCost,
                  float deliveryCost,
                  int amountOfProducts,
-                 int amountOfProductsKinds){
+                 int amountOfProductsKinds,
+                 Customer whoOrdered,
+                 Order mainOrder){
+        this.whoOrdered = whoOrdered;
+        this.mainOrder = mainOrder;
         this.orderSerialNumber = generatedSerialNumber++;
         this.orderDate = orderDate;
         this.productsInOrder = productsInOrder;
@@ -37,6 +43,10 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
         this.deliveryCost = deliveryCost;
         this.amountOfProducts = amountOfProducts;
         this.amountOfProductsKinds = amountOfProductsKinds;
+    }
+
+    public void setMainOrder(Order mainOrder) {
+        this.mainOrder = mainOrder;
     }
 
     public void generateNewSerialNumber(){

@@ -1,5 +1,6 @@
 package SDMSystem.order;
 
+import SDMSystem.customer.Customer;
 import SDMSystem.product.ProductInStore;
 import SDMSystem.store.Store;
 import SDMSystemDTO.order.DTOOrder;
@@ -19,8 +20,10 @@ public class StaticOrder extends Order {
                        float deliveryCost,
                        int amountOfProducts,
                        int amountOfProductsKinds,
-                       Store storeFromWhomTheOrderWasMade) {
-        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds);
+                       Store storeFromWhomTheOrderWasMade,
+                       Customer whoOrdered,
+                       Order mainOrder) {
+        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds, whoOrdered, mainOrder);
         this.storeFromWhomTheOrderWasMade = storeFromWhomTheOrderWasMade;
     }
 

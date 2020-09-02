@@ -9,6 +9,7 @@ import SDMSystemDTO.store.DTOStore;
 import common.SDMResourcesConstants;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
+import components.details.storeDetails.StoreDetailsController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -49,8 +50,10 @@ public class SDMMainControllers {
     private SimpleBooleanProperty isFileSelected;
     private GridPane productsDetailsGridPane;
     private GridPane customersDetailsGridPane;
+    private ScrollPane storesDetailsScrollPane;
     private ProductDetailsController productDetailsController;
     private CustomerDetailsController customerDetailsController;
+    private StoreDetailsController storeDetailsController;
 
 
     public SDMMainControllers() {
@@ -65,21 +68,27 @@ public class SDMMainControllers {
         storeListView.setPlaceholder(new Label("No content yet"));
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
-
-
-
     }
 
     public void setProductsDetailsGridPane(GridPane productsDetailsGridPane) {
         this.productsDetailsGridPane = productsDetailsGridPane;
         productsDetailsGridPane.setAlignment(Pos.CENTER);
-
     }
 
     public void setCustomersDetailsGridPane(GridPane customersDetailsGridPane) {
         this.customersDetailsGridPane = customersDetailsGridPane;
         customersDetailsGridPane.setAlignment(Pos.CENTER);
+    }
 
+    public void setStoreDetailsScrollPane(ScrollPane storeDetailsScrollPane){
+        this.storesDetailsScrollPane = storeDetailsScrollPane;
+        //storeDetailsScrollPane.fitToHeightProperty().set(true);
+        storeDetailsScrollPane.fitToWidthProperty().set(true);
+    }
+
+    public void setStoreDetailsController(StoreDetailsController storeDetailsController){
+        this.storeDetailsController = storeDetailsController;
+        storeDetailsController.setSdmSystem(sdmSystem);
     }
 
     public void setProductDetailsController(ProductDetailsController productDetailsController) {
@@ -164,6 +173,17 @@ public class SDMMainControllers {
     }
 
 
+    @FXML
+    void storeItemClicked(MouseEvent event) {
+        if(storeListView.getSelectionModel().getSelectedIndex() != -1) {
+            mainBorderPane.setCenter(storesDetailsScrollPane);
+            storeDetailsController.updatePane(storeListView.getSelectionModel().getSelectedItem());
+            //storeDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
+        }
+
+    }
+
+
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
     }
@@ -171,4 +191,6 @@ public class SDMMainControllers {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+
 }

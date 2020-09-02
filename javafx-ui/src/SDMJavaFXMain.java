@@ -33,12 +33,28 @@ public class SDMJavaFXMain extends Application {
 
         loadProductDetailsComponent(sdmMainControllers);
         loadCustomerDetailsComponent(sdmMainControllers);
+        loadStoreDetailsComponent(sdmMainControllers);
 
         //set stage
         primaryStage.setTitle("Super Duper Market System");
         Scene scene = new Scene(root, 1100, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void loadStoreDetailsComponent(SDMMainControllers sdmMainControllers) {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource("/components/details/storeDetails/storeDetails.fxml");
+        loader.setLocation(mainFXML);
+        try {
+            sdmMainControllers.setStoreDetailsScrollPane(loader.load());
+            sdmMainControllers.setStoreDetailsController(loader.getController());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadProductDetailsComponent(SDMMainControllers sdmMainControllers ) {

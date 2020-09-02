@@ -1,5 +1,6 @@
 package SDMSystem.order;
 
+import SDMSystem.customer.Customer;
 import SDMSystem.product.ProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
@@ -18,8 +19,9 @@ public class DynamicOrder extends Order {
                         float deliveryCost,
                         int amountOfProducts,
                         int amountOfProductsKinds,
-                        Collection<StaticOrder> subOrders) {
-        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds);
+                        Collection<StaticOrder> subOrders,
+                        Customer whoOrdered) {
+        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds, whoOrdered, null);
         this.subOrders = subOrders;
     }
 

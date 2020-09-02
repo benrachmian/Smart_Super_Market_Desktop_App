@@ -58,4 +58,7 @@ public class Customer implements HasSerialNumber<Integer>, Locationable {
         return new DTOCustomer(this.customerName,this.customerId,this.customerLocation, dtoOrders);
     }
 
+    public void addOrder(Order newOrder) {
+        ordersMade.add(newOrder);
+    }
 }
