@@ -7,6 +7,7 @@ import SDMSystemDTO.store.DTOStore;
 import components.main.SDMMainControllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -40,6 +41,9 @@ public class StoreDetailsController {
     @FXML
     public void initialize(){
         productTabScrollPane.fitToWidthProperty().set(true);
+        productsFlowPane.setPadding(new Insets(10,10,10,10));
+        productsFlowPane.setVgap(4);
+        productsFlowPane.setHgap(4);
     }
 
     public void updatePane(DTOStore store) {
