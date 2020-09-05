@@ -17,14 +17,17 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <Label text="Product ID:" GridPane.columnIndex="1" />
-      <Label text="Quantity:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Price per unit:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Quantity:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Price per unit:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Label fx:id="productIdLabel" text="Label" GridPane.columnIndex="3" />
-      <Label fx:id="quantityLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Label fx:id="pricePerUnitLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label fx:id="quantityLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label fx:id="pricePerUnitLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label text="Product Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="productNameLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

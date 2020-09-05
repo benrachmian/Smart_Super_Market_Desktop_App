@@ -80,6 +80,7 @@ public class SDMSystem {
         productsInSystem = new HashMap<>();
         ordersInSystem = new HashMap<>();
         customersInSystem = new CustomersInSystem();
+        customersAndStoresLocationMap = new HashMap<>();
         try {
             loadProducts(superDuperMarketDescriptor.getSDMItems());
             loadStores(superDuperMarketDescriptor.getSDMStores(), superDuperMarketDescriptor.getSDMItems());

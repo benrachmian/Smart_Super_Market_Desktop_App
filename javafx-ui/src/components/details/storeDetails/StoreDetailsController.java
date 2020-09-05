@@ -4,6 +4,7 @@ import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import components.details.storeDetails.productInStoreDetails.ProductInStoreController;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,15 +53,19 @@ public class StoreDetailsController {
         storePpkAnswerLabel.setText(String.format("%.2f",store.getPpk()));
         totalProfitFromDeliveryAnswerLabel.setText(String.format("%.2f",store.getTotalProfitFromDelivery()));
         productsFlowPane.getChildren().clear();
-        updateProducts(store);
-        Task<Boolean> currentRunningTask = new Task<Boolean>() {
-            @Override
-            protected Boolean call() throws Exception {
-                updateProducts(store);
-                return true;
-            }
-        };
-        new Thread(currentRunningTask).start();
+        //updateProducts(store);
+//        Task<Boolean> currentRunningTask = new Task<Boolean>() {
+//            @Override
+//            protected Boolean call() throws Exception {
+//                updateProducts(store);
+//                return true;
+//            }
+//        };
+        new Thread(() -> {
+            Platform.runLater(
+                    () -> updateProducts(store)
+            );
+        }).start();
     }
 
     private synchronized void updateProducts(DTOStore store) {

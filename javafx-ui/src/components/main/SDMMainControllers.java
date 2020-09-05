@@ -104,7 +104,6 @@ public class SDMMainControllers {
         if(selectedFile == null){
             return;
         }
-
         String absolutePath = selectedFile.getAbsolutePath();
         selectedFileProperty.set(absolutePath);
         isFileSelected.set(true);
@@ -123,18 +122,24 @@ public class SDMMainControllers {
     }
 
     private void initProductsInAccordion() {
+        productsListView.getItems().clear();
+        productsListView.setPlaceholder(new Label("No content yet"));
         for(DTOProduct product : sdmSystem.getProductsInSystem().values()){
             productsListView.getItems().add(product);
         }
     }
 
     private void initStoresInAccordion() {
+        storeListView.getItems().clear();
+        storeListView.setPlaceholder(new Label("No content yet"));
         for(DTOStore store : sdmSystem.getStoresInSystemBySerialNumber().values()){
             storeListView.getItems().add(store);
         }
     }
 
     private void initCustomersInAccordion() {
+        customerListView.getItems().clear();
+        customerListView.setPlaceholder(new Label("No content yet"));
         for(DTOCustomer customer : sdmSystem.getCustomers().values()){
             customerListView.getItems().add(customer);
         }
