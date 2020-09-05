@@ -6,19 +6,15 @@ import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
-import common.SDMResourcesConstants;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -29,8 +25,6 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 
 public class SDMMainControllers {
 
@@ -82,7 +76,7 @@ public class SDMMainControllers {
 
     public void setStoreDetailsScrollPane(ScrollPane storeDetailsScrollPane){
         this.storesDetailsScrollPane = storeDetailsScrollPane;
-        //storeDetailsScrollPane.fitToHeightProperty().set(true);
+        storeDetailsScrollPane.fitToHeightProperty().set(true);
         storeDetailsScrollPane.fitToWidthProperty().set(true);
     }
 
@@ -177,7 +171,7 @@ public class SDMMainControllers {
     void storeItemClicked(MouseEvent event) {
         if(storeListView.getSelectionModel().getSelectedIndex() != -1) {
             mainBorderPane.setCenter(storesDetailsScrollPane);
-            storeDetailsController.updatePane(storeListView.getSelectionModel().getSelectedItem());
+            storeDetailsController.updateProductsInStorePane(storeListView.getSelectionModel().getSelectedItem());
             //storeDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
         }
 

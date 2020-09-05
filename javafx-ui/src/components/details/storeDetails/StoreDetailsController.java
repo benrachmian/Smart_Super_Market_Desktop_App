@@ -46,7 +46,7 @@ public class StoreDetailsController {
 //        productsFlowPane.setHgap(4);
     }
 
-    public void updatePane(DTOStore store) {
+    public void updateProductsInStorePane(DTOStore store) {
         storeSerialNumberAnswerLabel.setText(String.format("%d",store.getStoreSerialNumber()));
         storeNameAnswerLabel.setText(store.getStoreName());
         storePpkAnswerLabel.setText(String.format("%.2f",store.getPpk()));

@@ -2,7 +2,7 @@ package SDMSystem.system;
 
 import SDMSystem.customer.Customer;
 import SDMSystem.discount.Discount;
-import SDMSystem.discount.DiscountKind;
+import SDMSystemDTO.discount.DiscountKind;
 import SDMSystem.discount.Offer;
 import SDMSystem.location.Locationable;
 import SDMSystem.order.DynamicOrder;
@@ -82,7 +82,7 @@ public class SDMSystem {
         customersInSystem = new CustomersInSystem();
         try {
             loadProducts(superDuperMarketDescriptor.getSDMItems());
-            loadStores(superDuperMarketDescriptor.getSDMStores());
+            loadStores(superDuperMarketDescriptor.getSDMStores(), superDuperMarketDescriptor.getSDMItems());
             scanForProductsWithoutStore();
             loadCustomers(superDuperMarketDescriptor.getSDMCustomers());
         }
@@ -129,12 +129,12 @@ public class SDMSystem {
         }
     }
 
-    private void loadStores(SDMStores sdmStores) {
+    private void loadStores(SDMStores sdmStores, SDMItems sdmItems) {
         Store loadedStore;
         List<SDMStore> sdmStoreList = sdmStores.getSDMStore();
         for (SDMStore sdmStore : sdmStoreList) {
             Point loadedStoreLocation = getLoadedLocation(sdmStore.getLocation());
-            Collection<Discount> loadedDiscounts = getLoadedDiscounts(sdmStore.getSDMDiscounts(), sdmStore.getSDMPrices().getSDMSell());
+            Collection<Discount> loadedDiscounts = getLoadedDiscounts(sdmStore.getSDMDiscounts(), sdmStore.getSDMPrices().getSDMSell(),sdmItems);
             loadedStore = new Store(sdmStore.getId(),loadedStoreLocation,sdmStore.getDeliveryPpk(),sdmStore.getName(), loadedDiscounts);
             addStoreToSystem(loadedStore);
             List<SDMSell> sdmSellList = sdmStore.getSDMPrices().getSDMSell();
@@ -143,7 +143,7 @@ public class SDMSystem {
     }
 
 
-    private Collection<Discount> getLoadedDiscounts(SDMDiscounts sdmDiscounts, List<SDMSell> productsTheStoreSelling) {
+    private Collection<Discount> getLoadedDiscounts(SDMDiscounts sdmDiscounts, List<SDMSell> productsTheStoreSelling, SDMItems sdmItems) {
         Collection<Discount> discounts = null;
         if(sdmDiscounts != null) {
             discounts = new LinkedList<>();
@@ -155,13 +155,27 @@ public class SDMSystem {
                         sdmDiscount.getName(),
                         new Pair<>(sdmDiscount.getIfYouBuy().getItemId(), sdmDiscount.getIfYouBuy().getQuantity()),
                         getDiscountKind(sdmDiscount.getThenYouGet().getOperator()),
-                        getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName())
+                        getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName()),
+                        //getStoreFromStores(sdmStore.getId()).getProductFromStore(sdmDiscount.getIfYouBuy().getItemId()).getWayOfBuying()
+                        getWayOfBuyingOfProductFromSDMStore(sdmItems,sdmDiscount.getIfYouBuy().getItemId())
+
                 );
                 discounts.add(newDiscount);
             }
         }
 
         return discounts;
+    }
+
+    private WayOfBuying getWayOfBuyingOfProductFromSDMStore(SDMItems sdmItems, int productId) {
+        WayOfBuying answer = null;
+        for(SDMItem product : sdmItems.getSDMItem()){
+            if(product.getId() == productId){
+                answer = getLoadedProductWayOfBuying(product.getPurchaseCategory());
+            }
+        }
+
+        return answer;
     }
 
     private void checkLoadedProductInDiscountAndThrowException(int productSerialNumber, List<SDMSell> productsInStore, String discountName) {

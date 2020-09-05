@@ -1,9 +1,11 @@
 package SDMSystemDTO.store;
 
 
+import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.product.DTOProductInStore;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.Map;
 
 public class DTOStore {
@@ -15,7 +17,7 @@ public class DTOStore {
     //private Collection<DTOOrder> ordersFromStore;
     //private Collection<DTOFeedback> storeFeedbacks;
     private final float totalProfitFromDelivery;
-
+    private final Collection<DTODiscount> storeDiscounts;
     @Override
     public String toString() {
         return storeName;
@@ -26,16 +28,19 @@ public class DTOStore {
                     float ppk,
                     int storeSerialNumber,
                     String storeName,
-                    //Collection<DTOFeedback> storeFeedbacks,
-                    float totalProfitFromDelivery) {
+                    float totalProfitFromDelivery,
+                    Collection<DTODiscount> storeDiscounts ) {
         this.productsInStore = productsInStore;
         this.storeLocation = storeLocation;
         this.ppk = ppk;
         this.storeSerialNumber = storeSerialNumber;
         this.storeName = storeName;
-       // this.ordersFromStore = ordersFromStore;
-        //this.storeFeedbacks = storeFeedbacks;
         this.totalProfitFromDelivery = totalProfitFromDelivery;
+        this.storeDiscounts = storeDiscounts;
+    }
+
+    public Collection<DTODiscount> getStoreDiscounts() {
+        return storeDiscounts;
     }
 
     public DTOProductInStore getProductFromStore(int productSerialNumber){

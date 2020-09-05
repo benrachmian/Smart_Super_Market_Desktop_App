@@ -1,5 +1,7 @@
 package SDMSystem.discount;
 
+import SDMSystemDTO.discount.DTOOffer;
+
 public class Offer {
     private int productSerialNumber;
     private double productQuantity;
@@ -9,5 +11,9 @@ public class Offer {
         this.productSerialNumber = productSerialNumber;
         this.productQuantity = productQuantity;
         this.pricePerUnit = pricePerUnit;
+    }
+
+    public DTOOffer createDTOOffer() {
+        return new DTOOffer(productSerialNumber,productQuantity,pricePerUnit);
     }
 }

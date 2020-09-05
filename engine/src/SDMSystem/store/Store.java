@@ -8,6 +8,7 @@ import SDMSystem.order.Order;
 import SDMSystem.product.Product;
 import SDMSystem.product.ProductInStore;
 import SDMSystem.exceptions.*;
+import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
@@ -166,9 +167,21 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
                 storeSerialNumber,
                 storeName,
                 //getDTOOrdersFromStore(),
-                totalProfitFromDelivery);
+                totalProfitFromDelivery,
+                getDTODiscountsInStore());
     }
 
+    private Collection<DTODiscount> getDTODiscountsInStore() {
+        Collection<DTODiscount> dtoDiscounts = null;
+        if(storeDiscounts != null) {
+            dtoDiscounts = new LinkedList<>();
+            for (Discount discount : this.storeDiscounts) {
+                dtoDiscounts.add(discount.createDTODiscount());
+            }
+        }
+
+        return dtoDiscounts;
+    }
 
 
     public float getTotalProfitFromDelivery() {

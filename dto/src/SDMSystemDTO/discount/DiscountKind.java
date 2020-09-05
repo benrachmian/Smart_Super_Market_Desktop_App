@@ -1,4 +1,4 @@
-package SDMSystem.discount;
+package SDMSystemDTO.discount;
 
 public enum DiscountKind {
     IRRELEVANT{
