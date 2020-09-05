@@ -1,14 +1,13 @@
 package components.details.storeDetails;
 
 import SDMSystem.system.SDMSystem;
-import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
-import components.main.SDMMainControllers;
+import components.details.storeDetails.productInStoreDetails.ProductInStoreController;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
@@ -23,6 +22,7 @@ public class StoreDetailsController {
     private SDMSystem sdmSystem;
     private GridPane productGridPane;
     private ProductInStoreController productInStoreController;
+    private static final String Product_In_Store_Details_Fxml_Path = "/components/details/storeDetails/productInStoreDetails/productInStoreDetails.fxml";
 
     @FXML private TabPane storeTabPane;
     @FXML private ScrollPane productTabScrollPane;
@@ -41,9 +41,9 @@ public class StoreDetailsController {
     @FXML
     public void initialize(){
         productTabScrollPane.fitToWidthProperty().set(true);
-        productsFlowPane.setPadding(new Insets(10,10,10,10));
-        productsFlowPane.setVgap(4);
-        productsFlowPane.setHgap(4);
+//        productsFlowPane.setPadding(new Insets(10,10,10,10));
+//        productsFlowPane.setVgap(4);
+//        productsFlowPane.setHgap(4);
     }
 
     public void updatePane(DTOStore store) {
@@ -53,9 +53,17 @@ public class StoreDetailsController {
         totalProfitFromDeliveryAnswerLabel.setText(String.format("%.2f",store.getTotalProfitFromDelivery()));
         productsFlowPane.getChildren().clear();
         updateProducts(store);
+        Task<Boolean> currentRunningTask = new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                updateProducts(store);
+                return true;
+            }
+        };
+        new Thread(currentRunningTask).start();
     }
 
-    private void updateProducts(DTOStore store) {
+    private synchronized void updateProducts(DTOStore store) {
         for(DTOProductInStore product : store.getProductsInStore().values()){
             //GridPane newProductGridPane = getGridPaneWithSameProperties();
 
@@ -83,7 +91,7 @@ public class StoreDetailsController {
         FXMLLoader loader;
         URL mainFXML;
         loader = new FXMLLoader();
-        mainFXML = getClass().getResource("/components/details/storeDetails/productInStoreDetails.fxml");
+        mainFXML = getClass().getResource(Product_In_Store_Details_Fxml_Path);
         loader.setLocation(mainFXML);
         try {
             productGridPane = loader.load();

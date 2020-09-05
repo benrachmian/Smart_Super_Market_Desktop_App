@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="productGridPane" style="-fx-background-color: RED;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.ProductInStoreController">
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" stylesheets="@productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.productInStoreDetails.ProductInStoreController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

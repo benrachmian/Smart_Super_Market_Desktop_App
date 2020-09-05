@@ -1,4 +1,4 @@
-package components.details.storeDetails;
+package components.details.storeDetails.productInStoreDetails;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
