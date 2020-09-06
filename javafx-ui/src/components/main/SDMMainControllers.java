@@ -83,6 +83,7 @@ public class SDMMainControllers {
     public void setStoreDetailsController(StoreDetailsController storeDetailsController){
         this.storeDetailsController = storeDetailsController;
         storeDetailsController.setSdmSystem(sdmSystem);
+        storeDetailsController.setMainBorderPane(mainBorderPane);
     }
 
     public void setProductDetailsController(ProductDetailsController productDetailsController) {
@@ -176,7 +177,9 @@ public class SDMMainControllers {
     void storeItemClicked(MouseEvent event) {
         if(storeListView.getSelectionModel().getSelectedIndex() != -1) {
             mainBorderPane.setCenter(storesDetailsScrollPane);
-            storeDetailsController.updateStoreDetailsTab(storeListView.getSelectionModel().getSelectedItem());
+            //in order to get the most updated store I always get the store from the system even though I got it in the listview.
+            storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeListView.getSelectionModel().getSelectedItem().getStoreSerialNumber()));
+            storeDetailsController.updateStoreDetailsTab();
             //storeDetailsController.updateDiscountsInStore(storeListView.getSelectionModel().getSelectedItem());
             //storeDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
         }

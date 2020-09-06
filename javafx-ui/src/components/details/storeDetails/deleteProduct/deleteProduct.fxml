@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<ScrollPane prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.deleteProduct.DeleteProductController">
+   <content>
+      <GridPane alignment="CENTER" prefHeight="439.0" prefWidth="702.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.20001220703125" minWidth="10.0" prefWidth="143.19998779296876" />
+            <ColumnConstraints halignment="CENTER" maxWidth="330.4000122070313" minWidth="10.0" prefWidth="330.4000122070313" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="370.4000244140625" minHeight="10.0" prefHeight="261.6000061035156" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="94.20001220703122" minHeight="10.0" prefHeight="56.60003662109372" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" prefHeight="46.00002441406252" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ScrollPane fx:id="productTabScrollPane" GridPane.columnSpan="4" GridPane.rowIndex="1">
+               <content>
+                  <FlowPane fx:id="productsFlowPane" alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="688.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
+               </content>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ScrollPane>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="The products are:" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <HBox fx:id="selectProductHBox" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <children>
+                  <Label prefHeight="42.0" text="Select the product you would like to delete:" />
+                  <ChoiceBox fx:id="productChoiseBox" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </HBox>
+            <Button fx:id="deleteProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickDelete" text="Delete!" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <HBox fx:id="statusHBox" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <children>
+                  <Label text="Status:" />
+                  <Label fx:id="statusLabel" prefHeight="18.0" text="The product was deleted sucssessfully!">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>

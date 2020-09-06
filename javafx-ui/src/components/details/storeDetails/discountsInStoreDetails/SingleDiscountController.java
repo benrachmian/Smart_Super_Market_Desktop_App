@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
@@ -23,6 +24,7 @@ public class SingleDiscountController {
     private SimpleIntegerProperty productIdForGettingDiscount;
     private SimpleStringProperty productNameForGettingDiscount;
     private SimpleStringProperty discountKindString;
+    private SimpleStringProperty discountName;
     private DTODiscount discount;
     private GridPane productsInDiscountGridPane;
     private ProductInDiscountDetailsController productInDiscountDetailsController;
@@ -34,6 +36,8 @@ public class SingleDiscountController {
     @FXML private Label discountTitleLabel;
     @FXML private FlowPane productsInDiscountFlowPane;
     @FXML private Label whatYouGetLabel;
+    @FXML private Label discountNameLabel;
+    @FXML private ScrollPane productsInDiscountScrollPane;
 
     public SingleDiscountController(){
         quantityToBuyToGetDiscount = new SimpleDoubleProperty();
@@ -41,6 +45,7 @@ public class SingleDiscountController {
         productIdForGettingDiscount = new SimpleIntegerProperty();
         productNameForGettingDiscount = new SimpleStringProperty();
         discountKindString = new SimpleStringProperty();
+        discountName = new SimpleStringProperty();
     }
 
     @FXML
@@ -51,6 +56,9 @@ public class SingleDiscountController {
         whatYouGetLabel.textProperty().bind(Bindings.concat(
                 "you get ", discountKindString, ":"
         ));
+        discountNameLabel.textProperty().bind(discountName);
+        productsInDiscountScrollPane.fitToWidthProperty().set(true);
+        productsInDiscountScrollPane.fitToHeightProperty().set(true);
 
     }
 
@@ -65,6 +73,7 @@ public class SingleDiscountController {
         productIdForGettingDiscount.set(discount.getIfYouBuyProductAndAmount().getKey());
         productNameForGettingDiscount.set(discount.getProductNameToBuyForDiscount());
         getDiscountKind(discount.getDiscountKind());
+        discountName.set(discount.getDiscountName());
 
         initProductsInDiscount();
     }
@@ -89,7 +98,6 @@ public class SingleDiscountController {
                     offer.getPricePerUnit(),
                     offer.getProductName()
             );
-
             productsInDiscountFlowPane.getChildren().add(productsInDiscountGridPane);
         }
     }
