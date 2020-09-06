@@ -126,7 +126,7 @@ public class StoreDetailsController {
 
     private synchronized void updateDiscountsInStore( ) {
         //at least one discount
-        if(store.getStoreDiscounts() != null) {
+        if(store.getStoreDiscounts() != null && store.getStoreDiscounts().size() >= 1) {
             discountsVbox.getChildren().clear();
             for (DTODiscount discount : store.getStoreDiscounts()) {
                 loadDiscountDetails();

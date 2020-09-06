@@ -287,15 +287,17 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
 
     public boolean isProductPartOfDiscount(int productSerialNumber) {
         boolean answer = false;
-        for(Discount discount : storeDiscounts){
-            if(discount.getIfYouBuyProductAndAmount().getKey() == productSerialNumber){
-                answer = true;
-                break;
-            }
-            for(Offer offer : discount.getOffers()){
-                if(offer.getProductSerialNumber() == productSerialNumber){
+        if(storeDiscounts != null) {
+            for (Discount discount : storeDiscounts) {
+                if (discount.getIfYouBuyProductAndAmount().getKey() == productSerialNumber) {
                     answer = true;
                     break;
+                }
+                for (Offer offer : discount.getOffers()) {
+                    if (offer.getProductSerialNumber() == productSerialNumber) {
+                        answer = true;
+                        break;
+                    }
                 }
             }
         }
