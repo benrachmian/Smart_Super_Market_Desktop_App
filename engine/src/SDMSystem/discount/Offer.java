@@ -18,4 +18,8 @@ public class Offer {
     public DTOOffer createDTOOffer() {
         return new DTOOffer(productSerialNumber,productQuantity,pricePerUnit,productName);
     }
+
+    public int getProductSerialNumber() {
+        return productSerialNumber;
+    }
 }

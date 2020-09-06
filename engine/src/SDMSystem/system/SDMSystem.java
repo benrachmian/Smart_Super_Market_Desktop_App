@@ -21,6 +21,7 @@ import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
 import SDMSystemDTO.product.WayOfBuying;
 import javafx.util.Pair;
+import org.omg.SendingContext.RunTime;
 import xml.XMLHelper;
 import xml.generated.*;
 
@@ -635,17 +636,22 @@ public class SDMSystem {
     }
 
 
-    public boolean deleteProductFromStore(DTOProductInStore chosenProductToDeleteDTO) {
-        boolean deletedSuccessfully = false;
+    public void deleteProductFromStore(DTOProductInStore chosenProductToDeleteDTO) {
         Store storeSellingTheProduct = storesInSystem.getStoreInSystem(chosenProductToDeleteDTO.getStoreTheProductBelongsID());
+        // if the store selling only one product
+        if(storeSellingTheProduct.getDTOProductsInStore().values().size() == 1){
+            throw new RuntimeException(String.format("The product %s, ID: %d can't be deleted because it's the only product the store selling!",
+                    chosenProductToDeleteDTO.getProductName(),chosenProductToDeleteDTO.getProductSerialNumber()));
+        }
         ProductInStore productToDelete = storeSellingTheProduct.getProductInStore(chosenProductToDeleteDTO.getProductSerialNumber());
         //if more then one store selling the product
         if(productToDelete.getStoresSellingTheProduct().size() > 1){
             storeSellingTheProduct.deleteProduct(productToDelete);
-            deletedSuccessfully = true;
         }
-
-        return deletedSuccessfully;
+        else{
+            throw new RuntimeException(String.format("The product %s, ID: %d can't be deleted because it's the only store selling the product!",
+                    chosenProductToDeleteDTO.getProductName(), chosenProductToDeleteDTO.getProductSerialNumber()));
+        }
     }
 
     public Map<Integer, DTOProduct> getProductsTheStoreDoesntSell(DTOStore storeToUpdate) {
@@ -776,5 +782,37 @@ public class SDMSystem {
         }
 
         return sum / customer.getOrdersMade().size();
+    }
+
+    public boolean isPartOfDiscount(int storeSerialNumber, int productSerialNumber) {
+        return storesInSystem.getStoresInSystemBySerialNumber().get(storeSerialNumber).isProductPartOfDiscount(productSerialNumber);
+    }
+
+
+    public boolean isProductDeletable(int storeSerialNumber, int productSerialNumber, String[] reasonRef){
+        boolean answer = true;
+        Store storeSellingTheProduct = storesInSystem.getStoreInSystem(storeSerialNumber);
+        ProductInStore productToDelete = storeSellingTheProduct.getProductInStore(productSerialNumber);
+
+        if(storeSellingTheProduct.getDTOProductsInStore().values().size() == 1){
+            reasonRef[0] = String.format("The product %s, ID: %d can't be deleted because it's the only product the store selling!",
+                    productToDelete.getProductName(),productSerialNumber);
+            answer = false;
+        }
+
+        //if not more then one store selling the product
+        if(productToDelete.getStoresSellingTheProduct().size() <= 1){
+            reasonRef[0] = String.format("The product %s, ID: %d can't be deleted because it's the only store selling the product!",
+                    productToDelete.getProductName(),productSerialNumber);
+            answer = false;
+        }
+
+        return answer;
+
+    }
+
+    public void deleteDiscountsTheProductIsPartOf(int storeSerialNumber, int productSerialNumber) {
+        Store storeSellingTheProduct = storesInSystem.getStoreInSystem(storeSerialNumber);
+        storeSellingTheProduct.deleteDiscountsTheProductIsPartOf(productSerialNumber);
     }
 }

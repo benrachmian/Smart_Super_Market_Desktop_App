@@ -7,12 +7,11 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+
+import java.util.Optional;
 
 public class DeleteProductController {
 
@@ -54,11 +53,6 @@ public class DeleteProductController {
 
 
 
-
-    //    public void setStore(DTOStore store) {
-//        this.store = store;
-//    }
-
     public FlowPane getProductsFlowPane() {
         return productsFlowPane;
     }
@@ -70,17 +64,45 @@ public class DeleteProductController {
     @FXML
     void onClickDelete(ActionEvent event) {
         DTOProductInStore productToDelete = productChoiseBox.getSelectionModel().getSelectedItem();
-        //if deleted successfully
-        if(sdmSystem.deleteProductFromStore(productToDelete)){
-            statusLabel.setText("The product was deleted successfully!");
-            //update DTOStore with deleted product
-            storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeDetailsController.getStoreSerialNumber()));
-            storeDetailsController.addProductsFromStoreToFlowPane(productsFlowPane);
-            storeDetailsController.addProductsToProductChoisBox(productChoiseBox);
+        //in order to send by ref
+        String[] reason = new String[1];
+        try {
+            if (sdmSystem.isProductDeletable(storeDetailsController.getStoreSerialNumber(), productToDelete.getProductSerialNumber(), reason)) {
+                if (sdmSystem.isPartOfDiscount(
+                        storeDetailsController.getStoreSerialNumber(),
+                        productToDelete.getProductSerialNumber())) {
+                    createAndShowProductInDiscountDeleteAlert();
+                    sdmSystem.deleteDiscountsTheProductIsPartOf(
+                            storeDetailsController.getStoreSerialNumber(),
+                            productToDelete.getProductSerialNumber());
+                }
+                sdmSystem.deleteProductFromStore(productToDelete);
+                statusLabel.setText("The product was deleted successfully!");
+                //update DTOStore with deleted product
+                storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeDetailsController.getStoreSerialNumber()));
+                storeDetailsController.addProductsFromStoreToFlowPane(productsFlowPane);
+                storeDetailsController.addProductsToProductChoisBox(productChoiseBox);
+            }
+            else {
+                statusLabel.setText(reason[0]);
+            }
+        } catch (RuntimeException e) {
+            statusLabel.setText(e.getMessage());
         }
-        else{
-            statusLabel.setText(String.format("the product %s is available only in this store, therefore you can't delete it!", productToDelete.getProductName()));
+        finally {
+            deleteTryWasMade.set(true);
         }
-        deleteTryWasMade.set(true);
+    }
+
+    private void createAndShowProductInDiscountDeleteAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Warning");
+        alert.setHeaderText("You are about to delete a product that is a part of a discount!");
+        alert.setContentText("The discount will be deleted as well.\nAre you ok with this?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            throw new RuntimeException("Cancelled");
+        }
     }
 }

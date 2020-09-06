@@ -2,6 +2,7 @@ package SDMSystem.store;
 
 import SDMSystem.HasSerialNumber;
 import SDMSystem.discount.Discount;
+import SDMSystem.discount.Offer;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.location.Locationable;
 import SDMSystem.order.Order;
@@ -40,6 +41,10 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         //this.storeFeedbacks = null;
         this.totalProfitFromDelivery = 0;
         this.storeDiscounts = new LinkedList<>();
+    }
+
+    public Collection<Discount> getStoreDiscounts() {
+        return storeDiscounts;
     }
 
     public Store(int storeSerialNumber, Point storeLocation, float ppk, String storeName, Collection<Discount> storeDiscounts) {
@@ -278,5 +283,44 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
     public void updateProductPrice(int productSerialNumber, float newPrice) {
         ProductInStore productToUpdate = productsInStore.get(productSerialNumber);
         productToUpdate.setPrice(newPrice);
+    }
+
+    public boolean isProductPartOfDiscount(int productSerialNumber) {
+        boolean answer = false;
+        for(Discount discount : storeDiscounts){
+            if(discount.getIfYouBuyProductAndAmount().getKey() == productSerialNumber){
+                answer = true;
+                break;
+            }
+            for(Offer offer : discount.getOffers()){
+                if(offer.getProductSerialNumber() == productSerialNumber){
+                    answer = true;
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public void deleteDiscountsTheProductIsPartOf(int productSerialNumber) {
+        Collection<Discount> discountsToDelete = new LinkedList<>();
+        for(Discount discount : storeDiscounts){
+            if(discount.getIfYouBuyProductAndAmount().getKey() == productSerialNumber){
+                discountsToDelete.add(discount);
+            }
+            else{
+                for(Offer offer : discount.getOffers()){
+                    if(offer.getProductSerialNumber() == productSerialNumber){
+                        storeDiscounts.remove(discount);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for(Discount discountToDelete : discountsToDelete){
+            storeDiscounts.remove(discountToDelete);
+        }
     }
 }

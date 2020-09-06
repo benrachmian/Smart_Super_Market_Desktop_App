@@ -81,6 +81,8 @@ public class DTOStore {
     }
 
 
+
+
 //    public DTOProductInStore getProductInStore(int chosenProductSerialNumber) {
 //        DTOProductInStore askedProduct = productsInStore.get(chosenProductSerialNumber);
 //        if(askedProduct == null){
