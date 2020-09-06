@@ -2,6 +2,7 @@ package SDMSystem.system;
 
 import SDMSystem.customer.Customer;
 import SDMSystem.discount.Discount;
+import SDMSystem.location.LocationUtility;
 import SDMSystemDTO.discount.DiscountKind;
 import SDMSystem.discount.Offer;
 import SDMSystem.location.Locationable;
@@ -60,7 +61,7 @@ public class SDMSystem {
         Point newStoreLocation = newStore.getStoreLocation();
         //if the store doesn't exist
         if(!checkIfLocationIsUnique(newStoreLocation)){
-            throw new RuntimeException("There is already a store/customer in that location!");
+            throw new RuntimeException("There is already a store/customer in location " + LocationUtility.locationToString(newStore.getStoreLocation()) + " !");
         }
         else {
             storesInSystem.addStoreToSystem(newStore, newStoreLocation);
@@ -122,7 +123,8 @@ public class SDMSystem {
     private void addCustomerToSystem(Customer loadedCustomer) {
         Point newCustomerLocation = loadedCustomer.getLocation();
         if(!checkIfLocationIsUnique(newCustomerLocation)){
-            throw new RuntimeException("There is already a store/customer in that location!");
+            throw new RuntimeException("There is already a store/customer in location " + LocationUtility.locationToString(loadedCustomer.getLocation()) + " !");
+
         }
         else {
             customersInSystem.addCustomerToSystem(loadedCustomer, newCustomerLocation);
@@ -158,8 +160,8 @@ public class SDMSystem {
                         getDiscountKind(sdmDiscount.getThenYouGet().getOperator()),
                         getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName()),
                         //getStoreFromStores(sdmStore.getId()).getProductFromStore(sdmDiscount.getIfYouBuy().getItemId()).getWayOfBuying()
-                        getWayOfBuyingOfProductFromSDMStore(sdmItems,sdmDiscount.getIfYouBuy().getItemId())
-
+                        getWayOfBuyingOfProductFromSDMStore(sdmItems,sdmDiscount.getIfYouBuy().getItemId()),
+                        getProductFromSystem(sdmDiscount.getIfYouBuy().getItemId()).getProductName()
                 );
                 discounts.add(newDiscount);
             }
@@ -220,7 +222,8 @@ public class SDMSystem {
             offers.add(new Offer(
                     sdmOffer.getItemId(),
                     sdmOffer.getQuantity(),
-                    sdmOffer.getForAdditional()));
+                    sdmOffer.getForAdditional(),
+                    getProductFromSystem(sdmOffer.getItemId()).getProductName()));
         }
 
         return offers;

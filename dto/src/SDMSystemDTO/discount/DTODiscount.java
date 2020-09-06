@@ -12,17 +12,25 @@ public class DTODiscount {
     DiscountKind discountKind;
     Collection<DTOOffer> offers;
     WayOfBuying productWayOfBuying;
+    String productNameToBuyForDiscount;
+
 
     public DTODiscount(String discountName,
                        Pair<Integer, Double> ifYouBuyProductAndAmount,
                        DiscountKind discountKind,
                        Collection<DTOOffer> offers,
-                       WayOfBuying productWayOfBuying) {
+                       WayOfBuying productWayOfBuying,
+                       String productNameToBuyForDiscount) {
         this.discountName = discountName;
         this.ifYouBuyProductAndAmount = ifYouBuyProductAndAmount;
         this.discountKind = discountKind;
         this.offers = offers;
         this.productWayOfBuying = productWayOfBuying;
+        this.productNameToBuyForDiscount = productNameToBuyForDiscount;
+    }
+
+    public String getProductNameToBuyForDiscount() {
+        return productNameToBuyForDiscount;
     }
 
     public String getDiscountName() {

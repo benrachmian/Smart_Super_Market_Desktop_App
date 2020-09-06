@@ -176,7 +176,8 @@ public class SDMMainControllers {
     void storeItemClicked(MouseEvent event) {
         if(storeListView.getSelectionModel().getSelectedIndex() != -1) {
             mainBorderPane.setCenter(storesDetailsScrollPane);
-            storeDetailsController.updateProductsInStorePane(storeListView.getSelectionModel().getSelectedItem());
+            storeDetailsController.updateStoreDetailsTab(storeListView.getSelectionModel().getSelectedItem());
+            //storeDetailsController.updateDiscountsInStore(storeListView.getSelectionModel().getSelectedItem());
             //storeDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
         }
 

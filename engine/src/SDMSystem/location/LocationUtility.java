@@ -12,4 +12,8 @@ public class LocationUtility {
         double bPower2 = Math.pow(b, 2);
         return (float) Math.sqrt(aPower2 + bPower2);
     }
+
+    public static String locationToString(Point location){
+        return "X = " + location.x + " Y = " + location.y;
+    }
 }

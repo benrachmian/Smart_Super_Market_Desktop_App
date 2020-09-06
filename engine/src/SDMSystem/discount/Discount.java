@@ -1,5 +1,6 @@
 package SDMSystem.discount;
 
+import SDMSystem.product.Product;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
@@ -13,6 +14,7 @@ public class Discount {
     String discountName;
     //pair: key = product id, value: product quantity
     Pair<Integer,Double> ifYouBuyProductAndAmount;
+    String productNameToBuyForDiscount;
     DiscountKind discountKind;
     Collection<Offer> offers;
     WayOfBuying productWayOfBuying;
@@ -21,12 +23,14 @@ public class Discount {
                     Pair<Integer, Double> ifYouBuyProductAndAmount,
                     DiscountKind discountKind,
                     Collection<Offer> offers,
-                    WayOfBuying productWayOfBuying) {
+                    WayOfBuying productWayOfBuying,
+                    String productNameToBuyForDiscount) {
         this.discountName = discountName;
         this.ifYouBuyProductAndAmount = ifYouBuyProductAndAmount;
         this.discountKind = discountKind;
         this.offers = offers;
         this.productWayOfBuying = productWayOfBuying;
+        this.productNameToBuyForDiscount = productNameToBuyForDiscount;
     }
 
     public String getDiscountName() {
@@ -62,7 +66,8 @@ public class Discount {
                 ifYouBuyProductAndAmount,
                 discountKind,
                 getDTOOffer(),
-                productWayOfBuying);
+                productWayOfBuying,
+                productNameToBuyForDiscount);
     }
 
     private Collection<DTOOffer> getDTOOffer() {
