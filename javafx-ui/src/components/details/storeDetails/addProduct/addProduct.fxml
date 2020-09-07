@@ -5,13 +5,14 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.deleteProduct.DeleteProductController">
+<ScrollPane prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.addProduct.AddProductController">
    <content>
       <GridPane alignment="CENTER" prefHeight="439.0" prefWidth="702.0">
          <columnConstraints>
@@ -25,6 +26,7 @@
             <RowConstraints maxHeight="370.4000244140625" minHeight="10.0" prefHeight="261.6000061035156" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="94.20001220703122" minHeight="10.0" prefHeight="56.60003662109372" valignment="CENTER" vgrow="NEVER" />
             <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" prefHeight="46.00002441406252" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
             <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
@@ -40,14 +42,14 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ScrollPane>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="The products are:" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="The products you can add are:" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <HBox fx:id="selectProductHBox" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <HBox fx:id="selectProductHBox" alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
-                  <Label prefHeight="42.0" text="Select the product you would like to delete:" />
+                  <Label prefHeight="42.0" text="Select the product you would like to add:" />
                   <ChoiceBox fx:id="productChoiseBox" prefWidth="150.0">
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -61,17 +63,37 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </HBox>
-            <Button fx:id="deleteProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickDelete" text="Delete!" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <HBox fx:id="statusHBox" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <children>
+                  <Label text="Insert the product price:" />
+                  <TextField fx:id="priceTextField" />
+                  <Button fx:id="addProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickAdd" text="Add!" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="statusHBox" alignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <children>
                   <Label fx:id="statusStaticLabel" text="Status:" />
-                  <Label fx:id="statusLabel" prefHeight="18.0" text="The product was deleted sucssessfully!">
+                  <Label fx:id="statusLabel" prefHeight="18.0" text="The product was added sucssessfully!">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
                   </Label>
                </children>
             </HBox>
+            <Label fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textFill="#ff0000" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </content>

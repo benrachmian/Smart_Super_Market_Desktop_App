@@ -670,6 +670,9 @@ public class SDMSystem {
     }
 
     public void addProductToStore(DTOStore storeToUpdateDTO, DTOProduct productToAddDTO, float productPrice) {
+        if(productPrice <= 0){
+            throw new RuntimeException("The price must be a positive number!");
+        }
         Store storeToUpdate = storesInSystem.getStoreInSystem(storeToUpdateDTO.getStoreSerialNumber());
         Product productToAdd = productsInSystem.get(productToAddDTO.getProductSerialNumber());
         storeToUpdate.addNewProductToStore(productToAdd,productPrice);

@@ -23,13 +23,7 @@ public class ProductInStoreController {
     @FXML private Label productPriceLabel;
     @FXML private Label productTotalBoughtLabel;
 
-//    public ProductInStoreController(int productId, String productName, String wayOfBuying, float productPrice, float productTotalBought) {
-//        this.productId = new SimpleIntegerProperty(productId);
-//        this.productName = new SimpleStringProperty(productName);
-//        this.wayOfBuying = new SimpleStringProperty(wayOfBuying);
-//        this.productPrice = new SimpleFloatProperty(productPrice);
-//        this.productTotalBought = new SimpleFloatProperty(productTotalBought);
-//    }
+
 
     public ProductInStoreController()
     {

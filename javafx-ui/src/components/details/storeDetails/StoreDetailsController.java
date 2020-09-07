@@ -1,12 +1,17 @@
 package components.details.storeDetails;
 
+import SDMSystem.product.Product;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.discount.DTODiscount;
+import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
+import components.details.storeDetails.addProduct.AddProductController;
+import components.details.storeDetails.addProduct.ProductYouCanAddController;
 import components.details.storeDetails.deleteProduct.DeleteProductController;
 import components.details.storeDetails.discountsInStoreDetails.SingleDiscountController;
 import components.details.storeDetails.productInStoreDetails.ProductInStoreController;
+import components.details.storeDetails.updateProductPrice.UpdateProductPriceController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +29,7 @@ import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 
 public class StoreDetailsController {
 
@@ -31,13 +37,22 @@ public class StoreDetailsController {
     private DTOStore store;
     private GridPane productGridPane;
     private ProductInStoreController productInStoreController;
+    private GridPane productYouCanAddGridPane;
+    private ProductYouCanAddController productYouCanAddController;
     private GridPane discountGridPane;
     private SingleDiscountController singleDiscountController;
     private static final String PRODUCT_IN_STORE_DETAILS_FXML_PATH = "/components/details/storeDetails/productInStoreDetails/productInStoreDetails.fxml";
+    private static final String PRODUCT_YOU_CAN_ADD_FXML_PATH = "/components/details/storeDetails/addProduct/productYouCanAddDetails.fxml";
     private static final String SINGLE_DISCOUNT_DETAILS_FXML_PATH = "/components/details/storeDetails/discountsInStoreDetails/SingleDiscount.fxml";
     private static final String DELETE_PRODUCT_FXML_PATH = "/components/details/storeDetails/deleteProduct/deleteProduct.fxml";
+    private static final String ADD_PRODUCT_FXML_PATH = "/components/details/storeDetails/addProduct/addProduct.fxml";
+    private static final String UPDATE_PRODUCT_FXML_PATH = "/components/details/storeDetails/updateProductPrice/updateProductPrice.fxml";
     private ScrollPane deleteProductScrollPane;
     private DeleteProductController deleteProductController;
+    private ScrollPane addProductScrollPane;
+    private AddProductController addProductController;
+    private ScrollPane updateProductScrollPane;
+    private UpdateProductPriceController updateProductPriceController;
     private BorderPane mainBorderPane;
 
     @FXML private TabPane storeTabPane;
@@ -72,6 +87,10 @@ public class StoreDetailsController {
 //        productsFlowPane.setPadding(new Insets(10,10,10,10));
 //        productsFlowPane.setVgap(4);
 //        productsFlowPane.setHgap(4);
+    }
+
+    public DTOStore getStore() {
+        return store;
     }
 
     public void updateStoreDetailsTab() {
@@ -157,7 +176,7 @@ public class StoreDetailsController {
         }
     }
 
-    private void loadProductInStoreDetails() {
+     private void loadProductInStoreDetails() {
         FXMLLoader loader;
         URL mainFXML;
         loader = new FXMLLoader();
@@ -166,6 +185,21 @@ public class StoreDetailsController {
         try {
             productGridPane = loader.load();
             productInStoreController = loader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadProductYouCanAddDetails() {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource(PRODUCT_YOU_CAN_ADD_FXML_PATH);
+        loader.setLocation(mainFXML);
+        try {
+            productYouCanAddGridPane = loader.load();
+            productYouCanAddController = loader.getController();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -184,9 +218,55 @@ public class StoreDetailsController {
         //deleteProductController.setStore(store);
         addProductsFromStoreToFlowPane(deleteProductController.getProductsFlowPane());
         addProductsToProductChoisBox(deleteProductController.getProductChoiseBox());
-
-
     }
+
+    @FXML
+    void clickOnAddProduct(ActionEvent event) {
+        //show add product form
+        loadAddProductForm();
+        mainBorderPane.setCenter(addProductScrollPane);
+        addProductScrollPane.fitToWidthProperty().set(true);
+        addProductScrollPane.fitToHeightProperty().set(true);
+        addProductController.setSdmSystem(sdmSystem);
+        addProductController.setStoreDetailsController(this);
+        initProductsYouCanAddToStore();
+    }
+
+    @FXML
+    void clickOnUpdateProduct(ActionEvent event) {
+        //show update product form
+        loadUpdateProductForm();
+        mainBorderPane.setCenter(updateProductScrollPane);
+        updateProductScrollPane.fitToWidthProperty().set(true);
+        updateProductScrollPane.fitToHeightProperty().set(true);
+        updateProductPriceController.setSdmSystem(sdmSystem);
+        updateProductPriceController.setStoreDetailsController(this);
+        initProductsYouCanUpdate();
+    }
+
+    private void initProductsYouCanUpdate() {
+        addProductsFromStoreToFlowPane(updateProductPriceController.getProductsFlowPane());
+        addProductsToProductChoisBox(updateProductPriceController.getProductChoiseBox());
+    }
+
+
+    public void initProductsYouCanAddToStore() {
+       addProductController.getProductsFlowPane().getChildren().clear();
+       addProductController.getProductChoiseBox().getItems().clear();
+        Collection<DTOProduct> productsCanBeAdded = sdmSystem.getProductsTheStoreDoesntSell(store).values();
+
+        for(DTOProduct product : productsCanBeAdded){
+            loadProductYouCanAddDetails();
+            productYouCanAddController.initDetails(
+                    product.getProductSerialNumber(),
+                    product.getProductName(),
+                    product.getWayOfBuying().toString());
+
+            addProductController.getProductsFlowPane().getChildren().add(productYouCanAddGridPane);
+            addProductController.getProductChoiseBox().getItems().add(product);
+        }
+    }
+
 
     public void addProductsToProductChoisBox(ChoiceBox<DTOProductInStore> productChoiseBox) {
         productChoiseBox.getItems().clear();
@@ -194,6 +274,36 @@ public class StoreDetailsController {
             productChoiseBox.getItems().add(product);
         }
 
+    }
+
+    private void loadAddProductForm() {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource(ADD_PRODUCT_FXML_PATH);
+        loader.setLocation(mainFXML);
+        try {
+            addProductScrollPane = loader.load();
+            addProductController = loader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUpdateProductForm() {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource(UPDATE_PRODUCT_FXML_PATH);
+        loader.setLocation(mainFXML);
+        try {
+            updateProductScrollPane = loader.load();
+            updateProductPriceController = loader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadDeleteProductForm() {

@@ -17,7 +17,7 @@ public class DeleteProductController {
 
     private SDMSystem sdmSystem;
     private StoreDetailsController storeDetailsController;
-    private SimpleBooleanProperty deleteTryWasMade;
+    private final SimpleBooleanProperty deleteTryWasMade;
 
     @FXML private HBox selectProductHBox;
     @FXML private FlowPane productsFlowPane;
@@ -26,6 +26,7 @@ public class DeleteProductController {
     @FXML private Button deleteProductButton;
     @FXML private HBox statusHBox;
     @FXML private Label statusLabel;
+    @FXML private Label statusStaticLabel;
 
     public DeleteProductController() {
         deleteTryWasMade = new SimpleBooleanProperty(false);
@@ -40,7 +41,7 @@ public class DeleteProductController {
         statusHBox.setAlignment(Pos.CENTER);
         productsFlowPane.setAlignment(Pos.CENTER);
         statusLabel.visibleProperty().bind(deleteTryWasMade);
-
+        statusStaticLabel.visibleProperty().bind(statusLabel.visibleProperty());
     }
 
     public void setSdmSystem(SDMSystem sdmSystem) {
