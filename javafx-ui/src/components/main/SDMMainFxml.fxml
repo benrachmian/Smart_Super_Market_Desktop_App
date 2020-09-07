@@ -76,13 +76,20 @@
       </MenuBar>
    </top>
    <bottom>
-      <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Show Map" />
+            <Button fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" text="Make Order" />
+            <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Show Map" />
          </children>
          <opaqueInsets>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </opaqueInsets>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
       </HBox>
    </bottom>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

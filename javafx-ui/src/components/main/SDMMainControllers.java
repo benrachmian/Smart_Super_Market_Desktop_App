@@ -9,10 +9,12 @@ import SDMSystemDTO.store.DTOStore;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
+import components.makeOrder.MakeOrderMainController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +27,8 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 public class SDMMainControllers {
 
@@ -36,6 +40,8 @@ public class SDMMainControllers {
     @FXML private Accordion systemAccordion;
     @FXML private AnchorPane customerAccordionAnchorPane;
     @FXML private BorderPane mainBorderPane;
+    @FXML private Button makeOrderButton;
+    @FXML private Button showMapButton;
 
 
     private SDMSystem sdmSystem;
@@ -48,11 +54,17 @@ public class SDMMainControllers {
     private ProductDetailsController productDetailsController;
     private CustomerDetailsController customerDetailsController;
     private StoreDetailsController storeDetailsController;
+    private static final String MAKE_ORDER_MAIN_FXML_PATH = "/components/makeOrder/makeOrderMain.fxml";
+    private ScrollPane makeOrderMainScrollPain;
+    private MakeOrderMainController makeOrderMainController;
+    private SimpleBooleanProperty fileLoaded;
+
 
 
     public SDMMainControllers() {
         selectedFileProperty = new SimpleStringProperty();
         isFileSelected = new SimpleBooleanProperty(false);
+        fileLoaded = new SimpleBooleanProperty(false);
     }
 
     @FXML
@@ -62,6 +74,8 @@ public class SDMMainControllers {
         storeListView.setPlaceholder(new Label("No content yet"));
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
+        makeOrderButton.disableProperty().bind(fileLoaded.not());
+        showMapButton.disableProperty().bind(fileLoaded.not());
     }
 
     public void setProductsDetailsGridPane(GridPane productsDetailsGridPane) {
@@ -111,6 +125,7 @@ public class SDMMainControllers {
         try {
             sdmSystem.loadSystem(absolutePath);
             initMainAccordion();
+            fileLoaded.set(true);
         } catch (FileNotFoundException | JAXBException | RuntimeException e) {
             showLoadingFileError(e.getMessage());
         }
@@ -180,12 +195,31 @@ public class SDMMainControllers {
             //in order to get the most updated store I always get the store from the system even though I got it in the listview.
             storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeListView.getSelectionModel().getSelectedItem().getStoreSerialNumber()));
             storeDetailsController.updateStoreDetailsTab();
-            //storeDetailsController.updateDiscountsInStore(storeListView.getSelectionModel().getSelectedItem());
-            //storeDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
         }
+    }
+
+    @FXML
+    void clickOnMakeOrder(ActionEvent event) {
+        loadMakeOrderMainForm();
+        mainBorderPane.setCenter(makeOrderMainScrollPain);
+
 
     }
 
+    private void loadMakeOrderMainForm() {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource(MAKE_ORDER_MAIN_FXML_PATH);
+        loader.setLocation(mainFXML);
+        try {
+            makeOrderMainScrollPain = loader.load();
+            makeOrderMainController = loader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
