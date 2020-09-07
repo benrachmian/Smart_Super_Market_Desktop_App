@@ -1,6 +1,7 @@
 package components.details.storeDetails.updateProductPrice;
 
 import SDMSystem.system.SDMSystem;
+import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import components.details.storeDetails.StoreDetailsController;
 import javafx.beans.binding.Bindings;
@@ -86,8 +87,24 @@ public class UpdateProductPriceController {
 
     @FXML
     void onClickUpdate(ActionEvent event) {
-
-
+        DTOProductInStore productToUpdate = productChoiseBox.getSelectionModel().getSelectedItem();
+        try {
+            updateTryWasMade.set(true);
+            float price = Float.parseFloat(priceTextField.getText());
+            priceTextField.setText("");
+            if(price >0) {
+                sdmSystem.updateProductPrice(storeDetailsController.getStore(), productToUpdate, price);
+                statusLabel.setText("The product was updated successfully!");
+                //update DTOStore with updated product
+                storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeDetailsController.getStoreSerialNumber()));
+                storeDetailsController.initProductsYouCanUpdate();
+            }
+            else{
+                statusLabel.setText("The price must be a positive number!");
+            }
+        } catch (NumberFormatException e) {
+            statusLabel.setText("The price must be a float number!");
+        }
     }
 
 }

@@ -244,7 +244,7 @@ public class StoreDetailsController {
         initProductsYouCanUpdate();
     }
 
-    private void initProductsYouCanUpdate() {
+    public void initProductsYouCanUpdate() {
         addProductsFromStoreToFlowPane(updateProductPriceController.getProductsFlowPane());
         addProductsToProductChoisBox(updateProductPriceController.getProductChoiseBox());
     }
