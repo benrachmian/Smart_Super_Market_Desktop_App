@@ -2,9 +2,12 @@ package components.makeOrder.makeStaticOrder;
 
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,16 +43,24 @@ public class MakeStaticOrderController {
     @FXML private TableColumn<?, ?> ppkCol1;
     @FXML private ComboBox<?> chooseStoreComboBox1;
     @FXML private TextField priceTextField;
-    @FXML private TableView<ProductsToBuyTable> productsToBuyTable;
-    @FXML private TableColumn<ProductsToBuyTable, String> productNameCol;
-    @FXML private TableColumn<ProductsToBuyTable, Integer> productIdCol;
-    @FXML private TableColumn<ProductsToBuyTable, String> wayOfBuyingCol;
-    @FXML private TableColumn<ProductsToBuyTable, Float> priceCol;
+    @FXML private TableView<ProductInTable> productsToBuyTable;
+    @FXML private TableColumn<ProductInTable, String> productNameCol;
+    @FXML private TableColumn<ProductInTable, Integer> productIdCol;
+    @FXML private TableColumn<ProductInTable, String> wayOfBuyingCol;
+    @FXML private TableColumn<ProductInTable, Float> priceCol;
     @FXML private ComboBox<DTOProductInStore> chooseProductComboBox;
     @FXML private TextField amountTextField;
     @FXML private Label errorInputLabel;
     @FXML private Button addToCartButton;
     @FXML private Label productCostLabel;
+    @FXML private TableColumn<ProductInTable, String> productNameCartTableCol;
+    @FXML private TableColumn<ProductInTable, Integer> idCartTableCol;
+    @FXML private TableColumn<ProductInTable, String> wayOfBuyingCartTableCol;
+    @FXML private TableColumn<ProductInTable, Float> amountCartTableCol;
+    @FXML private TableView<ProductInTable> cartTable;
+    @FXML private Label zeroErrorLabel;
+    @FXML private Label notIntegerErrorLabel;
+
 
 
     public MakeStaticOrderController() {
@@ -71,6 +82,13 @@ public class MakeStaticOrderController {
         errorInputLabel.setAlignment(Pos.CENTER);
         errorInputLabel.visibleProperty().set(false);
         errorInputLabel.setManaged(false);
+       zeroErrorLabel.setAlignment(Pos.CENTER);
+       zeroErrorLabel.visibleProperty().set(false);
+       zeroErrorLabel.setManaged(false);
+       notIntegerErrorLabel.setAlignment(Pos.CENTER);
+       notIntegerErrorLabel.visibleProperty().set(false);
+       notIntegerErrorLabel.setManaged(false);
+
         //not allow to write chars that aren't digits
         amountTextField.disableProperty().bind(chooseProductComboBox.valueProperty().isNull());
         amountTextField.textProperty().addListener(new ChangeListener<String>() {
@@ -97,7 +115,10 @@ public class MakeStaticOrderController {
 
         bindCostLabel();
         initProductsToBuyTableSettings();
+        initProductsCartTableSettings();
     }
+
+
 
     private void makeMainScrollPaneSettings() {
         makeStaticOrderMainScrollPain.setMinWidth(250);
@@ -122,7 +143,7 @@ public class MakeStaticOrderController {
         wayOfBuyingCol.setCellValueFactory(new PropertyValueFactory<>("wayOfBuying"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         //make the cell to present two digits after the dot
-        priceCol.setCellFactory(tc -> new TableCell<ProductsToBuyTable, Float>() {
+        priceCol.setCellFactory(tc -> new TableCell<ProductInTable, Float>() {
             @Override
             protected void updateItem(Float priceCol, boolean empty) {
                 super.updateItem(priceCol, empty);
@@ -130,6 +151,23 @@ public class MakeStaticOrderController {
                     setText(null);
                 } else {
                     setText(String.format("%.2f", priceCol));
+                }}});
+    }
+
+    private void initProductsCartTableSettings() {
+        productNameCartTableCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        idCartTableCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        wayOfBuyingCartTableCol.setCellValueFactory(new PropertyValueFactory<>("wayOfBuying"));
+        amountCartTableCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        //make the cell to present two digits after the dot
+        amountCartTableCol.setCellFactory(tc -> new TableCell<ProductInTable, Float>() {
+            @Override
+            protected void updateItem(Float amountCartTableCol, boolean empty) {
+                super.updateItem(amountCartTableCol, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", amountCartTableCol));
                 }}});
     }
 
@@ -153,11 +191,12 @@ public class MakeStaticOrderController {
 
     private void initProductsToBuyTable() {
         for(DTOProductInStore product : storeFromWhomTheOrderIsMade.getProductsInStore().values()){
-            productsToBuyTable.getItems().add(new ProductsToBuyTable(
+            productsToBuyTable.getItems().add(new ProductInTable(
                     product.getProductName(),
                     product.getProductSerialNumber(),
                     product.getWayOfBuying(),
-                    product.getPrice()
+                    product.getPrice(),
+                    null
             ));
             chooseProductComboBox.getItems().add(product);
         }
@@ -165,6 +204,42 @@ public class MakeStaticOrderController {
 
     @FXML
     void onSelectProduct(ActionEvent event) {
-        selectedProductPrice.set(chooseProductComboBox.getValue().getPrice());
+        if(chooseProductComboBox.getValue() != null) {
+            selectedProductPrice.set(chooseProductComboBox.getValue().getPrice());
+        }
+    }
+
+    @FXML
+    void onAddToCart(ActionEvent event) {
+
+        Float amountEntered = Float.parseFloat(amountTextField.getText());
+        DTOProductInStore chosenProduct = chooseProductComboBox.getValue();
+        if(amountEntered <= 0){
+            zeroErrorLabel.visibleProperty().set(true);
+            zeroErrorLabel.setManaged(true);
+        }
+        else if(chosenProduct.getWayOfBuying() == WayOfBuying.BY_QUANTITY && !isInteger(amountEntered)){
+            notIntegerErrorLabel.visibleProperty().set(true);
+            notIntegerErrorLabel.setManaged(true);
+        }
+        else {
+            cartTable.getItems().add(new ProductInTable(
+                    chosenProduct.getProductName(),
+                    chosenProduct.getProductSerialNumber(),
+                    chosenProduct.getWayOfBuying(),
+                    null,
+                    amountEntered
+            ));
+            amountTextField.setText("");
+            chooseProductComboBox.getSelectionModel().clearSelection();
+            zeroErrorLabel.visibleProperty().set(false);
+            zeroErrorLabel.setManaged(false);
+            notIntegerErrorLabel.visibleProperty().set(false);
+            notIntegerErrorLabel.setManaged(false);
+        }
+    }
+
+    private boolean isInteger(Float number) {
+        return number % 1 == 0;// if the modulus(remainder of the division) of the argument(number) with 1 is 0 then return true otherwise false.
     }
 }

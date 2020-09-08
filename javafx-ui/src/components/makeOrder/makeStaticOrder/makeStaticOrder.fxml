@@ -30,7 +30,7 @@
             <RowConstraints minHeight="220.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints minHeight="120.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="200.0" minHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="156.00003662109373" minHeight="130.0" prefHeight="132.80002441406248" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="156.00003662109373" minHeight="180.0" prefHeight="132.80002441406248" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="39.99997558593748" minHeight="30.0" prefHeight="39.99997558593748" vgrow="SOMETIMES" />
             <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
@@ -88,7 +88,17 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </HBox>
-                              <Label fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textAlignment="CENTER" textFill="#ed0000">
+                              <Label fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textAlignment="CENTER" textFill="RED">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="zeroErrorLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter positive value!" textFill="RED">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="notIntegerErrorLabel" text="You must enter an integer!" textFill="RED">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -112,7 +122,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <Button fx:id="addToCartButton" alignment="CENTER" mnemonicParsing="false" prefHeight="82.0" text="Add To Cart" />
+                  <Button fx:id="addToCartButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddToCart" prefHeight="82.0" text="Add To Cart" />
                </children>
             </HBox>
             <TableView id="my-table" fx:id="productsToBuyTable" prefHeight="103.0" prefWidth="586.0" stylesheets="@../../main/tableStyle1.css" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
@@ -126,12 +136,12 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TableView id="my-table" fx:id="storesTable111" prefHeight="242.0" prefWidth="584.0" stylesheets="@../../main/tableStyle1.css" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
+            <TableView id="my-table" fx:id="cartTable" prefHeight="242.0" prefWidth="584.0" stylesheets="@../../main/tableStyle1.css" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
                <columns>
-                  <TableColumn fx:id="storeNameCol111" minWidth="120.0" prefWidth="-1.0" text="Product Name" />
-                  <TableColumn fx:id="storeIdCol111" minWidth="55.0" prefWidth="-1.0" text="ID" />
-                  <TableColumn fx:id="locationCol111" minWidth="55.0" prefWidth="-1.0" text="Way Of Buying" />
-                  <TableColumn fx:id="ppkCol111" minWidth="30.0" prefWidth="-1.0" text="Amount" />
+                  <TableColumn fx:id="productNameCartTableCol" minWidth="120.0" prefWidth="-1.0" text="Product Name" />
+                  <TableColumn fx:id="idCartTableCol" minWidth="55.0" prefWidth="-1.0" text="ID" />
+                  <TableColumn fx:id="wayOfBuyingCartTableCol" minWidth="55.0" prefWidth="-1.0" text="Way Of Buying" />
+                  <TableColumn fx:id="amountCartTableCol" minWidth="30.0" prefWidth="-1.0" text="Amount" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

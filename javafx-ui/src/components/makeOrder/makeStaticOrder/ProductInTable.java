@@ -2,18 +2,21 @@ package components.makeOrder.makeStaticOrder;
 
 import SDMSystemDTO.product.WayOfBuying;
 
-public class ProductsToBuyTable {
+public class ProductInTable {
     private String productName;
     private int productId;
     private WayOfBuying wayOfBuying;
     private Float price;
+    private Float amount;
 
-    public ProductsToBuyTable(String productName, int productId, WayOfBuying wayOfBuying, Float price) {
+    public ProductInTable(String productName, int productId, WayOfBuying wayOfBuying, Float price, Float amount) {
         this.productName = productName;
         this.productId = productId;
         this.wayOfBuying = wayOfBuying;
         this.price = price;
+        this.amount = amount;
     }
+
 
     public String getProductName() {
         return productName;
@@ -29,5 +32,9 @@ public class ProductsToBuyTable {
 
     public float getPrice() {
         return price;
+    }
+
+    public Float getAmount() {
+        return amount;
     }
 }
