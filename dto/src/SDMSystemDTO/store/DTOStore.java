@@ -20,7 +20,7 @@ public class DTOStore {
     private final Collection<DTODiscount> storeDiscounts;
     @Override
     public String toString() {
-        return storeName;
+        return storeName + ", ID:" + getStoreSerialNumber();
     }
 
     public DTOStore(Map<Integer, DTOProductInStore> productsInStore,

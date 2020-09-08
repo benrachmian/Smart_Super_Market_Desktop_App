@@ -20,7 +20,7 @@
             <content>
               <AnchorPane fx:id="customerAccordionAnchorPane" minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -29,7 +29,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="storeListView" onMouseClicked="#storeItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="storeListView" onMouseClicked="#storeItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -38,7 +38,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="productsListView" onMouseClicked="#productItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="productsListView" onMouseClicked="#productItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -47,7 +47,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>

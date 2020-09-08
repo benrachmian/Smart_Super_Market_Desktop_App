@@ -27,7 +27,6 @@ public class AddProductController {
     private StoreDetailsController storeDetailsController;
     private final SimpleBooleanProperty addTryWasMade;
 
-
     @FXML private HBox selectProductHBox;
     @FXML private ScrollPane productTabScrollPane;
     @FXML private Button addProductButton;

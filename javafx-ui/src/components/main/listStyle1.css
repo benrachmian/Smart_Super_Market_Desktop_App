@@ -1,0 +1,13 @@
+.list-cell {
+    -fx-background-color: transparent;
+}
+.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    /* 3:, 4: */
+    /* -fx-background-color: linear-gradient(#2c2ea9 0%, #226d77 25%, #17125b 75%, #eee 100%);*/
+    -fx-background-color: #4b9bd2;
+    -fx-text-fill: white; /* 5 */
+}

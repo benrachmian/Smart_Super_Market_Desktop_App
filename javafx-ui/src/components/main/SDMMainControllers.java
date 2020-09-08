@@ -202,7 +202,8 @@ public class SDMMainControllers {
     void clickOnMakeOrder(ActionEvent event) {
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
-
+        makeOrderMainController.setSdmSystem(sdmSystem);
+        makeOrderMainController.initDetails();
 
     }
 
