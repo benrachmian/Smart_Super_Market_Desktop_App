@@ -62,8 +62,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
                <children>
-                  <Button mnemonicParsing="false" text="Cancel" />
-                  <Button fx:id="continueButton" mnemonicParsing="false" text="Continue" />
+                  <Button mnemonicParsing="false" onAction="#onClickCancel" text="Cancel" />
+                  <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onClickContinue" text="Continue" />
                </children>
             </HBox>
             <ScrollPane fx:id="storesScrollPane" prefHeight="290.0" prefWidth="638.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">

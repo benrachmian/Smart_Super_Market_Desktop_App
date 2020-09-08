@@ -203,6 +203,7 @@ public class SDMMainControllers {
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
         makeOrderMainController.setSdmSystem(sdmSystem);
+        makeOrderMainController.setMainBorderPane(mainBorderPane);
         makeOrderMainController.initDetails();
 
     }

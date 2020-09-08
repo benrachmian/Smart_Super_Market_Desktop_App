@@ -4,13 +4,20 @@ import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.store.DTOStore;
+import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
 
 public class MakeOrderMainController {
 
@@ -29,6 +36,11 @@ public class MakeOrderMainController {
     }
 
     private SDMSystem sdmSystem;
+    private BorderPane mainBorderPane;
+    private static final String STATIC_ORDER_FORM_FXML_PATH = "/components/makeOrder/makeStaticOrder/makeStaticOrder.fxml";
+    private ScrollPane staticOrderFormScrollPane;
+    private MakeStaticOrderController makeStaticOrderController;
+
 
     @FXML private ScrollPane makeOrderMainScrollPain;
     @FXML private ScrollPane storesScrollPane;
@@ -50,12 +62,15 @@ public class MakeOrderMainController {
 
     @FXML
     public void initialize(){
-        makeOrderMainScrollPain.setMinWidth(250);
-        makeOrderMainScrollPain.setMinHeight(250);
-        makeOrderMainScrollPain.setMaxHeight(1000);
-        makeOrderMainScrollPain.setMaxWidth(4000);
-        makeOrderMainScrollPain.fitToWidthProperty().set(true);
-        makeOrderMainScrollPain.fitToHeightProperty().set(true);
+        initMainScrollPainSettings();
+        initContinueButtonBinding();
+        orderTypeComboBox.getItems().add(OrderType.STATIC_ORDER);
+        orderTypeComboBox.getItems().add(OrderType.DYNAMIC_ORDER);
+        storesScrollPane.visibleProperty().bind(orderTypeComboBox.valueProperty().isEqualTo(OrderType.STATIC_ORDER));
+        initTableSettings();
+    }
+
+    private void initContinueButtonBinding() {
         continueButton.disableProperty().bind(
                 //customer wasn't chosen
                 chooseCustomerComboBox.valueProperty().isNull().or(
@@ -69,10 +84,15 @@ public class MakeOrderMainController {
                                 )
                         )
                 ));
-        orderTypeComboBox.getItems().add(OrderType.STATIC_ORDER);
-        orderTypeComboBox.getItems().add(OrderType.DYNAMIC_ORDER);
-        storesScrollPane.visibleProperty().bind(orderTypeComboBox.valueProperty().isEqualTo(OrderType.STATIC_ORDER));
-        initTableSettings();
+    }
+
+    private void initMainScrollPainSettings() {
+        makeOrderMainScrollPain.setMinWidth(250);
+        makeOrderMainScrollPain.setMinHeight(250);
+        makeOrderMainScrollPain.setMaxHeight(1000);
+        makeOrderMainScrollPain.setMaxWidth(4000);
+        makeOrderMainScrollPain.fitToWidthProperty().set(true);
+        makeOrderMainScrollPain.fitToHeightProperty().set(true);
     }
 
     private void initTableSettings() {
@@ -130,6 +150,54 @@ public class MakeOrderMainController {
             storeInTable.setDeliveryCost(
                     LocationUtility.calcDistance(chosenCustomer.getCustomerLocation(),storeInTable.getStoreLocationInPoint())
                     * storeInTable.getStorePPK());
+        }
+    }
+
+    public void setMainBorderPane(BorderPane mainBorderPane) {
+        this.mainBorderPane = mainBorderPane;
+    }
+
+    @FXML
+    void onClickCancel(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Warning");
+        alert.setHeaderText("You are about to cancel the order");
+        alert.setContentText("You can't undo the action.\nAre you sure about it?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            mainBorderPane.setCenter(null);
+        }
+    }
+
+    @FXML
+    void onClickContinue(ActionEvent event) {
+        if(orderTypeComboBox.selectionModelProperty().getValue().getSelectedItem().equals(OrderType.STATIC_ORDER)){
+            createStaticOrderForm();
+        }
+
+    }
+
+    private void createStaticOrderForm() {
+        loadMakeStaticOrderForm();
+        mainBorderPane.setCenter(staticOrderFormScrollPane);
+        makeStaticOrderController.setSdmSystem(sdmSystem);
+//        makeStaticOrderController.setMainBorderPane(mainBorderPane);
+//        makeStaticOrderController.initDetails();
+    }
+
+    private void loadMakeStaticOrderForm() {
+        FXMLLoader loader;
+        URL mainFXML;
+        loader = new FXMLLoader();
+        mainFXML = getClass().getResource(STATIC_ORDER_FORM_FXML_PATH);
+        loader.setLocation(mainFXML);
+        try {
+            staticOrderFormScrollPane = loader.load();
+            makeStaticOrderController = loader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
