@@ -182,8 +182,10 @@ public class MakeOrderMainController {
         loadMakeStaticOrderForm();
         mainBorderPane.setCenter(staticOrderFormScrollPane);
         makeStaticOrderController.setSdmSystem(sdmSystem);
+        makeStaticOrderController.setCustomerMakingTheOrder(chooseCustomerComboBox.getValue());
+        makeStaticOrderController.setStoreFromWhomTheOrderIsMade(chooseStoreComboBox.getValue());
 //        makeStaticOrderController.setMainBorderPane(mainBorderPane);
-//        makeStaticOrderController.initDetails();
+        makeStaticOrderController.initDetails();
     }
 
     private void loadMakeStaticOrderForm() {

@@ -53,8 +53,8 @@ public class AddProductController {
         addProductButton.disableProperty().bind(binding);
         statusHBox.setAlignment(Pos.CENTER);
         productsFlowPane.setAlignment(Pos.CENTER);
-        errorInputLabel.setAlignment(Pos.CENTER);
         statusLabel.visibleProperty().bind(addTryWasMade);
+        errorInputLabel.setAlignment(Pos.CENTER);
         errorInputLabel.visibleProperty().set(false);
         statusStaticLabel.visibleProperty().bind(statusLabel.visibleProperty());
         //not allow to write chars that aren't digits
