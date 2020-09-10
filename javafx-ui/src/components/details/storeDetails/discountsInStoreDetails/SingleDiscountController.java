@@ -4,6 +4,7 @@ import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
 import SDMSystemDTO.product.WayOfBuying;
+import common.FxmlLoader;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -29,6 +30,7 @@ public class SingleDiscountController {
     private GridPane productsInDiscountGridPane;
     private ProductInDiscountDetailsController productInDiscountDetailsController;
     private static final String Product_In_Discount_Details_Fxml_Path = "/components/details/storeDetails/discountsInStoreDetails/ProductInDiscountDetails.fxml";
+    public static final String SINGLE_DISCOUNT_FORM_FXML_PATH = "/components/details/storeDetails/discountsInStoreDetails/SingleDiscount.fxml";
 
 
 
@@ -103,7 +105,10 @@ public class SingleDiscountController {
     }
 
     private void loadProductInDiscountDetails() {
-        FXMLLoader loader;
+        FxmlLoader<GridPane,ProductInDiscountDetailsController> loaderProductInDiscountDetails = new FxmlLoader<>(Product_In_Discount_Details_Fxml_Path);
+        productsInDiscountGridPane = loaderProductInDiscountDetails.getFormBasePane();
+        productInDiscountDetailsController = loaderProductInDiscountDetails.getFormController();
+        /*FXMLLoader loader;
         URL mainFXML;
         loader = new FXMLLoader();
         mainFXML = getClass().getResource(Product_In_Discount_Details_Fxml_Path);
@@ -114,6 +119,15 @@ public class SingleDiscountController {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+    }
+
+    public void setLabelsForDiscountInOrder() {
+        discountTitleLabel.textProperty().bind(Bindings.concat(
+                "You bought ", quantityToBuyToGetDiscount, " " ,
+                wayOfBuying , " of " , productNameForGettingDiscount , " (ID:" , productIdForGettingDiscount , ")"));
+        whatYouGetLabel.textProperty().bind(Bindings.concat(
+                "you deserve ", discountKindString, ":"
+        ));
     }
 }

@@ -10,9 +10,11 @@ import SDMSystem.product.Product;
 import SDMSystem.product.ProductInStore;
 import SDMSystem.exceptions.*;
 import SDMSystemDTO.discount.DTODiscount;
+import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
+import javafx.util.Pair;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -324,5 +326,21 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         for(Discount discountToDelete : discountsToDelete){
             storeDiscounts.remove(discountToDelete);
         }
+    }
+
+    public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<DTOProduct, Float>> shoppingCart) {
+        boolean answer = false;
+        for(Discount discount : storeDiscounts){
+            for(Pair<DTOProduct,Float> product : shoppingCart){
+                if(product.getKey().getProductSerialNumber() == discount.getIfYouBuyProductAndAmount().getKey()
+                &&
+                    product.getValue() >= discount.getIfYouBuyProductAndAmount().getValue()){
+                    answer = true;
+                    break;
+                }
+            }
+        }
+
+        return answer;
     }
 }

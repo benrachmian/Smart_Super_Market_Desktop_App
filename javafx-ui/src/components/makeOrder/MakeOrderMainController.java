@@ -4,6 +4,8 @@ import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.store.DTOStore;
+import common.FxmlLoader;
+import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
@@ -20,6 +22,8 @@ import java.net.URL;
 import java.util.Optional;
 
 public class MakeOrderMainController {
+
+
 
     public enum OrderType {
         STATIC_ORDER {
@@ -38,8 +42,11 @@ public class MakeOrderMainController {
     private SDMSystem sdmSystem;
     private BorderPane mainBorderPane;
     private static final String STATIC_ORDER_FORM_FXML_PATH = "/components/makeOrder/makeStaticOrder/makeStaticOrder.fxml";
+    private static final String DISCOUNTS_IN_ORDER_FORM_FXML_PATH = "/components/makeOrder/discountsInOrder/discountsInOrder.fxml";
     private ScrollPane staticOrderFormScrollPane;
     private MakeStaticOrderController makeStaticOrderController;
+    private ScrollPane discountsInOrderScrollPane;
+    private DiscountsInOrderController discountsInOrderController;
 
 
     @FXML private ScrollPane makeOrderMainScrollPain;
@@ -119,6 +126,7 @@ public class MakeOrderMainController {
         this.sdmSystem = sdmSystem;
     }
 
+
     public void initDetails() {
         initChooseCustomerComboBox();
         initStoresTableWithDetails();
@@ -159,6 +167,10 @@ public class MakeOrderMainController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
+        cancelOrderAlert();
+    }
+
+     public void cancelOrderAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
         alert.setHeaderText("You are about to cancel the order");
@@ -184,12 +196,45 @@ public class MakeOrderMainController {
         makeStaticOrderController.setSdmSystem(sdmSystem);
         makeStaticOrderController.setCustomerMakingTheOrder(chooseCustomerComboBox.getValue());
         makeStaticOrderController.setStoreFromWhomTheOrderIsMade(chooseStoreComboBox.getValue());
+        makeStaticOrderController.setMakeOrderMainController(this);
+        makeStaticOrderController.setDeliveryCost(LocationUtility.calcDistance(
+                chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
+                * chooseStoreComboBox.getValue().getPpk());
+
 //        makeStaticOrderController.setMainBorderPane(mainBorderPane);
         makeStaticOrderController.initDetails();
     }
 
+    public DiscountsInOrderController createDiscountsInOrderForm() {
+        loadDiscountsInOrderForm();
+        mainBorderPane.setCenter(discountsInOrderScrollPane);
+        return discountsInOrderController;
+    }
+
+    private void loadDiscountsInOrderForm() {
+        FxmlLoader<ScrollPane,DiscountsInOrderController> loaderDiscountsInOrderForm = new FxmlLoader<>(DISCOUNTS_IN_ORDER_FORM_FXML_PATH);
+        discountsInOrderScrollPane = loaderDiscountsInOrderForm.getFormBasePane();
+        discountsInOrderController = loaderDiscountsInOrderForm.getFormController();
+//        FXMLLoader loader;
+//        URL mainFXML;
+//        loader = new FXMLLoader();
+//        mainFXML = getClass().getResource(DISCOUNTS_IN_ORDER_FORM_FXML_PATH);
+//        loader.setLocation(mainFXML);
+//        try {
+//            discountsInOrderScrollPane = loader.load();
+//            discountsInOrderController = loader.getController();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
     private void loadMakeStaticOrderForm() {
-        FXMLLoader loader;
+        FxmlLoader<ScrollPane,MakeStaticOrderController> loaderMakeStaticOrderForm = new FxmlLoader<>(STATIC_ORDER_FORM_FXML_PATH);
+        staticOrderFormScrollPane = loaderMakeStaticOrderForm.getFormBasePane();
+        makeStaticOrderController = loaderMakeStaticOrderForm.getFormController();
+    }
+ /*       FXMLLoader loader;
         URL mainFXML;
         loader = new FXMLLoader();
         mainFXML = getClass().getResource(STATIC_ORDER_FORM_FXML_PATH);
@@ -201,5 +246,5 @@ public class MakeOrderMainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

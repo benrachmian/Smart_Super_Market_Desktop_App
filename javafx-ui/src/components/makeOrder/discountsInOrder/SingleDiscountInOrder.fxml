@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.discountsInOrder.SingleDiscountInOrderController">
+   <children>
+      <Separator prefWidth="200.0" />
+      <HBox fx:id="singleDiscountMainHBox" minHeight="280.0" prefWidth="722.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="CENTER" prefHeight="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Amount left&#10;to implement:" textAlignment="CENTER" />
+                  <Label fx:id="amountLeftToImplementLabel" alignment="CENTER" contentDisplay="CENTER" text="[num]" textAlignment="CENTER" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+   </children>
+</VBox>

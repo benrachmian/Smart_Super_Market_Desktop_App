@@ -6,6 +6,7 @@ import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
+import common.FxmlLoader;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
@@ -200,6 +201,7 @@ public class SDMMainControllers {
 
     @FXML
     void clickOnMakeOrder(ActionEvent event) {
+        //loadMakeOrderMainForm();
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
         makeOrderMainController.setSdmSystem(sdmSystem);
@@ -209,19 +211,25 @@ public class SDMMainControllers {
     }
 
     private void loadMakeOrderMainForm() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(MAKE_ORDER_MAIN_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            makeOrderMainScrollPain = loader.load();
-            makeOrderMainController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FxmlLoader<ScrollPane,MakeOrderMainController> loaderMakeOrderMainForm = new FxmlLoader<>(MAKE_ORDER_MAIN_FXML_PATH);
+        makeOrderMainScrollPain = loaderMakeOrderMainForm.getFormBasePane();
+        makeOrderMainController = loaderMakeOrderMainForm.getFormController();
     }
+
+//    private void loadMakeOrderMainForm() {
+//        FXMLLoader loader;
+//        URL mainFXML;
+//        loader = new FXMLLoader();
+//        mainFXML = getClass().getResource(MAKE_ORDER_MAIN_FXML_PATH);
+//        loader.setLocation(mainFXML);
+//        try {
+//            makeOrderMainScrollPain = loader.load();
+//            makeOrderMainController = loader.getController();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;

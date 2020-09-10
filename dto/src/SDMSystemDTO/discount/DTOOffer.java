@@ -29,5 +29,10 @@ public class DTOOffer {
     public float getPricePerUnit() {
         return pricePerUnit;
     }
+
+    @Override
+    public String toString() {
+        return productName + ", ID: " + productSerialNumber;
+    }
 }
 

@@ -52,4 +52,9 @@ public class DTODiscount {
     public Collection<DTOOffer> getOffers() {
         return offers;
     }
+
+    @Override
+    public String toString() {
+        return discountName;
+    }
 }

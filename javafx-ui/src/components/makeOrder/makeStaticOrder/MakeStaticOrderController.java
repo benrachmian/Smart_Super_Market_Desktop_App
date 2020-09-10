@@ -1,11 +1,14 @@
 package components.makeOrder.makeStaticOrder;
 
+import SDMSystem.product.ProductInStore;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
+import components.makeOrder.MakeOrderMainController;
+import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -16,6 +19,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Pair;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Optional;
 
 public class MakeStaticOrderController {
 
@@ -24,6 +32,12 @@ public class MakeStaticOrderController {
     private DTOStore storeFromWhomTheOrderIsMade;
     private SimpleFloatProperty selectedProductPrice;
     private SimpleFloatProperty amountInTextField;
+    private SimpleFloatProperty deliveryCost;
+    private SimpleFloatProperty productsCost;
+    private MakeOrderMainController makeOrderMainController;
+    private DiscountsInOrderController discountsInOrderController;
+    //pair: key = product bought, value: amount
+    private Collection<Pair<DTOProduct,Float> >shoppingCart;
 
     @FXML private ScrollPane makeStaticOrderMainScrollPain;
     @FXML private Button continueButton;
@@ -60,12 +74,16 @@ public class MakeStaticOrderController {
     @FXML private TableView<ProductInTable> cartTable;
     @FXML private Label zeroErrorLabel;
     @FXML private Label notIntegerErrorLabel;
-
-
+    @FXML private Label deliveryCostLabel;
+    @FXML private Label productsCostLabel;
+    @FXML private Label totalOrderCostLabel;
 
     public MakeStaticOrderController() {
         selectedProductPrice = new SimpleFloatProperty();
         amountInTextField = new SimpleFloatProperty();
+        productsCost = new SimpleFloatProperty(0);
+        deliveryCost = new SimpleFloatProperty();
+        shoppingCart = new LinkedList<>();
     }
 
     public void setCustomerMakingTheOrder(DTOCustomer customerMakingTheOrder) {
@@ -74,6 +92,14 @@ public class MakeStaticOrderController {
 
     public void setStoreFromWhomTheOrderIsMade(DTOStore storeFromWhomTheOrderIsMade) {
         this.storeFromWhomTheOrderIsMade = storeFromWhomTheOrderIsMade;
+    }
+
+    public void setMakeOrderMainController(MakeOrderMainController makeOrderMainController) {
+        this.makeOrderMainController = makeOrderMainController;
+    }
+
+    public void setDeliveryCost(float deliveryCost) {
+        this.deliveryCost.set(deliveryCost);
     }
 
     @FXML
@@ -88,6 +114,9 @@ public class MakeStaticOrderController {
        notIntegerErrorLabel.setAlignment(Pos.CENTER);
        notIntegerErrorLabel.visibleProperty().set(false);
        notIntegerErrorLabel.setManaged(false);
+       productsCostLabel.textProperty().bind(productsCost.asString());
+       totalOrderCostLabel.textProperty().bind(Bindings.add(deliveryCost,productsCost).asString());
+       continueButton.disableProperty().bind(Bindings.isEmpty(cartTable.getItems()));
 
         //not allow to write chars that aren't digits
         amountTextField.disableProperty().bind(chooseProductComboBox.valueProperty().isNull());
@@ -177,16 +206,14 @@ public class MakeStaticOrderController {
     }
 
     @FXML void onClickCancel(ActionEvent event) {
-
+        makeOrderMainController.cancelOrderAlert();
     }
 
-    @FXML void onClickContinue(ActionEvent event) {
 
-    }
 
     public void initDetails() {
         initProductsToBuyTable();
-
+        deliveryCostLabel.setText(String.format("%.2f",deliveryCost.get()));
     }
 
     private void initProductsToBuyTable() {
@@ -230,6 +257,10 @@ public class MakeStaticOrderController {
                     null,
                     amountEntered
             ));
+            shoppingCart.add(new Pair(
+                    storeFromWhomTheOrderIsMade.getProductFromStore(chosenProduct.getProductSerialNumber()),
+                    amountEntered));
+            productsCost.set(productsCost.get() + (chosenProduct.getPrice() * amountEntered));
             amountTextField.setText("");
             chooseProductComboBox.getSelectionModel().clearSelection();
             zeroErrorLabel.visibleProperty().set(false);
@@ -241,5 +272,19 @@ public class MakeStaticOrderController {
 
     private boolean isInteger(Float number) {
         return number % 1 == 0;// if the modulus(remainder of the division) of the argument(number) with 1 is 0 then return true otherwise false.
+    }
+
+    @FXML void onClickContinue(ActionEvent event) {
+        if(sdmSystem.storeHasDiscountWithOneOfTheProducts(storeFromWhomTheOrderIsMade.getStoreSerialNumber(),shoppingCart)) {
+            discountsInOrderController = makeOrderMainController.createDiscountsInOrderForm();
+            discountsInOrderController.updateItemsInCartTable(cartTable.getItems());
+            discountsInOrderController.setSdmSystem(sdmSystem);
+            discountsInOrderController.initDetails(
+                    deliveryCost,
+                    productsCost,
+                    shoppingCart,
+                    storeFromWhomTheOrderIsMade.getStoreDiscounts()
+            );
+        }
     }
 }
