@@ -48,7 +48,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onClickCancel" text="Cancel" />
                   <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onClickContinue" text="Continue" />
-                  <Button fx:id="addToCartButton1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAddToCart" text="Continue without discounts" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <Button fx:id="continueWithoutButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Continue without discounts" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
                </children>
             </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" minWidth="50.0" text="Shopping Cart:" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
@@ -98,7 +98,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <Button fx:id="addToCartButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddToCart" prefHeight="82.0" prefWidth="112.0" text="Add To Cart" />
+                  <Button fx:id="addToCartButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#onAddToCart" prefHeight="82.0" prefWidth="112.0" text="Add To Cart" />
                </children>
             </HBox>
             <ScrollPane fx:id="discountsScrollPain" minHeight="350.0" minWidth="747.0" prefHeight="220.0" prefWidth="747.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">

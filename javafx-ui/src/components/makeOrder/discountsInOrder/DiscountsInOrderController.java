@@ -1,5 +1,6 @@
 package components.makeOrder.discountsInOrder;
 
+import SDMSystem.discount.Offer;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
@@ -10,6 +11,7 @@ import components.makeOrder.makeStaticOrder.ProductInTable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DiscountsInOrderController {
 
@@ -32,12 +36,17 @@ public class DiscountsInOrderController {
     private VBox singleDiscountInOrderVBox;
     private SingleDiscountInOrderController singleDiscountInOrderController;
     private SimpleBooleanProperty discountWithChooseProduct;
+    private SimpleBooleanProperty discountWasSelected;
+    private SimpleBooleanProperty productInDiscountWasSelected;
+    private SimpleIntegerProperty currentDiscountAmountToImplement;
+    private SimpleFloatProperty currentDiscountCost;
+    private SimpleBooleanProperty atLeastOneDiscountWasImplemented;
+    private Map<String,SingleDiscountInOrderController> singleDiscountsInOrderControllers = new HashMap<>();
 
 
 
     @FXML private ScrollPane discountsInOrderScrollPain;
     @FXML private Button continueButton;
-    @FXML private Button addToCartButton1;
     @FXML private ComboBox<DTOOffer> chooseProductComboBox;
     @FXML private Label productCostLabel;
     @FXML private Button addToCartButton;
@@ -53,10 +62,16 @@ public class DiscountsInOrderController {
     @FXML private FlowPane discountsFlowPane;
     @FXML private ScrollPane discountsScrollPain;
     @FXML private ComboBox<DTODiscount> selectDiscountComboBox;
+    @FXML private Button continueWithoutButton;
 
 
     public DiscountsInOrderController() {
         discountWithChooseProduct = new SimpleBooleanProperty(false);
+        discountWasSelected = new SimpleBooleanProperty(false);
+        productInDiscountWasSelected = new SimpleBooleanProperty(false);
+        currentDiscountAmountToImplement = new SimpleIntegerProperty(-1);
+        currentDiscountCost = new SimpleFloatProperty();
+        atLeastOneDiscountWasImplemented = new SimpleBooleanProperty(false);
     }
 
     @FXML
@@ -64,6 +79,15 @@ public class DiscountsInOrderController {
         initDiscountsInOrderScrollPainSettings();
         initProductsCartTableSettings();
         chooseProductComboBox.disableProperty().bind(discountWithChooseProduct.not());
+        addToCartButton.disableProperty().bind(
+                discountWasSelected.not().
+                        or(
+                        discountWithChooseProduct.and(productInDiscountWasSelected.not())).
+                        or(
+                        discountWasSelected.and(currentDiscountAmountToImplement.isEqualTo(0))));
+        productCostLabel.textProperty().bind(currentDiscountCost.asString());
+        continueWithoutButton.disableProperty().bind(atLeastOneDiscountWasImplemented);
+
 
 //        initContinueButtonBinding();
 //        orderTypeComboBox.getItems().add(MakeOrderMainController.OrderType.STATIC_ORDER);
@@ -136,6 +160,7 @@ public class DiscountsInOrderController {
         singleDiscountInOrderController.setDiscount(discount.getKey());
         singleDiscountInOrderController.initDetails(discount.getValue());
         discountsFlowPane.getChildren().add(singleDiscountInOrderVBox);
+        singleDiscountsInOrderControllers.put(discount.getKey().getDiscountName(),singleDiscountInOrderController);
 
     }
 
@@ -148,15 +173,55 @@ public class DiscountsInOrderController {
     @FXML
     void onAddToCart(ActionEvent event) {
         DTODiscount discountSelected = selectDiscountComboBox.getValue();
+        atLeastOneDiscountWasImplemented.set(true);
+        //SimpleIntegerProperty amountLeftToImplement =  singleDiscountsInOrderControllers.get(discountSelected.getDiscountName()).amountLeftToImplementProperty();
         if(discountSelected.getDiscountKind() == DiscountKind.ONE_OF){
             DTOOffer selectedProduct = chooseProductComboBox.getValue();
-            cartTable.getItems().add(
-                    new ProductInTable(
-                            selectedProduct.getProductName(),
-                            selectedProduct.getProductSerialNumber(),
-                            selectedProduct.
-                    ))
+            //add to shopping cart
+            addDiscountProductToCart(selectedProduct);
         }
+        //else if(discountSelected.getDiscountKind() == DiscountKind.ALL_OR_NOTHING){
+        else {
+            for (DTOOffer productInDiscount : discountSelected.getOffers()) {
+                addDiscountProductToCart(productInDiscount);
+            }
+        }
+        selectDiscountComboBox.getSelectionModel().clearSelection();
+        discountWasSelected.set(false);
+        chooseProductComboBox.getSelectionModel().clearSelection();
+        productInDiscountWasSelected.set(false);
+        //amountLeftToImplement.set(amountLeftToImplement.getValue() - 1);
+        subAmountInAllDiscountsContainTheProduct(discountSelected);
+        ifAmountZeroRemoveFromComboBox(discountSelected);
+        currentDiscountCost.set(0);
+    }
+
+    private void ifAmountZeroRemoveFromComboBox(DTODiscount discountSelected) {
+        if(singleDiscountsInOrderControllers.get(discountSelected.getDiscountName()).amountLeftToImplementProperty().get() == 0){
+            selectDiscountComboBox.getItems().remove(discountSelected);
+        }
+    }
+
+    private void subAmountInAllDiscountsContainTheProduct(DTODiscount discountSelected) {
+        int triggerDiscountProductSerialNumber = discountSelected.getIfYouBuyProductAndAmount().getKey();
+        for(DTODiscount discount : discounts){
+            if(discount.getIfYouBuyProductAndAmount().getKey().intValue() == triggerDiscountProductSerialNumber){
+                SimpleIntegerProperty discountAmountToImplement =  singleDiscountsInOrderControllers.get(discount.getDiscountName()).amountLeftToImplementProperty();
+                discountAmountToImplement.set(discountAmountToImplement.getValue() - 1);
+            }
+        }
+    }
+
+    private void addDiscountProductToCart(DTOOffer selectedProduct) {
+        cartTable.getItems().add(
+                new ProductInTable(
+                        selectedProduct.getProductName() + " (Discount)",
+                        selectedProduct.getProductSerialNumber(),
+                        sdmSystem.getProductWayOfBuying(selectedProduct.getProductSerialNumber()),
+                        null,
+                        (float) selectedProduct.getProductQuantity())
+                );
+        productsCost.set(productsCost.get() + (float)(selectedProduct.getPricePerUnit() * selectedProduct.getProductQuantity()));
     }
 
     @FXML
@@ -171,20 +236,48 @@ public class DiscountsInOrderController {
 
     @FXML
     void onSelectDiscount(ActionEvent event) {
-        DTODiscount discountchosen = selectDiscountComboBox.getValue();
-        if(discountchosen.getDiscountKind() == DiscountKind.ONE_OF){
-            discountWithChooseProduct.set(true);
-            chooseProductComboBox.getItems().clear();
-            chooseProductComboBox.getItems().addAll(discountchosen.getOffers());
+        if(selectDiscountComboBox.getValue() != null) {
+            SimpleIntegerProperty amountLeftToImplement = singleDiscountsInOrderControllers.get(selectDiscountComboBox.getValue().getDiscountName()).amountLeftToImplementProperty();
+            currentDiscountAmountToImplement.bind(amountLeftToImplement);
+            discountWasSelected.set(true);
+            DTODiscount discountChosen = selectDiscountComboBox.getValue();
+            if (discountChosen.getDiscountKind() == DiscountKind.ONE_OF) {
+                currentDiscountCost.set(0);
+                discountWithChooseProduct.set(true);
+                chooseProductComboBox.getItems().clear();
+                chooseProductComboBox.getItems().addAll(discountChosen.getOffers());
+            } else {
+                discountWithChooseProduct.set(false);
+                calcDiscountCost(discountChosen);
+            }
         }
         else{
+            discountWasSelected.set(false);
             discountWithChooseProduct.set(false);
         }
 
     }
 
+    private void calcDiscountCost(DTODiscount discountChosen) {
+        float totalCost = 0;
+        for(DTOOffer productInDiscount : discountChosen.getOffers()){
+            totalCost += (productInDiscount.getPricePerUnit() * productInDiscount.getProductQuantity());
+        }
+
+        currentDiscountCost.set(totalCost);
+    }
+
     @FXML
     void onSelectProduct(ActionEvent event) {
+        if(chooseProductComboBox.getValue() != null) {
+            productInDiscountWasSelected.set(true);
+            currentDiscountCost.set((float)(chooseProductComboBox.getValue().getPricePerUnit() * chooseProductComboBox.getValue().getProductQuantity()));
+        }
+        else {
+            productInDiscountWasSelected.set(false);
+            chooseProductComboBox.getSelectionModel().clearSelection();
+        }
+
     }
 
     public void updateItemsInCartTable(ObservableList<ProductInTable> items) {

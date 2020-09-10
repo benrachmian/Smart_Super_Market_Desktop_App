@@ -8,6 +8,7 @@ public class Offer {
     private double productQuantity;
     private float pricePerUnit;
 
+
     public Offer(int productSerialNumber, double productQuantity, float pricePerUnit, String productName) {
         this.productSerialNumber = productSerialNumber;
         this.productQuantity = productQuantity;

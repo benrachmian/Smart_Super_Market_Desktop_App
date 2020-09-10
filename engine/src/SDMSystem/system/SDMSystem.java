@@ -837,4 +837,8 @@ public class SDMSystem {
 
         return discountsForProduct;
     }
+
+    public WayOfBuying getProductWayOfBuying(int productSerialNumber) {
+        return getProductsInSystem().get(productSerialNumber).getWayOfBuying();
+    }
 }
