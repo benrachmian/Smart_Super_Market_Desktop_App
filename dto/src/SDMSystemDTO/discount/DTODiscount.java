@@ -6,13 +6,15 @@ import javafx.util.Pair;
 import java.util.Collection;
 
 public class DTODiscount {
-    String discountName;
+    private String discountName;
     //pair: key = product id, value: product quantity
-    Pair<Integer,Double> ifYouBuyProductAndAmount;
-    DiscountKind discountKind;
-    Collection<DTOOffer> offers;
-    WayOfBuying productWayOfBuying;
-    String productNameToBuyForDiscount;
+    private Pair<Integer,Double> ifYouBuyProductAndAmount;
+    private DiscountKind discountKind;
+    private Collection<DTOOffer> offers;
+    private WayOfBuying productWayOfBuying;
+    private String productNameToBuyForDiscount;
+    private int storeWithThisDiscountSerialNumber;
+
 
 
     public DTODiscount(String discountName,
@@ -20,13 +22,15 @@ public class DTODiscount {
                        DiscountKind discountKind,
                        Collection<DTOOffer> offers,
                        WayOfBuying productWayOfBuying,
-                       String productNameToBuyForDiscount) {
+                       String productNameToBuyForDiscount,
+                       int storeWithThisDiscountSerialNumber) {
         this.discountName = discountName;
         this.ifYouBuyProductAndAmount = ifYouBuyProductAndAmount;
         this.discountKind = discountKind;
         this.offers = offers;
         this.productWayOfBuying = productWayOfBuying;
         this.productNameToBuyForDiscount = productNameToBuyForDiscount;
+        this.storeWithThisDiscountSerialNumber = storeWithThisDiscountSerialNumber;
     }
 
     public String getProductNameToBuyForDiscount() {
@@ -51,6 +55,10 @@ public class DTODiscount {
 
     public Collection<DTOOffer> getOffers() {
         return offers;
+    }
+
+    public int getStoreWithThisDiscountSerialNumber() {
+        return storeWithThisDiscountSerialNumber;
     }
 
     @Override

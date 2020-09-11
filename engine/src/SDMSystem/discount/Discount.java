@@ -1,6 +1,7 @@
 package SDMSystem.discount;
 
 import SDMSystem.product.Product;
+import SDMSystem.store.Store;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
@@ -11,30 +12,37 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 public class Discount {
-    String discountName;
-    //pair: key = product id, value: product quantity
-    Pair<Integer,Double> ifYouBuyProductAndAmount;
-    String productNameToBuyForDiscount;
-    DiscountKind discountKind;
-    Collection<Offer> offers;
-    WayOfBuying productWayOfBuying;
+  private String discountName;
+   //pair: key = product id, value: product quantity
+  private Pair<Integer,Double> ifYouBuyProductAndAmount;
+  private String productNameToBuyForDiscount;
+  private DiscountKind discountKind;
+  private Collection<Offer> offers;
+  private WayOfBuying productWayOfBuying;
+  private int storeWithThisDiscountSerialNumber;
 
     public Discount(String discountName,
                     Pair<Integer, Double> ifYouBuyProductAndAmount,
                     DiscountKind discountKind,
                     Collection<Offer> offers,
                     WayOfBuying productWayOfBuying,
-                    String productNameToBuyForDiscount) {
+                    String productNameToBuyForDiscount,
+                    int storeWithThisDiscountSerialNumber) {
         this.discountName = discountName;
         this.ifYouBuyProductAndAmount = ifYouBuyProductAndAmount;
         this.discountKind = discountKind;
         this.offers = offers;
         this.productWayOfBuying = productWayOfBuying;
         this.productNameToBuyForDiscount = productNameToBuyForDiscount;
+        this.storeWithThisDiscountSerialNumber = storeWithThisDiscountSerialNumber;
     }
 
     public String getDiscountName() {
         return discountName;
+    }
+
+    public int getStoreWithThisDiscountSerialNumber() {
+        return storeWithThisDiscountSerialNumber;
     }
 
     public Pair<Integer, Double> getIfYouBuyProductAndAmount() {
@@ -67,7 +75,8 @@ public class Discount {
                 discountKind,
                 getDTOOffer(),
                 productWayOfBuying,
-                productNameToBuyForDiscount);
+                productNameToBuyForDiscount,
+                storeWithThisDiscountSerialNumber);
     }
 
     private Collection<DTOOffer> getDTOOffer() {

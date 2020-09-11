@@ -83,7 +83,6 @@ public class MakeStaticOrderController {
         amountInTextField = new SimpleFloatProperty();
         productsCost = new SimpleFloatProperty(0);
         deliveryCost = new SimpleFloatProperty();
-        shoppingCart = new LinkedList<>();
     }
 
     public void setCustomerMakingTheOrder(DTOCustomer customerMakingTheOrder) {
@@ -96,6 +95,10 @@ public class MakeStaticOrderController {
 
     public void setMakeOrderMainController(MakeOrderMainController makeOrderMainController) {
         this.makeOrderMainController = makeOrderMainController;
+    }
+
+    public void setShoppingCart(Collection<Pair<DTOProduct, Float>> shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     public void setDeliveryCost(float deliveryCost) {
@@ -276,15 +279,20 @@ public class MakeStaticOrderController {
 
     @FXML void onClickContinue(ActionEvent event) {
         if(sdmSystem.storeHasDiscountWithOneOfTheProducts(storeFromWhomTheOrderIsMade.getStoreSerialNumber(),shoppingCart)) {
-            discountsInOrderController = makeOrderMainController.createDiscountsInOrderForm();
-            discountsInOrderController.updateItemsInCartTable(cartTable.getItems());
-            discountsInOrderController.setSdmSystem(sdmSystem);
-            discountsInOrderController.initDetails(
-                    deliveryCost,
-                    productsCost,
-                    shoppingCart,
-                    storeFromWhomTheOrderIsMade.getStoreDiscounts()
-            );
+            createDiscountsInOrderForm();
         }
+    }
+
+    private void createDiscountsInOrderForm() {
+        discountsInOrderController = makeOrderMainController.createDiscountsInOrderForm();
+        discountsInOrderController.updateItemsInCartTable(cartTable.getItems());
+        discountsInOrderController.setSdmSystem(sdmSystem);
+        discountsInOrderController.setMakeOrderMainController(makeOrderMainController);
+        discountsInOrderController.initDetails(
+                deliveryCost,
+                productsCost,
+                shoppingCart,
+                storeFromWhomTheOrderIsMade.getStoreDiscounts()
+        );
     }
 }

@@ -17,6 +17,7 @@ import SDMSystem.exceptions.*;
 import SDMSystem.validation.*;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProduct;
+import SDMSystemDTO.product.DTOProductInDiscount;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
@@ -40,6 +41,7 @@ public class SDMSystem {
     private Map<Integer,Product> productsInSystem;
     private Map<Integer, Order> ordersInSystem;
     private Map<Point, Locationable> customersAndStoresLocationMap;
+    private Map<String,Discount> discountsInSystem;
     //private Map<Integer, Customer> customersInSystem;
 
     public SDMSystem() {
@@ -48,6 +50,7 @@ public class SDMSystem {
         ordersInSystem = new HashMap<>();
         customersInSystem = new CustomersInSystem();
         customersAndStoresLocationMap = new HashMap<>();
+        discountsInSystem = new HashMap<>();
     }
 
 
@@ -78,11 +81,13 @@ public class SDMSystem {
         Map<Integer, Order> oldOrdersInSystem = this.ordersInSystem;
         CustomersInSystem oldCustomersInSystem = this.customersInSystem;
         Map<Point, Locationable> oldCustomersAndStoresLocationMap = this.customersAndStoresLocationMap;
+        Map<String,Discount> oldDiscountsInSystem = this.discountsInSystem;
         storesInSystem = new StoresInSystem();
         productsInSystem = new HashMap<>();
         ordersInSystem = new HashMap<>();
         customersInSystem = new CustomersInSystem();
         customersAndStoresLocationMap = new HashMap<>();
+        discountsInSystem = new HashMap<>();
         try {
             loadProducts(superDuperMarketDescriptor.getSDMItems());
             loadStores(superDuperMarketDescriptor.getSDMStores(), superDuperMarketDescriptor.getSDMItems());
@@ -95,6 +100,7 @@ public class SDMSystem {
             ordersInSystem = oldOrdersInSystem;
             customersInSystem = oldCustomersInSystem;
             customersAndStoresLocationMap = oldCustomersAndStoresLocationMap;
+            discountsInSystem = oldDiscountsInSystem;
             throw e;
         }
     }
@@ -138,7 +144,7 @@ public class SDMSystem {
         List<SDMStore> sdmStoreList = sdmStores.getSDMStore();
         for (SDMStore sdmStore : sdmStoreList) {
             Point loadedStoreLocation = getLoadedLocation(sdmStore.getLocation());
-            Collection<Discount> loadedDiscounts = getLoadedDiscounts(sdmStore.getSDMDiscounts(), sdmStore.getSDMPrices().getSDMSell(),sdmItems);
+            Collection<Discount> loadedDiscounts = getLoadedDiscounts(sdmStore.getSDMDiscounts(), sdmStore.getSDMPrices().getSDMSell(),sdmItems,sdmStore.getId());
             loadedStore = new Store(sdmStore.getId(),loadedStoreLocation,sdmStore.getDeliveryPpk(),sdmStore.getName(), loadedDiscounts);
             addStoreToSystem(loadedStore);
             List<SDMSell> sdmSellList = sdmStore.getSDMPrices().getSDMSell();
@@ -147,7 +153,7 @@ public class SDMSystem {
     }
 
 
-    private Collection<Discount> getLoadedDiscounts(SDMDiscounts sdmDiscounts, List<SDMSell> productsTheStoreSelling, SDMItems sdmItems) {
+    private Collection<Discount> getLoadedDiscounts(SDMDiscounts sdmDiscounts, List<SDMSell> productsTheStoreSelling, SDMItems sdmItems, int storeId) {
         Collection<Discount> discounts = null;
         if(sdmDiscounts != null) {
             discounts = new LinkedList<>();
@@ -162,9 +168,11 @@ public class SDMSystem {
                         getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName()),
                         //getStoreFromStores(sdmStore.getId()).getProductFromStore(sdmDiscount.getIfYouBuy().getItemId()).getWayOfBuying()
                         getWayOfBuyingOfProductFromSDMStore(sdmItems,sdmDiscount.getIfYouBuy().getItemId()),
-                        getProductFromSystem(sdmDiscount.getIfYouBuy().getItemId()).getProductName()
+                        getProductFromSystem(sdmDiscount.getIfYouBuy().getItemId()).getProductName(),
+                        storeId
                 );
                 discounts.add(newDiscount);
+                discountsInSystem.put(newDiscount.getDiscountName(),newDiscount);
             }
         }
 
@@ -840,5 +848,28 @@ public class SDMSystem {
 
     public WayOfBuying getProductWayOfBuying(int productSerialNumber) {
         return getProductsInSystem().get(productSerialNumber).getWayOfBuying();
+    }
+
+    public DTOProductInDiscount getProductInDiscount(String discountName, int productSerialNumber) {
+        Discount discountChosen = discountsInSystem.get(discountName);
+        ProductInStore originalProduct = storesInSystem.getStoreInSystem(discountChosen.getStoreWithThisDiscountSerialNumber()).getProductInStore(productSerialNumber);
+        DTOProductInDiscount productFromDiscount = null;
+        for(Offer product : discountChosen.getOffers()){
+            if (product.getProductSerialNumber() == productSerialNumber){
+                productFromDiscount = new DTOProductInDiscount(
+                        originalProduct.getSerialNumber(),
+                        originalProduct.getProductName(),
+                        originalProduct.getWayOfBuying(),
+                        originalProduct.getAmountSoldInAllStores(),
+                        originalProduct.getPrice(),
+                        originalProduct.getAmountSoldInStore(),
+                        discountChosen.getStoreWithThisDiscountSerialNumber(),
+                        product.getPricePerUnit()
+                );
+                break;
+            }
+        }
+
+        return productFromDiscount;
     }
 }

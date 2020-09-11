@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="orderSummaryMainScrollPane" minHeight="800.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.OrderSummaryMainController">
+   <content>
+      <GridPane alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="254.8000244140625" vgrow="NEVER" />
+          <RowConstraints maxHeight="260.8" vgrow="NEVER" />
+          <RowConstraints maxHeight="293.0" minHeight="500.0" prefHeight="350.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="293.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="293.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="293.0" minHeight="170.0" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints maxHeight="293.0" minHeight="44.0" prefHeight="35.0" valignment="CENTER" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Label text="Order Summary" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Label>
+            <Label text="Stores and products participating:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Confirm Order" />
+               </children>
+            </HBox>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
+               </content>
+            </ScrollPane>
+            <GridPane alignment="CENTER" prefWidth="711.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="375.2" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="39.20001220703125" minWidth="0.0" prefWidth="12.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="356.7999877929688" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Total products cost:" GridPane.halignment="RIGHT" />
+                  <Label text="Label" GridPane.columnIndex="2" />
+                  <Label text="Total delivery cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Total order cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+            <Label text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>

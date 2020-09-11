@@ -6,7 +6,9 @@ import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
 import SDMSystemDTO.product.DTOProduct;
+import SDMSystemDTO.product.DTOProductInDiscount;
 import common.FxmlLoader;
+import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -33,6 +35,7 @@ public class DiscountsInOrderController {
     private Collection<DTODiscount> discounts;
     private Collection<Pair<DTOProduct,Float>> shoppingCart;
     private SDMSystem sdmSystem;
+    private MakeOrderMainController makeOrderMainController;
     private VBox singleDiscountInOrderVBox;
     private SingleDiscountInOrderController singleDiscountInOrderController;
     private SimpleBooleanProperty discountWithChooseProduct;
@@ -42,6 +45,7 @@ public class DiscountsInOrderController {
     private SimpleFloatProperty currentDiscountCost;
     private SimpleBooleanProperty atLeastOneDiscountWasImplemented;
     private Map<String,SingleDiscountInOrderController> singleDiscountsInOrderControllers = new HashMap<>();
+
 
 
 
@@ -98,6 +102,14 @@ public class DiscountsInOrderController {
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
+    }
+
+    public void setShoppingCart(Collection<Pair<DTOProduct, Float>> shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public void setMakeOrderMainController(MakeOrderMainController makeOrderMainController) {
+        this.makeOrderMainController = makeOrderMainController;
     }
 
     private void initProductsCartTableSettings() {
@@ -174,13 +186,11 @@ public class DiscountsInOrderController {
     void onAddToCart(ActionEvent event) {
         DTODiscount discountSelected = selectDiscountComboBox.getValue();
         atLeastOneDiscountWasImplemented.set(true);
-        //SimpleIntegerProperty amountLeftToImplement =  singleDiscountsInOrderControllers.get(discountSelected.getDiscountName()).amountLeftToImplementProperty();
         if(discountSelected.getDiscountKind() == DiscountKind.ONE_OF){
             DTOOffer selectedProduct = chooseProductComboBox.getValue();
             //add to shopping cart
             addDiscountProductToCart(selectedProduct);
         }
-        //else if(discountSelected.getDiscountKind() == DiscountKind.ALL_OR_NOTHING){
         else {
             for (DTOOffer productInDiscount : discountSelected.getOffers()) {
                 addDiscountProductToCart(productInDiscount);
@@ -190,7 +200,6 @@ public class DiscountsInOrderController {
         discountWasSelected.set(false);
         chooseProductComboBox.getSelectionModel().clearSelection();
         productInDiscountWasSelected.set(false);
-        //amountLeftToImplement.set(amountLeftToImplement.getValue() - 1);
         subAmountInAllDiscountsContainTheProduct(discountSelected);
         ifAmountZeroRemoveFromComboBox(discountSelected);
         currentDiscountCost.set(0);
@@ -213,6 +222,13 @@ public class DiscountsInOrderController {
     }
 
     private void addDiscountProductToCart(DTOOffer selectedProduct) {
+        addProductToCartTable(selectedProduct);
+        DTOProductInDiscount discountProduct = sdmSystem.getProductInDiscount(selectDiscountComboBox.getValue().getDiscountName(),selectedProduct.getProductSerialNumber());
+        shoppingCart.add(new Pair<>(discountProduct,new Float(selectedProduct.getProductQuantity())));
+        productsCost.set(productsCost.get() + (float)(selectedProduct.getPricePerUnit() * selectedProduct.getProductQuantity()));
+    }
+
+    private void addProductToCartTable(DTOOffer selectedProduct) {
         cartTable.getItems().add(
                 new ProductInTable(
                         selectedProduct.getProductName() + " (Discount)",
@@ -221,7 +237,6 @@ public class DiscountsInOrderController {
                         null,
                         (float) selectedProduct.getProductQuantity())
                 );
-        productsCost.set(productsCost.get() + (float)(selectedProduct.getPricePerUnit() * selectedProduct.getProductQuantity()));
     }
 
     @FXML
@@ -231,7 +246,7 @@ public class DiscountsInOrderController {
 
     @FXML
     void onClickContinue(ActionEvent event) {
-
+        makeOrderMainController.createOrderSummaryForm();
     }
 
     @FXML

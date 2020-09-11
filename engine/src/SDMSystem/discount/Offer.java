@@ -23,4 +23,16 @@ public class Offer {
     public int getProductSerialNumber() {
         return productSerialNumber;
     }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public double getProductQuantity() {
+        return productQuantity;
+    }
+
+    public float getPricePerUnit() {
+        return pricePerUnit;
+    }
 }

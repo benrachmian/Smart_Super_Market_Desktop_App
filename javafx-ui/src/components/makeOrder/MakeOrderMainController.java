@@ -3,27 +3,28 @@ package components.makeOrder;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
+import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Optional;
 
 public class MakeOrderMainController {
-
-
 
     public enum OrderType {
         STATIC_ORDER {
@@ -47,6 +48,10 @@ public class MakeOrderMainController {
     private MakeStaticOrderController makeStaticOrderController;
     private ScrollPane discountsInOrderScrollPane;
     private DiscountsInOrderController discountsInOrderController;
+    private ScrollPane orderSummaryMainScrollPane;
+    private OrderSummaryMainController orderSummaryMainController;
+    //pair: key = product bought, value: amount
+    private Collection<Pair<DTOProduct,Float> >shoppingCart;
 
 
     @FXML private ScrollPane makeOrderMainScrollPain;
@@ -65,6 +70,7 @@ public class MakeOrderMainController {
     @FXML private ComboBox<DTOStore> chooseStoreComboBox;
 
     public MakeOrderMainController() {
+        shoppingCart = new LinkedList<>();
     }
 
     @FXML
@@ -200,8 +206,7 @@ public class MakeOrderMainController {
         makeStaticOrderController.setDeliveryCost(LocationUtility.calcDistance(
                 chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
                 * chooseStoreComboBox.getValue().getPpk());
-
-//        makeStaticOrderController.setMainBorderPane(mainBorderPane);
+        makeStaticOrderController.setShoppingCart(shoppingCart);
         makeStaticOrderController.initDetails();
     }
 
@@ -215,18 +220,6 @@ public class MakeOrderMainController {
         FxmlLoader<ScrollPane,DiscountsInOrderController> loaderDiscountsInOrderForm = new FxmlLoader<>(DISCOUNTS_IN_ORDER_FORM_FXML_PATH);
         discountsInOrderScrollPane = loaderDiscountsInOrderForm.getFormBasePane();
         discountsInOrderController = loaderDiscountsInOrderForm.getFormController();
-//        FXMLLoader loader;
-//        URL mainFXML;
-//        loader = new FXMLLoader();
-//        mainFXML = getClass().getResource(DISCOUNTS_IN_ORDER_FORM_FXML_PATH);
-//        loader.setLocation(mainFXML);
-//        try {
-//            discountsInOrderScrollPane = loader.load();
-//            discountsInOrderController = loader.getController();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void loadMakeStaticOrderForm() {
@@ -234,17 +227,17 @@ public class MakeOrderMainController {
         staticOrderFormScrollPane = loaderMakeStaticOrderForm.getFormBasePane();
         makeStaticOrderController = loaderMakeStaticOrderForm.getFormController();
     }
- /*       FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(STATIC_ORDER_FORM_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            staticOrderFormScrollPane = loader.load();
-            makeStaticOrderController = loader.getController();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public void createOrderSummaryForm() {
+        loadOrderSummaryForm();
+        mainBorderPane.setCenter(orderSummaryMainScrollPane);
+        orderSummaryMainController.initDetails(shoppingCart);
+    }
+
+    private void loadOrderSummaryForm() {
+        FxmlLoader<ScrollPane,OrderSummaryMainController> loaderOrderSummaryForm = new FxmlLoader<>(OrderSummaryMainController.ORDER_SUMMARY_FORM_FXML_PATH);
+        orderSummaryMainScrollPane = loaderOrderSummaryForm.getFormBasePane();
+        orderSummaryMainController = loaderOrderSummaryForm.getFormController();
+    }
+
 }
