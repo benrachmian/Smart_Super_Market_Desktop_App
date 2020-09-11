@@ -1,12 +1,12 @@
 package components.makeOrder.discountsInOrder;
 
-import SDMSystem.discount.Offer;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
-import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInDiscount;
+import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
@@ -26,14 +26,15 @@ import javafx.util.Pair;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class DiscountsInOrderController {
 
     private SimpleFloatProperty deliveryCost;
     private SimpleFloatProperty productsCost;
-    private Collection<DTODiscount> discounts;
-    private Collection<Pair<DTOProduct,Float>> shoppingCart;
+    private Collection<DTODiscount> discountsInOrder;
+    private Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart;
     private SDMSystem sdmSystem;
     private MakeOrderMainController makeOrderMainController;
     private VBox singleDiscountInOrderVBox;
@@ -76,6 +77,7 @@ public class DiscountsInOrderController {
         currentDiscountAmountToImplement = new SimpleIntegerProperty(-1);
         currentDiscountCost = new SimpleFloatProperty();
         atLeastOneDiscountWasImplemented = new SimpleBooleanProperty(false);
+        discountsInOrder = new LinkedList<>();
     }
 
     @FXML
@@ -102,10 +104,6 @@ public class DiscountsInOrderController {
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
-    }
-
-    public void setShoppingCart(Collection<Pair<DTOProduct, Float>> shoppingCart) {
-        this.shoppingCart = shoppingCart;
     }
 
     public void setMakeOrderMainController(MakeOrderMainController makeOrderMainController) {
@@ -140,12 +138,10 @@ public class DiscountsInOrderController {
 
     public void initDetails(SimpleFloatProperty deliveryCost,
                             SimpleFloatProperty productsCost,
-                            Collection<Pair<DTOProduct, Float>> shoppingCart,
-                            Collection<DTODiscount> storeDiscounts) {
+                            Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart) {
         this.deliveryCost = deliveryCost;
         this.productsCost = productsCost;
         this.shoppingCart = shoppingCart;
-        this.discounts = storeDiscounts;
         updateDiscountsToForm();
 
         deliveryCostLabel.textProperty().bind(deliveryCost.asString());
@@ -154,16 +150,18 @@ public class DiscountsInOrderController {
     }
 
     private void updateDiscountsToForm() {
-        //pair: key = discount, value = amount deserved
-        Collection<Pair<DTODiscount,Integer>> discountsForProduct;
-        for(Pair<DTOProduct,Float> product : shoppingCart){
-            discountsForProduct = sdmSystem.getDiscountsForProductFromDiscountsCollection(product,discounts);
-            for(Pair<DTODiscount,Integer> discountForProduct : discountsForProduct){
-                createSingleDiscountFormAndAddIt(discountForProduct);
-                selectDiscountComboBox.getItems().add(discountForProduct.getKey());
+        for(Integer storeId : shoppingCart.keySet()) {
+            DTOStore currentStore = sdmSystem.getStoreFromStores(storeId);
+            //pair: key = discount, value = amount deserved
+            Collection<Pair<DTODiscount,Integer>> discountsForProduct;
+            //for every product in products bought from store
+            for (Pair<DTOProductInStore, Float> product : shoppingCart.get(storeId)) {
+                discountsForProduct = sdmSystem.getDiscountsForProductFromDiscountsCollection(product, currentStore.getStoreDiscounts(),discountsInOrder);
+                for (Pair<DTODiscount, Integer> discountForProduct : discountsForProduct) {
+                    createSingleDiscountFormAndAddIt(discountForProduct);
+                    selectDiscountComboBox.getItems().add(discountForProduct.getKey());
+                }
             }
-
-
         }
     }
 
@@ -213,7 +211,7 @@ public class DiscountsInOrderController {
 
     private void subAmountInAllDiscountsContainTheProduct(DTODiscount discountSelected) {
         int triggerDiscountProductSerialNumber = discountSelected.getIfYouBuyProductAndAmount().getKey();
-        for(DTODiscount discount : discounts){
+        for(DTODiscount discount : discountsInOrder){
             if(discount.getIfYouBuyProductAndAmount().getKey().intValue() == triggerDiscountProductSerialNumber){
                 SimpleIntegerProperty discountAmountToImplement =  singleDiscountsInOrderControllers.get(discount.getDiscountName()).amountLeftToImplementProperty();
                 discountAmountToImplement.set(discountAmountToImplement.getValue() - 1);
@@ -224,7 +222,8 @@ public class DiscountsInOrderController {
     private void addDiscountProductToCart(DTOOffer selectedProduct) {
         addProductToCartTable(selectedProduct);
         DTOProductInDiscount discountProduct = sdmSystem.getProductInDiscount(selectDiscountComboBox.getValue().getDiscountName(),selectedProduct.getProductSerialNumber());
-        shoppingCart.add(new Pair<>(discountProduct,new Float(selectedProduct.getProductQuantity())));
+        shoppingCart.get(discountProduct.getStoreTheProductBelongsID()).add(new Pair<>(discountProduct,new Float(selectedProduct.getProductQuantity())));
+        //shoppingCart.add(new Pair<>(discountProduct,new Float(selectedProduct.getProductQuantity())));
         productsCost.set(productsCost.get() + (float)(selectedProduct.getPricePerUnit() * selectedProduct.getProductQuantity()));
     }
 

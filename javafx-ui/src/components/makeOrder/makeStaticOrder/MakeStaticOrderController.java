@@ -1,16 +1,13 @@
 package components.makeOrder.makeStaticOrder;
 
-import SDMSystem.product.ProductInStore;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
-import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,8 +19,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Optional;
 
 public class MakeStaticOrderController {
 
@@ -37,7 +32,7 @@ public class MakeStaticOrderController {
     private MakeOrderMainController makeOrderMainController;
     private DiscountsInOrderController discountsInOrderController;
     //pair: key = product bought, value: amount
-    private Collection<Pair<DTOProduct,Float> >shoppingCart;
+    private Collection<Pair<DTOProductInStore, Float>> shoppingCart;
 
     @FXML private ScrollPane makeStaticOrderMainScrollPain;
     @FXML private Button continueButton;
@@ -81,8 +76,8 @@ public class MakeStaticOrderController {
     public MakeStaticOrderController() {
         selectedProductPrice = new SimpleFloatProperty();
         amountInTextField = new SimpleFloatProperty();
-        productsCost = new SimpleFloatProperty(0);
-        deliveryCost = new SimpleFloatProperty();
+//        productsCost = new SimpleFloatProperty(0);
+//        deliveryCost = new SimpleFloatProperty();
     }
 
     public void setCustomerMakingTheOrder(DTOCustomer customerMakingTheOrder) {
@@ -97,7 +92,7 @@ public class MakeStaticOrderController {
         this.makeOrderMainController = makeOrderMainController;
     }
 
-    public void setShoppingCart(Collection<Pair<DTOProduct, Float>> shoppingCart) {
+    public void setShoppingCart(Collection<Pair<DTOProductInStore,Float>> shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
 
@@ -117,8 +112,7 @@ public class MakeStaticOrderController {
        notIntegerErrorLabel.setAlignment(Pos.CENTER);
        notIntegerErrorLabel.visibleProperty().set(false);
        notIntegerErrorLabel.setManaged(false);
-       productsCostLabel.textProperty().bind(productsCost.asString());
-       totalOrderCostLabel.textProperty().bind(Bindings.add(deliveryCost,productsCost).asString());
+
        continueButton.disableProperty().bind(Bindings.isEmpty(cartTable.getItems()));
 
         //not allow to write chars that aren't digits
@@ -214,9 +208,13 @@ public class MakeStaticOrderController {
 
 
 
-    public void initDetails() {
+    public void initDetails(SimpleFloatProperty totalProductsCost, SimpleFloatProperty totalDeliveryCost) {
         initProductsToBuyTable();
+        this.productsCost = totalProductsCost;
+        this.deliveryCost = totalDeliveryCost;
         deliveryCostLabel.setText(String.format("%.2f",deliveryCost.get()));
+        productsCostLabel.textProperty().bind(productsCost.asString());
+        totalOrderCostLabel.textProperty().bind(Bindings.add(deliveryCost,productsCost).asString());
     }
 
     private void initProductsToBuyTable() {
@@ -279,20 +277,12 @@ public class MakeStaticOrderController {
 
     @FXML void onClickContinue(ActionEvent event) {
         if(sdmSystem.storeHasDiscountWithOneOfTheProducts(storeFromWhomTheOrderIsMade.getStoreSerialNumber(),shoppingCart)) {
-            createDiscountsInOrderForm();
+            makeOrderMainController.createDiscountsInOrderForm(cartTable.getItems());
         }
     }
 
     private void createDiscountsInOrderForm() {
-        discountsInOrderController = makeOrderMainController.createDiscountsInOrderForm();
-        discountsInOrderController.updateItemsInCartTable(cartTable.getItems());
-        discountsInOrderController.setSdmSystem(sdmSystem);
-        discountsInOrderController.setMakeOrderMainController(makeOrderMainController);
-        discountsInOrderController.initDetails(
-                deliveryCost,
-                productsCost,
-                shoppingCart,
-                storeFromWhomTheOrderIsMade.getStoreDiscounts()
-        );
+        discountsInOrderController = makeOrderMainController.createDiscountsInOrderForm(cartTable.getItems());
+
     }
 }

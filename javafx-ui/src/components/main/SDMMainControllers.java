@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -28,8 +27,6 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 
 public class SDMMainControllers {
 
@@ -211,7 +208,7 @@ public class SDMMainControllers {
     }
 
     private void loadMakeOrderMainForm() {
-        FxmlLoader<ScrollPane,MakeOrderMainController> loaderMakeOrderMainForm = new FxmlLoader<>(MAKE_ORDER_MAIN_FXML_PATH);
+        FxmlLoader<ScrollPane, MakeOrderMainController> loaderMakeOrderMainForm = new FxmlLoader<>(MAKE_ORDER_MAIN_FXML_PATH);
         makeOrderMainScrollPain = loaderMakeOrderMainForm.getFormBasePane();
         makeOrderMainController = loaderMakeOrderMainForm.getFormController();
     }

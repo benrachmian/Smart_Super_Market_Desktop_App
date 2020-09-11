@@ -11,6 +11,7 @@ import SDMSystem.product.ProductInStore;
 import SDMSystem.exceptions.*;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.product.DTOProduct;
+import SDMSystemDTO.product.DTOProductInDiscount;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
@@ -328,10 +329,10 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         }
     }
 
-    public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<DTOProduct, Float>> shoppingCart) {
+    public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<DTOProductInStore, Float>> shoppingCart) {
         boolean answer = false;
         for(Discount discount : storeDiscounts){
-            for(Pair<DTOProduct,Float> product : shoppingCart){
+            for(Pair<DTOProductInStore,Float> product : shoppingCart){
                 if(product.getKey().getProductSerialNumber() == discount.getIfYouBuyProductAndAmount().getKey()
                 &&
                     product.getValue() >= discount.getIfYouBuyProductAndAmount().getValue()){

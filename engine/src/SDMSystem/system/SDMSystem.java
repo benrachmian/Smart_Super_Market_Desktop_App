@@ -827,19 +827,20 @@ public class SDMSystem {
         storeSellingTheProduct.deleteDiscountsTheProductIsPartOf(productSerialNumber);
     }
 
-    public boolean storeHasDiscountWithOneOfTheProducts(int storeSerialNumber, Collection<Pair<DTOProduct, Float>> shoppingCart) {
+    public boolean storeHasDiscountWithOneOfTheProducts(int storeSerialNumber, Collection<Pair<DTOProductInStore,Float>> shoppingCart) {
         Store storeSelling = storesInSystem.getStoreInSystem(storeSerialNumber);
         return storeSelling.hasDiscountWithOneOfTheProducts(shoppingCart);
     }
 
-    public Collection<Pair<DTODiscount, Integer>> getDiscountsForProductFromDiscountsCollection(Pair<DTOProduct, Float> productSold, Collection<DTODiscount> discounts) {
+    public Collection<Pair<DTODiscount, Integer>> getDiscountsForProductFromDiscountsCollection(Pair<DTOProductInStore, Float> productSold, Collection<DTODiscount> storeDiscounts, Collection<DTODiscount> discountsInOrder) {
         Collection<Pair<DTODiscount, Integer>> discountsForProduct = new LinkedList<>();
-        for(DTODiscount discount : discounts){
+        for(DTODiscount discount : storeDiscounts){
             if(discount.getIfYouBuyProductAndAmount().getKey() == productSold.getKey().getProductSerialNumber()
                 && discount.getIfYouBuyProductAndAmount().getValue() <= productSold.getValue()){
                 discountsForProduct.add(new Pair(
                         discount,
                         (int)(productSold.getValue() / discount.getIfYouBuyProductAndAmount().getValue())));
+                discountsInOrder.add(discount);
             }
         }
 

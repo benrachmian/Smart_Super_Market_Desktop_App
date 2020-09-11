@@ -3,13 +3,15 @@ package components.makeOrder;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
-import SDMSystemDTO.product.DTOProduct;
+import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
+import components.makeOrder.makeStaticOrder.ProductInTable;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,12 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Optional;
+import java.util.*;
 
 public class MakeOrderMainController {
 
@@ -50,8 +49,11 @@ public class MakeOrderMainController {
     private DiscountsInOrderController discountsInOrderController;
     private ScrollPane orderSummaryMainScrollPane;
     private OrderSummaryMainController orderSummaryMainController;
+    //Map: key = storeID, value: Collection of products bought from the store
     //pair: key = product bought, value: amount
-    private Collection<Pair<DTOProduct,Float> >shoppingCart;
+    private Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart;
+    private SimpleFloatProperty totalDeliveryCost;
+    private SimpleFloatProperty totalProductsCost;
 
 
     @FXML private ScrollPane makeOrderMainScrollPain;
@@ -70,7 +72,9 @@ public class MakeOrderMainController {
     @FXML private ComboBox<DTOStore> chooseStoreComboBox;
 
     public MakeOrderMainController() {
-        shoppingCart = new LinkedList<>();
+        shoppingCart = new HashMap<>();
+        totalDeliveryCost = new SimpleFloatProperty();
+        totalProductsCost = new SimpleFloatProperty();
     }
 
     @FXML
@@ -145,7 +149,7 @@ public class MakeOrderMainController {
                     store.getStoreSerialNumber(),
                     store.getStoreLocation(),
                     store.getPpk()
-                    ));
+            ));
             chooseStoreComboBox.getItems().add(store);
         }
     }
@@ -163,7 +167,7 @@ public class MakeOrderMainController {
         for(StoreInTable storeInTable : storesTable.getItems()){
             storeInTable.setDeliveryCost(
                     LocationUtility.calcDistance(chosenCustomer.getCustomerLocation(),storeInTable.getStoreLocationInPoint())
-                    * storeInTable.getStorePPK());
+                            * storeInTable.getStorePPK());
         }
     }
 
@@ -176,7 +180,7 @@ public class MakeOrderMainController {
         cancelOrderAlert();
     }
 
-     public void cancelOrderAlert() {
+    public void cancelOrderAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
         alert.setHeaderText("You are about to cancel the order");
@@ -203,16 +207,29 @@ public class MakeOrderMainController {
         makeStaticOrderController.setCustomerMakingTheOrder(chooseCustomerComboBox.getValue());
         makeStaticOrderController.setStoreFromWhomTheOrderIsMade(chooseStoreComboBox.getValue());
         makeStaticOrderController.setMakeOrderMainController(this);
-        makeStaticOrderController.setDeliveryCost(LocationUtility.calcDistance(
+        totalDeliveryCost.set(LocationUtility.calcDistance(
                 chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
                 * chooseStoreComboBox.getValue().getPpk());
-        makeStaticOrderController.setShoppingCart(shoppingCart);
-        makeStaticOrderController.initDetails();
+/*        makeStaticOrderController.setDeliveryCost(LocationUtility.calcDistance(
+                chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
+                * chooseStoreComboBox.getValue().getPpk());*/
+        Collection<Pair<DTOProductInStore, Float>> shoppingCartFromStaticOrder = new LinkedList<>();
+        shoppingCart.put(chooseStoreComboBox.getValue().getStoreSerialNumber(),shoppingCartFromStaticOrder);
+        makeStaticOrderController.setShoppingCart(shoppingCartFromStaticOrder);
+        makeStaticOrderController.initDetails(totalProductsCost,totalDeliveryCost);
     }
 
-    public DiscountsInOrderController createDiscountsInOrderForm() {
+    public DiscountsInOrderController createDiscountsInOrderForm(ObservableList<ProductInTable> productsInTable) {
         loadDiscountsInOrderForm();
         mainBorderPane.setCenter(discountsInOrderScrollPane);
+        discountsInOrderController.updateItemsInCartTable(productsInTable);
+        discountsInOrderController.setSdmSystem(sdmSystem);
+        discountsInOrderController.setMakeOrderMainController(this);
+        discountsInOrderController.initDetails(
+                totalDeliveryCost,
+                totalProductsCost,
+                shoppingCart
+        );
         return discountsInOrderController;
     }
 
