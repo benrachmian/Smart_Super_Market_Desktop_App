@@ -49,6 +49,7 @@ public class MakeOrderMainController {
     private DiscountsInOrderController discountsInOrderController;
     private ScrollPane orderSummaryMainScrollPane;
     private OrderSummaryMainController orderSummaryMainController;
+    private DTOCustomer customerMakingTheOrder;
     //Map: key = storeID, value: Collection of products bought from the store
     //pair: key = product bought, value: amount
     private Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart;
@@ -169,6 +170,7 @@ public class MakeOrderMainController {
                     LocationUtility.calcDistance(chosenCustomer.getCustomerLocation(),storeInTable.getStoreLocationInPoint())
                             * storeInTable.getStorePPK());
         }
+        customerMakingTheOrder = chosenCustomer;
     }
 
     public void setMainBorderPane(BorderPane mainBorderPane) {
@@ -248,7 +250,8 @@ public class MakeOrderMainController {
     public void createOrderSummaryForm() {
         loadOrderSummaryForm();
         mainBorderPane.setCenter(orderSummaryMainScrollPane);
-        orderSummaryMainController.initDetails(shoppingCart);
+        orderSummaryMainController.setSdmSystem(sdmSystem);
+        orderSummaryMainController.initDetails(shoppingCart,customerMakingTheOrder);
     }
 
     private void loadOrderSummaryForm() {

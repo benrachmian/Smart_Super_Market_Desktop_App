@@ -17,36 +17,33 @@
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
       <RowConstraints vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <Label text="Store ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="PPK:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Distance from customer:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label text="Delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Label fx:id="productIdLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Label fx:id="productNameLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Label fx:id="wayOfBuyingLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Label fx:id="productPriceLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <Label text="Quantity:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+      <Label text="Delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="storeIdLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label fx:id="PpkLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label fx:id="distanceFromCustomerLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Label text="Store name" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+      <Label fx:id="storeNameLabel" text="Store name" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
          <font>
             <Font size="37.0" />
          </font>
       </Label>
-      <ScrollPane minHeight="50.0" prefHeight="400.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="7">
+      <ScrollPane minHeight="50.0" prefHeight="400.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
          <content>
             <FlowPane prefHeight="200.0" prefWidth="200.0" />
          </content>
