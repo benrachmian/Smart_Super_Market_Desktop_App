@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane id="productInStoreGridPane" fx:id="productGridPane" prefWidth="484.0" stylesheets="@../../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController">
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" minWidth="900.0" stylesheets="@../../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -43,9 +43,9 @@
             <Font size="37.0" />
          </font>
       </Label>
-      <ScrollPane minHeight="50.0" prefHeight="400.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
+      <ScrollPane fx:id="productsBoughtFromStoreScrollPane" minHeight="50.0" prefHeight="400.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
          <content>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" />
+            <FlowPane fx:id="productsBoughtFromStoreFlowPane" prefHeight="390.0" prefWidth="857.0" />
          </content>
       </ScrollPane>
    </children>

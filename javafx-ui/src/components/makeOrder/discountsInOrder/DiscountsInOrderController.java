@@ -6,6 +6,7 @@ import SDMSystemDTO.discount.DTOOffer;
 import SDMSystemDTO.discount.DiscountKind;
 import SDMSystemDTO.product.DTOProductInDiscount;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.MakeOrderMainController;
@@ -34,7 +35,7 @@ public class DiscountsInOrderController {
     private SimpleFloatProperty deliveryCost;
     private SimpleFloatProperty productsCost;
     private Collection<DTODiscount> discountsInOrder;
-    private Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart;
+    private Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart;
     private SDMSystem sdmSystem;
     private MakeOrderMainController makeOrderMainController;
     private VBox singleDiscountInOrderVBox;
@@ -138,7 +139,7 @@ public class DiscountsInOrderController {
 
     public void initDetails(SimpleFloatProperty deliveryCost,
                             SimpleFloatProperty productsCost,
-                            Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart) {
+                            Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart) {
         this.deliveryCost = deliveryCost;
         this.productsCost = productsCost;
         this.shoppingCart = shoppingCart;
@@ -155,7 +156,7 @@ public class DiscountsInOrderController {
             //pair: key = discount, value = amount deserved
             Collection<Pair<DTODiscount,Integer>> discountsForProduct;
             //for every product in products bought from store
-            for (Pair<DTOProductInStore, Float> product : shoppingCart.get(storeId)) {
+            for (Pair<IDTOProductInStore, Float> product : shoppingCart.get(storeId)) {
                 discountsForProduct = sdmSystem.getDiscountsForProductFromDiscountsCollection(product, currentStore.getStoreDiscounts(),discountsInOrder);
                 for (Pair<DTODiscount, Integer> discountForProduct : discountsForProduct) {
                     createSingleDiscountFormAndAddIt(discountForProduct);

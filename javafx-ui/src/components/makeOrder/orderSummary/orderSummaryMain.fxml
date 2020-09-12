@@ -41,10 +41,10 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" text="Cancel" />
-                  <Button mnemonicParsing="false" text="Confirm Order" />
+                  <Button mnemonicParsing="false" onAction="#onConfirmOrder" text="Confirm Order" />
                </children>
             </HBox>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+            <ScrollPane fx:id="storeAndProductsParticipatingScrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
                <content>
                   <VBox fx:id="storesInOrderSummaryVBox" alignment="CENTER" prefHeight="497.0" prefWidth="706.0" />
                </content>
@@ -62,11 +62,11 @@
                </rowConstraints>
                <children>
                   <Label text="Total products cost:" GridPane.halignment="RIGHT" />
-                  <Label text="Label" GridPane.columnIndex="2" />
+                  <Label fx:id="totalProductsCostLabel" text="Label" GridPane.columnIndex="2" />
                   <Label text="Total delivery cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="totalDeliveryCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="Total order cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label fx:id="totalOrderCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <Label text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">

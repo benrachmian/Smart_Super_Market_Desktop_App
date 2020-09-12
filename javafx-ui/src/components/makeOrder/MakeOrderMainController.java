@@ -4,6 +4,7 @@ import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
@@ -21,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Pair;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class MakeOrderMainController {
@@ -52,9 +54,14 @@ public class MakeOrderMainController {
     private DTOCustomer customerMakingTheOrder;
     //Map: key = storeID, value: Collection of products bought from the store
     //pair: key = product bought, value: amount
-    private Map<Integer, Collection<Pair<DTOProductInStore, Float>>> shoppingCart;
+    private Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart;
     private SimpleFloatProperty totalDeliveryCost;
     private SimpleFloatProperty totalProductsCost;
+    private boolean isStaticOrder;
+    //for static order:
+    private DTOStore storeFromWhomTheOrderWasMade = null;
+    //for all orders:
+    private LocalDate orderDate;
 
 
     @FXML private ScrollPane makeOrderMainScrollPain;
@@ -198,8 +205,11 @@ public class MakeOrderMainController {
     void onClickContinue(ActionEvent event) {
         if(orderTypeComboBox.selectionModelProperty().getValue().getSelectedItem().equals(OrderType.STATIC_ORDER)){
             createStaticOrderForm();
+            isStaticOrder = true;
         }
-
+        else{
+            isStaticOrder = false;
+        }
     }
 
     private void createStaticOrderForm() {
@@ -207,15 +217,13 @@ public class MakeOrderMainController {
         mainBorderPane.setCenter(staticOrderFormScrollPane);
         makeStaticOrderController.setSdmSystem(sdmSystem);
         makeStaticOrderController.setCustomerMakingTheOrder(chooseCustomerComboBox.getValue());
-        makeStaticOrderController.setStoreFromWhomTheOrderIsMade(chooseStoreComboBox.getValue());
+        storeFromWhomTheOrderWasMade = chooseStoreComboBox.getValue();
+        makeStaticOrderController.setStoreFromWhomTheOrderIsMade(storeFromWhomTheOrderWasMade);
         makeStaticOrderController.setMakeOrderMainController(this);
         totalDeliveryCost.set(LocationUtility.calcDistance(
                 chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
                 * chooseStoreComboBox.getValue().getPpk());
-/*        makeStaticOrderController.setDeliveryCost(LocationUtility.calcDistance(
-                chooseStoreComboBox.getValue().getStoreLocation(), chooseCustomerComboBox.getValue().getCustomerLocation())
-                * chooseStoreComboBox.getValue().getPpk());*/
-        Collection<Pair<DTOProductInStore, Float>> shoppingCartFromStaticOrder = new LinkedList<>();
+        Collection<Pair<IDTOProductInStore, Float>> shoppingCartFromStaticOrder = new LinkedList<>();
         shoppingCart.put(chooseStoreComboBox.getValue().getStoreSerialNumber(),shoppingCartFromStaticOrder);
         makeStaticOrderController.setShoppingCart(shoppingCartFromStaticOrder);
         makeStaticOrderController.initDetails(totalProductsCost,totalDeliveryCost);
@@ -251,13 +259,26 @@ public class MakeOrderMainController {
         loadOrderSummaryForm();
         mainBorderPane.setCenter(orderSummaryMainScrollPane);
         orderSummaryMainController.setSdmSystem(sdmSystem);
-        orderSummaryMainController.initDetails(shoppingCart,customerMakingTheOrder);
+        orderSummaryMainController.initDetails(
+                shoppingCart,
+                customerMakingTheOrder,
+                totalProductsCost,
+                totalDeliveryCost,
+                isStaticOrder,
+                storeFromWhomTheOrderWasMade,
+                orderDate
+                );
     }
 
     private void loadOrderSummaryForm() {
         FxmlLoader<ScrollPane,OrderSummaryMainController> loaderOrderSummaryForm = new FxmlLoader<>(OrderSummaryMainController.ORDER_SUMMARY_FORM_FXML_PATH);
         orderSummaryMainScrollPane = loaderOrderSummaryForm.getFormBasePane();
         orderSummaryMainController = loaderOrderSummaryForm.getFormController();
+    }
+
+    @FXML
+    void onPickDate(ActionEvent event) {
+        orderDate = pickDateBox.getValue();
     }
 
 }

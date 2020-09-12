@@ -3,6 +3,7 @@ package components.makeOrder.makeStaticOrder;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
 import components.makeOrder.MakeOrderMainController;
@@ -32,7 +33,7 @@ public class MakeStaticOrderController {
     private MakeOrderMainController makeOrderMainController;
     private DiscountsInOrderController discountsInOrderController;
     //pair: key = product bought, value: amount
-    private Collection<Pair<DTOProductInStore, Float>> shoppingCart;
+    private Collection<Pair<IDTOProductInStore, Float>> shoppingCart;
 
     @FXML private ScrollPane makeStaticOrderMainScrollPain;
     @FXML private Button continueButton;
@@ -92,7 +93,7 @@ public class MakeStaticOrderController {
         this.makeOrderMainController = makeOrderMainController;
     }
 
-    public void setShoppingCart(Collection<Pair<DTOProductInStore,Float>> shoppingCart) {
+    public void setShoppingCart(Collection<Pair<IDTOProductInStore,Float>> shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
 

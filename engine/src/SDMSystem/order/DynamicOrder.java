@@ -1,11 +1,13 @@
 package SDMSystem.order;
 
 import SDMSystem.customer.Customer;
+import SDMSystem.product.IProductInStore;
 import SDMSystem.product.ProductInStore;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
 import javafx.util.Pair;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -13,8 +15,8 @@ import java.util.LinkedList;
 public class DynamicOrder extends Order {
     private Collection<StaticOrder> subOrders;
 
-    public DynamicOrder(Date orderDate,
-                        Collection<Pair<Float, ProductInStore>> productsInOrder,
+    public DynamicOrder(LocalDate orderDate,
+                        Collection<Pair<IProductInStore, Float>> productsInOrder,
                         float productsCost,
                         float deliveryCost,
                         int amountOfProducts,

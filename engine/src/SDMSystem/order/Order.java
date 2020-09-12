@@ -2,21 +2,23 @@ package SDMSystem.order;
 
 import SDMSystem.HasSerialNumber;
 import SDMSystem.customer.Customer;
+import SDMSystem.product.IProductInStore;
 import SDMSystem.product.ProductInStore;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.order.DTOOrder;
 import javafx.util.Pair;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 
 public abstract class Order implements Serializable, HasSerialNumber<Integer> {
     private static int generatedSerialNumber = 1000;
-    protected Date orderDate;
-    protected final Collection<Pair<Float,ProductInStore>> productsInOrder;
+    protected LocalDate orderDate;
+    protected final Collection<Pair<IProductInStore,Float>> productsInOrder;
     protected float productsCost;
     protected final float deliveryCost;
     protected int orderSerialNumber;
@@ -26,8 +28,8 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
     protected Order mainOrder;
 
 
-    public Order(Date orderDate,
-                 Collection<Pair<Float, ProductInStore>> productsInOrder,
+    public Order(LocalDate orderDate,
+                 Collection<Pair<IProductInStore, Float>> productsInOrder,
                  float productsCost,
                  float deliveryCost,
                  int amountOfProducts,
@@ -55,7 +57,7 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
 
     public abstract DTOOrder createDTOOrderFromOrder();
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
@@ -72,12 +74,12 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
         return orderSerialNumber;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public void addProductToOrder(ProductInStore product, float amount){
-        Pair<Float,ProductInStore> newProduct = new Pair<>(amount,product);
+    public void addProductToOrder(IProductInStore product, float amount){
+        Pair<IProductInStore,Float> newProduct = new Pair<>(product,amount);
         productsInOrder.add(newProduct);
         productsCost += product.getPrice() * amount;
         amountOfProductsKinds++;
@@ -99,14 +101,14 @@ public abstract class Order implements Serializable, HasSerialNumber<Integer> {
         return productsCost;
     }
 
-    public Collection<Pair<Float,ProductInStore>> getProductsInOrder() {
+    public Collection<Pair<IProductInStore,Float>> getProductsInOrder() {
         return productsInOrder;
     }
 
-    public Collection<Pair<Float, DTOProductInStore>> getDTOProductsInOrder() {
-        Collection<Pair<Float, DTOProductInStore>> dtoProductsInOrder = new LinkedList<>();
-        for(Pair<Float,ProductInStore> productsInOrder : productsInOrder){
-            dtoProductsInOrder.add(new Pair<>(productsInOrder.getKey(),productsInOrder.getValue().createDTOProductInStore()));
+    public Collection<Pair<IDTOProductInStore, Float>> getDTOProductsInOrder() {
+        Collection<Pair<IDTOProductInStore, Float>> dtoProductsInOrder = new LinkedList<>();
+        for(Pair<IProductInStore,Float> productsInOrder : productsInOrder){
+            dtoProductsInOrder.add(new Pair<>(productsInOrder.getKey().createIDTOProductInStore(),productsInOrder.getValue()));
         }
 
         return dtoProductsInOrder;

@@ -2,7 +2,7 @@ package SDMSystemDTO.product;
 
 
 
-public class DTOProductInStore extends DTOProduct {
+public class DTOProductInStore extends DTOProduct implements  IDTOProductInStore{
     private final float price;
     private float amountSoldInStore;
     private final int storeTheProductBelongsID;
@@ -28,6 +28,11 @@ public class DTOProductInStore extends DTOProduct {
 
     public float getPrice() {
         return price;
+    }
+
+    @Override
+    public int getSerialNumber() {
+        return productSerialNumber;
     }
 
     public float getAmountSoldInStore() {

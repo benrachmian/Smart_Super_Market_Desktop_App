@@ -14,6 +14,7 @@ import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInDiscount;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.order.DTOOrder;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import javafx.util.Pair;
 
@@ -329,10 +330,10 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         }
     }
 
-    public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<DTOProductInStore, Float>> shoppingCart) {
+    public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<IDTOProductInStore, Float>> shoppingCart) {
         boolean answer = false;
         for(Discount discount : storeDiscounts){
-            for(Pair<DTOProductInStore,Float> product : shoppingCart){
+            for(Pair<IDTOProductInStore,Float> product : shoppingCart){
                 if(product.getKey().getProductSerialNumber() == discount.getIfYouBuyProductAndAmount().getKey()
                 &&
                     product.getValue() >= discount.getIfYouBuyProductAndAmount().getValue()){

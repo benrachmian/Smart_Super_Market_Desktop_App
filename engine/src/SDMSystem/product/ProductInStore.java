@@ -2,9 +2,9 @@ package SDMSystem.product;
 
 import SDMSystem.store.Store;
 import SDMSystemDTO.product.DTOProductInStore;
-import SDMSystemDTO.product.WayOfBuying;
+import SDMSystemDTO.product.IDTOProductInStore;
 
-public class ProductInStore extends Product {
+public class ProductInStore extends Product implements IProductInStore {
     private float price;
     private float amountSoldInStore;
     Store storeTheProductBelongs;
@@ -47,7 +47,24 @@ public class ProductInStore extends Product {
         price = newPrice;
     }
 
-//    @Override
+    @Override
+    public int getSerialNumber() {
+        return super.getSerialNumber();
+    }
+
+    @Override
+    public IDTOProductInStore createIDTOProductInStore() {
+        return new DTOProductInStore(
+                productSerialNumber,
+                productName,
+                wayOfBuying,
+                amountSoldInAllStores,
+                getPrice(),
+                amountSoldInStore,
+                storeTheProductBelongs.getSerialNumber());
+    }
+
+    //    @Override
 //    public String toString() {
 //        return super.toString() +
 //                "\nPrice: " + price +

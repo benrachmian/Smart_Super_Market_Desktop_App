@@ -1,15 +1,17 @@
 package SDMSystemDTO.order;
 
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import javafx.util.Pair;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 
 public class DTOOrder {
-    private final Date orderDate;
-    private final Collection<Pair<Float,DTOProductInStore>> productsInOrder;
+    private final LocalDate orderDate;
+    private final Collection<Pair<IDTOProductInStore,Float>> productsInOrder;
     //private Customer whoOrdered;
     private final float productsCost;
     private final float deliveryCost;
@@ -19,8 +21,8 @@ public class DTOOrder {
     private final int amountOfProductsKinds;
 
 
-    public DTOOrder(Date orderDate,
-                    Collection<Pair<Float,DTOProductInStore>> productsInOrder,
+    public DTOOrder(LocalDate orderDate,
+                    Collection<Pair<IDTOProductInStore,Float>> productsInOrder,
                     float productsCost,
                     float deliveryCost,
                     int orderSerialNumber,
@@ -37,7 +39,7 @@ public class DTOOrder {
         this.amountOfProductsKinds = amountOfProductsKinds;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
@@ -61,7 +63,7 @@ public class DTOOrder {
         return orderSerialNumber;
     }
 
-    public Collection<Pair<Float,DTOProductInStore>> getProductsInOrder() {
+    public Collection<Pair<IDTOProductInStore,Float>> getProductsInOrder() {
         return productsInOrder;
     }
 

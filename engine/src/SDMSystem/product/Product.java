@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class Product implements HasSerialNumber<Integer>, Serializable {
+public class Product implements Serializable {
 
     protected static int generatedSerialNumber = 1000;
     protected final int productSerialNumber;
@@ -65,8 +65,8 @@ public class Product implements HasSerialNumber<Integer>, Serializable {
 
 
 
-    @Override
-    public Integer getSerialNumber() {
+
+    public int getSerialNumber() {
         return productSerialNumber;
     }
 

@@ -1,28 +1,42 @@
 package SDMSystemDTO.product;
 
-public class DTOProductInDiscount extends  DTOProductInStore{
-    private float discountPrice;
+public class DTOProductInDiscount implements IDTOProductInStore{
 
-    public DTOProductInDiscount(int productSerialNumber,
-                                String productName,
-                                WayOfBuying wayOfBuying,
-                                float amountSoldInAllStores,
-                                float price,
-                                float amountSoldInStore,
-                                int storeTheProductBelongsID,
-                                float discountPrice) {
-        super(productSerialNumber,
-                productName,
-                wayOfBuying,
-                amountSoldInAllStores,
-                price,
-                amountSoldInStore,
-                storeTheProductBelongsID);
+    private float discountPrice;
+    private DTOProductInStore originalProductInStore;
+
+    public DTOProductInDiscount(DTOProductInStore originalProductInStore,float discountPrice) {
+        this.originalProductInStore = originalProductInStore;
         this.discountPrice = discountPrice;
     }
 
     @Override
     public float getPrice() {
         return discountPrice;
+    }
+
+    @Override
+    public int getSerialNumber() {
+        return originalProductInStore.getSerialNumber();
+    }
+
+    @Override
+    public WayOfBuying getWayOfBuying() {
+        return originalProductInStore.getWayOfBuying();
+    }
+
+    @Override
+    public int getProductSerialNumber() {
+        return originalProductInStore.getProductSerialNumber();
+    }
+
+    @Override
+    public String getProductName() {
+        return originalProductInStore.productName;
+    }
+
+    @Override
+    public int getStoreTheProductBelongsID() {
+        return originalProductInStore.getStoreTheProductBelongsID();
     }
 }
