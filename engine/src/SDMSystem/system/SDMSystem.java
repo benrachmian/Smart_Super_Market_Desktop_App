@@ -590,12 +590,12 @@ public class SDMSystem {
         return new LinkedList<>(storesInSystem.getStoresInSystemByLocation().keySet());
     }
 
-    public Map<Integer, Collection<Pair<Float,DTOProductInStore>>> getCheapestBasket(Collection<Pair<Float, DTOProduct>> productsInOrder) {
-        Map<Integer, Collection<Pair<Float,DTOProductInStore>>> cheapestBasket = new HashMap<>();
-        Collection <Pair<Float,DTOProductInStore>> productsFromSameStore;
+    public Map<Integer, Collection<Pair<IDTOProductInStore,Float>>> getCheapestBasket(Collection<Pair<DTOProduct, Float>> productsInOrder) {
+        Map<Integer, Collection<Pair<IDTOProductInStore,Float>>> cheapestBasket = new HashMap<>();
+        Collection <Pair<IDTOProductInStore,Float>> productsFromSameStore;
         int storeWithCheapestProductSerialNumber;
-        for(Pair<Float, DTOProduct> dtoProductInOrder : productsInOrder){
-            ProductInStore cheapestProduct = findCheapestProduct(dtoProductInOrder.getValue().getProductSerialNumber());
+        for(Pair<DTOProduct, Float> dtoProductInOrder : productsInOrder){
+            ProductInStore cheapestProduct = findCheapestProduct(dtoProductInOrder.getKey().getProductSerialNumber());
             DTOProductInStore cheapestProductAsDTO = cheapestProduct.createDTOProductInStore();
             storeWithCheapestProductSerialNumber = cheapestProduct.getStoreTheProductBelongs().getSerialNumber();
             //If there is already a product from this store in the basket

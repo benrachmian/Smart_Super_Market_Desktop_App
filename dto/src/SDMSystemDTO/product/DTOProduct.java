@@ -22,7 +22,7 @@ public class DTOProduct {
 
     @Override
     public String toString() {
-        return productName;
+        return productName + ", ID:" + productSerialNumber;
     }
 
     public int getProductSerialNumber() {

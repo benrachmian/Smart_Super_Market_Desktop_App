@@ -8,6 +8,7 @@ import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
+import components.makeOrder.makeDynamicOrder.MakeDynamicOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
@@ -47,6 +48,8 @@ public class MakeOrderMainController {
     private static final String DISCOUNTS_IN_ORDER_FORM_FXML_PATH = "/components/makeOrder/discountsInOrder/discountsInOrder.fxml";
     private ScrollPane staticOrderFormScrollPane;
     private MakeStaticOrderController makeStaticOrderController;
+    private ScrollPane dynamicOrderFormScrollPane;
+    private MakeDynamicOrderController makeDynamicOrderController;
     private ScrollPane discountsInOrderScrollPane;
     private DiscountsInOrderController discountsInOrderController;
     private ScrollPane orderSummaryMainScrollPane;
@@ -208,9 +211,26 @@ public class MakeOrderMainController {
             isStaticOrder = true;
         }
         else{
+            createDynamicOrderForm();
             isStaticOrder = false;
         }
     }
+
+    private void createDynamicOrderForm() {
+        loadMakeDynamicOrderForm();
+        mainBorderPane.setCenter(dynamicOrderFormScrollPane);
+        makeDynamicOrderController.initDetails(
+                sdmSystem,
+                customerMakingTheOrder,
+                this,
+                shoppingCart,
+                totalProductsCost,
+                totalDeliveryCost
+        );
+    }
+
+
+
 
     private void createStaticOrderForm() {
         loadMakeStaticOrderForm();
@@ -247,6 +267,13 @@ public class MakeOrderMainController {
         FxmlLoader<ScrollPane,DiscountsInOrderController> loaderDiscountsInOrderForm = new FxmlLoader<>(DISCOUNTS_IN_ORDER_FORM_FXML_PATH);
         discountsInOrderScrollPane = loaderDiscountsInOrderForm.getFormBasePane();
         discountsInOrderController = loaderDiscountsInOrderForm.getFormController();
+    }
+
+    private void loadMakeDynamicOrderForm() {
+        FxmlLoader<ScrollPane,MakeDynamicOrderController> loaderMakeDynamicForm = new FxmlLoader<>(MakeDynamicOrderController.DYNAMIC_ORDER_FORM_FXML_PATH);
+        dynamicOrderFormScrollPane = loaderMakeDynamicForm.getFormBasePane();
+        makeDynamicOrderController = loaderMakeDynamicForm.getFormController();
+
     }
 
     private void loadMakeStaticOrderForm() {
