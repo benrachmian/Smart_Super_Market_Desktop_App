@@ -17,7 +17,7 @@ public class ProductInDiscount implements IProductInStore {
 
     @Override
     public void increaseAmountSoldInStore(float amountSold) {
-        originalProductInStore.increaseAmountSoldInAllStores(amountSold);
+        originalProductInStore.increaseAmountSoldInStore(amountSold);
     }
 
     @Override

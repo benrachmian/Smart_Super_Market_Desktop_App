@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -34,6 +35,8 @@ public class OrderSummaryMainController {
     private SimpleFloatProperty totalProductsCost;
     private SimpleFloatProperty totalDeliveryCost;
     private boolean isStaticOrder;
+    private BorderPane mainBorderPane;
+
     //for static order
     private DTOStore storeFromWhomTheOrderWasMade = null;
     //for orders:
@@ -67,15 +70,19 @@ public class OrderSummaryMainController {
             SimpleFloatProperty totalDeliveryCost,
             boolean isStaticOrder,
             DTOStore storeFromWhomTheOrderWasMade,
-            LocalDate orderDate) {
+            LocalDate orderDate,
+            BorderPane mainBorderPane) {
         this.shoppingCart = shoppingCart;
         this.customerMakingTheOrder = customerMakingTheOrder;
+        this.totalDeliveryCost = totalDeliveryCost;
+        totalProductsCost = totalProductsCost;
         totalProductsCostLabel.textProperty().bind(totalProductsCost.asString());
         totalDeliveryCostLabel.textProperty().bind(totalDeliveryCost.asString());
         totalOrderCostLabel.textProperty().bind(Bindings.add(totalDeliveryCost,totalProductsCost).asString());
         this.isStaticOrder = isStaticOrder;
         this.storeFromWhomTheOrderWasMade = storeFromWhomTheOrderWasMade;
         this.orderDate = orderDate;
+        this.mainBorderPane = mainBorderPane;
 
         addStoresToSummary();
 
@@ -111,10 +118,10 @@ public class OrderSummaryMainController {
                     storeFromWhomTheOrderWasMade,
                     orderDate,
                     totalDeliveryCost.floatValue(),
-                    shoppingCart.get(storeFromWhomTheOrderWasMade),
+                    shoppingCart.get(storeFromWhomTheOrderWasMade.getStoreSerialNumber()),
                     customerMakingTheOrder
             );
         }
-
+        mainBorderPane.setCenter(null);
     }
 }

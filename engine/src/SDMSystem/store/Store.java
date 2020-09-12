@@ -332,13 +332,15 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
 
     public boolean hasDiscountWithOneOfTheProducts(Collection<Pair<IDTOProductInStore, Float>> shoppingCart) {
         boolean answer = false;
-        for(Discount discount : storeDiscounts){
-            for(Pair<IDTOProductInStore,Float> product : shoppingCart){
-                if(product.getKey().getProductSerialNumber() == discount.getIfYouBuyProductAndAmount().getKey()
-                &&
-                    product.getValue() >= discount.getIfYouBuyProductAndAmount().getValue()){
-                    answer = true;
-                    break;
+        if(storeDiscounts != null) {
+            for (Discount discount : storeDiscounts) {
+                for (Pair<IDTOProductInStore, Float> product : shoppingCart) {
+                    if (product.getKey().getProductSerialNumber() == discount.getIfYouBuyProductAndAmount().getKey()
+                            &&
+                            product.getValue() >= discount.getIfYouBuyProductAndAmount().getValue()) {
+                        answer = true;
+                        break;
+                    }
                 }
             }
         }

@@ -48,7 +48,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onClickCancel" text="Cancel" />
                   <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onClickContinue" text="Continue" />
-                  <Button fx:id="continueWithoutButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Continue without discounts" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <Button fx:id="continueWithoutButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickContinue" text="Continue without discounts" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
                </children>
             </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" minWidth="50.0" text="Shopping Cart:" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">

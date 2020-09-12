@@ -280,6 +280,9 @@ public class MakeStaticOrderController {
         if(sdmSystem.storeHasDiscountWithOneOfTheProducts(storeFromWhomTheOrderIsMade.getStoreSerialNumber(),shoppingCart)) {
             makeOrderMainController.createDiscountsInOrderForm(cartTable.getItems());
         }
+        else{
+            makeOrderMainController.createOrderSummaryForm();
+        }
     }
 
     private void createDiscountsInOrderForm() {

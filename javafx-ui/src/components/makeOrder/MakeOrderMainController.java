@@ -266,7 +266,8 @@ public class MakeOrderMainController {
                 totalDeliveryCost,
                 isStaticOrder,
                 storeFromWhomTheOrderWasMade,
-                orderDate
+                orderDate,
+                mainBorderPane
                 );
     }
 

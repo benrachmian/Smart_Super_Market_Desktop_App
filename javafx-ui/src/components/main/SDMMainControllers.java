@@ -173,7 +173,7 @@ public class SDMMainControllers {
     void customerItemClicked(MouseEvent event) {
         if(customerListView.getSelectionModel().getSelectedIndex() != -1) {
             mainBorderPane.setCenter(customersDetailsGridPane);
-            customerDetailsController.updateGrid(customerListView.getSelectionModel().getSelectedItem());
+            customerDetailsController.updateGrid(sdmSystem.getCustomer(customerListView.getSelectionModel().getSelectedItem().getCustomerSerialNumber()));
         }
     }
 
@@ -181,7 +181,7 @@ public class SDMMainControllers {
     void productItemClicked(MouseEvent event) {
         if(productsListView.getSelectionModel().getSelectedIndex() != -1) {
             mainBorderPane.setCenter(productsDetailsGridPane);
-            productDetailsController.updateGrid(productsListView.getSelectionModel().getSelectedItem());
+            productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
         }
     }
 

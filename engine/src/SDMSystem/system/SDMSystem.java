@@ -853,4 +853,8 @@ public class SDMSystem {
 
         return productFromDiscount;
     }
+
+    public DTOCustomer getCustomer(int customerSerialNumber) {
+        return customersInSystem.getCustomer(customerSerialNumber).createDTOCustomer();
+    }
 }

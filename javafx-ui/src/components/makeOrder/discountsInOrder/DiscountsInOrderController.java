@@ -94,6 +94,7 @@ public class DiscountsInOrderController {
                         discountWasSelected.and(currentDiscountAmountToImplement.isEqualTo(0))));
         productCostLabel.textProperty().bind(currentDiscountCost.asString());
         continueWithoutButton.disableProperty().bind(atLeastOneDiscountWasImplemented);
+        continueButton.disableProperty().bind(continueWithoutButton.disabledProperty().not());
 
 
 //        initContinueButtonBinding();
@@ -298,4 +299,6 @@ public class DiscountsInOrderController {
     public void updateItemsInCartTable(ObservableList<ProductInTable> items) {
         cartTable.getItems().addAll(items);
     }
+
+
 }

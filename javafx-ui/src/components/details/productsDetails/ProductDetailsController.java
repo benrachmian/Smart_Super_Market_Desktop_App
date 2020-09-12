@@ -7,23 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class ProductDetailsController {
-    @FXML
-    private Label serialNumberAnswerLabel;
-
-    @FXML
-    private Label productNameAnswerLabel;
-
-    @FXML
-    private Label wayOfBuyingAnswerLabel;
-
-    @FXML
-    private Label numOfStoresSellingAnswerLabel;
-
-    @FXML
-    private Label averagePriceAnswerLabel;
-
-    @FXML
-    private Label amountSoldAnswerLabel;
+    @FXML private Label serialNumberAnswerLabel;
+    @FXML private Label productNameAnswerLabel;
+    @FXML private Label wayOfBuyingAnswerLabel;
+    @FXML private Label numOfStoresSellingAnswerLabel;
+    @FXML private Label averagePriceAnswerLabel;
+    @FXML private Label amountSoldAnswerLabel;
 
     private SDMSystem sdmSystem;
 
