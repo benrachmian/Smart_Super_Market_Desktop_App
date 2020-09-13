@@ -2,11 +2,13 @@ package components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder;
 
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import common.JavaFxHelper;
 import components.details.storeDetails.discountsInStoreDetails.SingleDiscountController;
+import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.makeDynamicOrder.MakeDynamicOrderController;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -28,6 +30,8 @@ public class StoresParticipatingInDynamicOrderController {
     private GridPane singleStoreGridPane;
     private SingleStoreParticipatingInDynamicStoreController singleStoreParticipatingInDynamicStoreController;
     private DTOCustomer customerOrdering;
+    private MakeDynamicOrderController makeDynamicOrderController;
+
 
     @FXML private ScrollPane storesParticipatingScrollPane;
     @FXML  private FlowPane storesParticipatingFlowPane;
@@ -63,15 +67,18 @@ public class StoresParticipatingInDynamicOrderController {
     private VBox storesInOrderSummaryVBox;
 
     @FXML
-    void onConfirmOrder(ActionEvent event) {
-
+    void onContinue(ActionEvent event) {
+        makeDynamicOrderController.ifHasDiscountMakeDiscountsForm();
     }
 
-    public void initDetails(SDMSystem sdmSystem, Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasket, DTOCustomer customerMakingTheOrder)
+
+
+    public void initDetails(SDMSystem sdmSystem, Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasket, DTOCustomer customerMakingTheOrder, MakeOrderMainController makeOrderMainController, MakeDynamicOrderController makeDynamicOrderController)
      {
         this.cheapestBasket = cheapestBasket;
         this.sdmSystem = sdmSystem;
         this.customerOrdering = customerMakingTheOrder;
+        this.makeDynamicOrderController = makeDynamicOrderController;
         for(Integer storeId : cheapestBasket.keySet()){
             DTOStore storeParticipating = sdmSystem.getStoreFromStores(storeId);
             addStoreToFlowPane(storeParticipating);

@@ -122,6 +122,13 @@ public class OrderSummaryMainController {
                     customerMakingTheOrder
             );
         }
+        else{
+            sdmSystem.makeNewDynamicOrder(
+                    orderDate,
+                    shoppingCart,
+                    customerMakingTheOrder
+            );
+        }
         mainBorderPane.setCenter(null);
     }
 }

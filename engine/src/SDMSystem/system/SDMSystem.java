@@ -361,14 +361,14 @@ public class SDMSystem {
 
 
     public void makeNewDynamicOrder(LocalDate orderDate,
-                                    Point userLocation,
-                                    Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasketDTO, Customer whoOrdered) {
+                                    Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasketDTO, DTOCustomer whoOrdered) {
         Collection<StaticOrder> subOrders = new LinkedList<>();
+        Customer customerMakingTheOrder = customersInSystem.getCustomer(whoOrdered.getCustomerSerialNumber());
         float totalDeliveryCost;
         //int[0] = amount of products
         //int[1] = amount of products kinds
         int[] amountOfProductsAndKinds = new int[2];
-        makeSubOrderFromEachStore(orderDate, userLocation, cheapestBasketDTO, subOrders,whoOrdered);
+        makeSubOrderFromEachStore(orderDate, customerMakingTheOrder.getLocation(), cheapestBasketDTO, subOrders,customerMakingTheOrder);
         totalDeliveryCost = calcTotalDeliveryCostInDynamicOrder(subOrders);
         Collection<Pair<IProductInStore,Float>> allProductsInOrder = getAllProductsFromSubOrdersAndAmountOfProductsAndKinds(subOrders,amountOfProductsAndKinds);
         //Map<Integer,Store> storesSellingTheProducts = getStoresSellingTheProductsFromBasket(cheapestBasketDTO);
@@ -379,7 +379,7 @@ public class SDMSystem {
                 amountOfProductsAndKinds[0],
                 amountOfProductsAndKinds[1],
                 subOrders,
-                whoOrdered);
+                customerMakingTheOrder);
         //updateAmountsSoldOfProduct(allProductsInOrder);
         updateSubOrdersToTheirMainOrder((DynamicOrder)dynamicOrder);
         updateAmountSoldInSystemForEveryProductInOrder(allProductsInOrder);
@@ -590,8 +590,8 @@ public class SDMSystem {
         return new LinkedList<>(storesInSystem.getStoresInSystemByLocation().keySet());
     }
 
-    public Map<Integer, Collection<Pair<IDTOProductInStore,Float>>> getCheapestBasket(Collection<Pair<DTOProduct, Float>> productsInOrder) {
-        Map<Integer, Collection<Pair<IDTOProductInStore,Float>>> cheapestBasket = new HashMap<>();
+    public void makeCheapestBasket(Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasket, Collection<Pair<DTOProduct, Float>> productsInOrder) {
+        //Map<Integer, Collection<Pair<IDTOProductInStore,Float>>> cheapestBasket = new HashMap<>();
         Collection <Pair<IDTOProductInStore,Float>> productsFromSameStore;
         int storeWithCheapestProductSerialNumber;
         for(Pair<DTOProduct, Float> dtoProductInOrder : productsInOrder){
@@ -609,8 +609,6 @@ public class SDMSystem {
                 cheapestBasket.put(storeWithCheapestProductSerialNumber,productsFromSameStore);
             }
         }
-
-        return cheapestBasket;
     }
 
     private ProductInStore findCheapestProduct(int productSerialNumber) {

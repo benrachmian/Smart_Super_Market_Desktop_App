@@ -79,23 +79,6 @@ public class MakeDynamicOrderController {
 
         amountTextField.disableProperty().bind(chooseProductComboBox.valueProperty().isNull());
         JavaFxHelper.makeTextFieldInputOnlyFloat(amountTextField,errorInputLabel,amountInTextField);
-//        amountTextField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                if(!newValue.matches("\\d*(\\.\\d*)?")) {
-//                    amountTextField.setText(oldValue);
-//                    errorInputLabel.visibleProperty().set(true);
-//                    errorInputLabel.setManaged(true);
-//                }
-//                else{
-//                    errorInputLabel.visibleProperty().set(false);
-//                    errorInputLabel.setManaged(false);
-//                    if(!amountTextField.getText().isEmpty() && !amountTextField.getText().equals(".")) {
-//                        amountInTextField.set(Float.parseFloat(amountTextField.getText()));
-//                    }
-//                }
-//            }
-//        });
         addToCartButton.disableProperty().bind(
                 chooseProductComboBox.valueProperty().isNull().or(
                         amountTextField.textProperty().isEmpty()
@@ -193,15 +176,31 @@ public class MakeDynamicOrderController {
 
     @FXML
     void onClickContinue(ActionEvent event) {
-        cheapestBasket = sdmSystem.getCheapestBasket(productsInOrder);
+        findCheapestBasketAndUpdateTotalPriceAndDeliveryCost();
         createStoresParticipatingInDynamicOrderForm();
+    }
 
+    private void findCheapestBasketAndUpdateTotalPriceAndDeliveryCost() {
+        sdmSystem.makeCheapestBasket(cheapestBasket,productsInOrder);
+        calcTotalProductsPriceAndDeliveryCost();
+    }
+
+    private void calcTotalProductsPriceAndDeliveryCost() {
+        float deliveryCost;
+        float costOfProductsInStore;
+        for (Integer storeSerialNumber : cheapestBasket.keySet()) {
+            DTOStore storeSellingTheProducts = sdmSystem.getStoreFromStores(storeSerialNumber);
+            deliveryCost = sdmSystem.getDeliveryCost(storeSellingTheProducts.getStoreSerialNumber(), customerMakingTheOrder.getCustomerLocation());
+            totalDeliveryCost.set(totalDeliveryCost.floatValue() + deliveryCost);
+            costOfProductsInStore = sdmSystem.calcProductsInOrderCost(cheapestBasket.get(storeSerialNumber));
+            totalProductsCost.set(totalProductsCost.floatValue() + costOfProductsInStore);
+        }
     }
 
     private void createStoresParticipatingInDynamicOrderForm() {
         loadStoresParticipatingInDynamicOrderForm();
         mainBorderPane.setCenter(storesParticipatingInDynamicOrderScrollPane);
-        storesParticipatingInDynamicOrderController.initDetails(sdmSystem,cheapestBasket,customerMakingTheOrder);
+        storesParticipatingInDynamicOrderController.initDetails(sdmSystem,cheapestBasket,customerMakingTheOrder,makeOrderMainController,this);
 
     }
 
@@ -244,5 +243,23 @@ public class MakeDynamicOrderController {
             ));
             chooseProductComboBox.getItems().add(product);
         }
+    }
+
+    public void ifHasDiscountMakeDiscountsForm() {
+        if(checkIfDeserveDiscount()){
+            makeOrderMainController.createDiscountsInOrderForm(cartTable.getItems());
+        }
+    }
+
+    private boolean checkIfDeserveDiscount() {
+        boolean answer = false;
+        for(Integer storeId : cheapestBasket.keySet()){
+            if(sdmSystem.storeHasDiscountWithOneOfTheProducts(storeId,cheapestBasket.get(storeId))) {
+                answer = true;
+                break;
+            }
+        }
+
+        return answer;
     }
 }
