@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
@@ -32,7 +33,8 @@ public class UpdateProductPriceController {
     @FXML private Label statusStaticLabel;
     @FXML private Label errorInputLabel;
     @FXML private TextField priceTextField;
-
+    private BorderPane mainBorderPane;
+    private ScrollPane storeDetailsScrollPain;
 
 
     public UpdateProductPriceController() {
@@ -42,8 +44,8 @@ public class UpdateProductPriceController {
     @FXML
     public void initialize(){
         selectProductHBox.setAlignment( Pos.CENTER );
-        productTabScrollPane.fitToHeightProperty().set(true);
-        productTabScrollPane.fitToWidthProperty().set(true);
+//        productTabScrollPane.fitToHeightProperty().set(true);
+//        productTabScrollPane.fitToWidthProperty().set(true);
         updateProductButton.disableProperty().bind(productChoiseBox.valueProperty().isNull());
         statusHBox.setAlignment(Pos.CENTER);
         productsFlowPane.setAlignment(Pos.CENTER);
@@ -69,13 +71,21 @@ public class UpdateProductPriceController {
         });
     }
 
-    public void setSdmSystem(SDMSystem sdmSystem) {
+    public void initDetails(SDMSystem sdmSystem, StoreDetailsController storeDetailsController, BorderPane mainBorderPane, ScrollPane storeDetailsScrollPain){
         this.sdmSystem = sdmSystem;
+        this.storeDetailsController = storeDetailsController;
+        this.mainBorderPane = mainBorderPane;
+        this.storeDetailsScrollPain = storeDetailsScrollPain;
+
     }
 
-    public void setStoreDetailsController(StoreDetailsController storeDetailsController) {
-        this.storeDetailsController = storeDetailsController;
-    }
+//    public void setSdmSystem(SDMSystem sdmSystem) {
+//        this.sdmSystem = sdmSystem;
+//    }
+//
+//    public void setStoreDetailsController(StoreDetailsController storeDetailsController) {
+//        this.storeDetailsController = storeDetailsController;
+//    }
 
     public FlowPane getProductsFlowPane() {
         return productsFlowPane;
@@ -105,6 +115,11 @@ public class UpdateProductPriceController {
         } catch (NumberFormatException e) {
             statusLabel.setText("The price must be a float number!");
         }
+    }
+
+    @FXML
+    void onBackButton(ActionEvent event) {
+        mainBorderPane.setCenter(storeDetailsScrollPain);
     }
 
 }

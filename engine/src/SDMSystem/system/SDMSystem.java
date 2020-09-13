@@ -382,6 +382,7 @@ public class SDMSystem {
                 customerMakingTheOrder);
         //updateAmountsSoldOfProduct(allProductsInOrder);
         updateSubOrdersToTheirMainOrder((DynamicOrder)dynamicOrder);
+        customerMakingTheOrder.addOrder(dynamicOrder);
         updateAmountSoldInSystemForEveryProductInOrder(allProductsInOrder);
         ordersInSystem.put(dynamicOrder.getSerialNumber(),dynamicOrder);
     }
@@ -601,7 +602,7 @@ public class SDMSystem {
             //If there is already a product from this store in the basket
             if(cheapestBasket.containsKey(storeWithCheapestProductSerialNumber)){
                 productsFromSameStore = cheapestBasket.get(storeWithCheapestProductSerialNumber);
-                productsFromSameStore.add(new Pair(dtoProductInOrder.getKey(),cheapestProductAsDTO));
+                productsFromSameStore.add(new Pair(cheapestProductAsDTO, dtoProductInOrder.getValue()));
             }
             else{
                 productsFromSameStore = new LinkedList<>();

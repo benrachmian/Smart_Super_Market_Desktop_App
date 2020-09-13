@@ -249,6 +249,9 @@ public class MakeDynamicOrderController {
         if(checkIfDeserveDiscount()){
             makeOrderMainController.createDiscountsInOrderForm(cartTable.getItems());
         }
+        else{
+            makeOrderMainController.createOrderSummaryForm();
+        }
     }
 
     private boolean checkIfDeserveDiscount() {

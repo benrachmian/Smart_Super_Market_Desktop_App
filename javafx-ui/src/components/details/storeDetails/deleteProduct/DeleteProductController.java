@@ -2,12 +2,14 @@ package components.details.storeDetails.deleteProduct;
 
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.product.DTOProductInStore;
+import SDMSystemDTO.store.DTOStore;
 import components.details.storeDetails.StoreDetailsController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
@@ -18,6 +20,7 @@ public class DeleteProductController {
     private SDMSystem sdmSystem;
     private StoreDetailsController storeDetailsController;
     private final SimpleBooleanProperty deleteTryWasMade;
+    private ScrollPane storeDetailsScrollPain;
 
     @FXML private HBox selectProductHBox;
     @FXML private FlowPane productsFlowPane;
@@ -27,6 +30,10 @@ public class DeleteProductController {
     @FXML private HBox statusHBox;
     @FXML private Label statusLabel;
     @FXML private Label statusStaticLabel;
+    @FXML private Button backButton;
+    @FXML private ScrollPane mainFormScrollPane;
+
+    private BorderPane mainBorderPane;
 
     public DeleteProductController() {
         deleteTryWasMade = new SimpleBooleanProperty(false);
@@ -44,6 +51,15 @@ public class DeleteProductController {
         statusStaticLabel.visibleProperty().bind(statusLabel.visibleProperty());
     }
 
+    public void initDetails(SDMSystem sdmSystem, StoreDetailsController storeDetailsController, BorderPane mainBorderPane, ScrollPane storeDetailsScrollPain){
+        mainFormScrollPane.fitToWidthProperty().set(true);
+        mainFormScrollPane.fitToHeightProperty().set(true);
+        this.sdmSystem = sdmSystem;
+        this.storeDetailsController = storeDetailsController;
+        this.mainBorderPane = mainBorderPane;
+        this.storeDetailsScrollPain = storeDetailsScrollPain;
+    }
+
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
     }
@@ -52,7 +68,13 @@ public class DeleteProductController {
         this.storeDetailsController = storeDetailsController;
     }
 
+    public void setMainBorderPane(BorderPane mainBorderPane) {
+        this.mainBorderPane = mainBorderPane;
+    }
 
+    public void setStoreDetailsScrollPain(ScrollPane storeDetailsScrollPain) {
+        this.storeDetailsScrollPain = storeDetailsScrollPain;
+    }
 
     public FlowPane getProductsFlowPane() {
         return productsFlowPane;
@@ -105,5 +127,10 @@ public class DeleteProductController {
         if (result.get() != ButtonType.OK) {
             throw new RuntimeException("Cancelled");
         }
+    }
+
+    @FXML
+    void onBackButton(ActionEvent event) {
+        mainBorderPane.setCenter(storeDetailsScrollPain);
     }
 }

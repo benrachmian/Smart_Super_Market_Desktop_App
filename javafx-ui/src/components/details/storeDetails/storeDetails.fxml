@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="449.0" prefWidth="712.0" stylesheets="@storeDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.StoreDetailsController">
+<ScrollPane fx:id="storeDetailsScrollPain" prefHeight="449.0" prefWidth="712.0" stylesheets="@storeDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.StoreDetailsController">
    <content>
       <GridPane>
          <columnConstraints>

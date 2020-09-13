@@ -3,6 +3,7 @@ package components.details.storeDetails.addProduct;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
+import common.JavaFxHelper;
 import components.details.storeDetails.StoreDetailsController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.IntegerStringConverter;
@@ -26,6 +28,8 @@ public class AddProductController {
     private SDMSystem sdmSystem;
     private StoreDetailsController storeDetailsController;
     private final SimpleBooleanProperty addTryWasMade;
+    private BorderPane mainBorderPane;
+    private ScrollPane storeDetailsScrollPain;
 
     @FXML private HBox selectProductHBox;
     @FXML private ScrollPane productTabScrollPane;
@@ -46,8 +50,8 @@ public class AddProductController {
     @FXML
     public void initialize(){
         selectProductHBox.setAlignment( Pos.CENTER );
-        productTabScrollPane.fitToHeightProperty().set(true);
-        productTabScrollPane.fitToWidthProperty().set(true);
+//        productTabScrollPane.fitToHeightProperty().set(true);
+//        productTabScrollPane.fitToWidthProperty().set(true);
         BooleanBinding binding = productChoiseBox.valueProperty().isNull().or(Bindings.createBooleanBinding(() ->
                 priceTextField.getText().trim().isEmpty(),priceTextField.textProperty()));
         addProductButton.disableProperty().bind(binding);
@@ -72,12 +76,11 @@ public class AddProductController {
         });
     }
 
-    public void setSdmSystem(SDMSystem sdmSystem) {
+    public void initDetails(SDMSystem sdmSystem, StoreDetailsController storeDetailsController, BorderPane mainBorderPane, ScrollPane storeDetailsScrollPain){
         this.sdmSystem = sdmSystem;
-    }
-
-    public void setStoreDetailsController(StoreDetailsController storeDetailsController) {
         this.storeDetailsController = storeDetailsController;
+        this.mainBorderPane = mainBorderPane;
+        this.storeDetailsScrollPain = storeDetailsScrollPain;
     }
 
     @FXML
@@ -110,5 +113,9 @@ public class AddProductController {
         return productChoiseBox;
     }
 
+    @FXML
+    void onBack(ActionEvent event) {
+        mainBorderPane.setCenter(storeDetailsScrollPain);
+    }
 
 }

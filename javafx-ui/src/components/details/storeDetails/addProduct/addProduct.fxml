@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.addProduct.AddProductController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.addProduct.AddProductController">
    <content>
       <GridPane alignment="CENTER" prefHeight="439.0" prefWidth="702.0">
          <columnConstraints>
@@ -25,12 +25,13 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="370.4000244140625" minHeight="10.0" prefHeight="261.6000061035156" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="94.20001220703122" minHeight="10.0" prefHeight="56.60003662109372" valignment="CENTER" vgrow="NEVER" />
-            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" prefHeight="46.00002441406252" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
-            <RowConstraints maxHeight="223.19998779296873" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="25.0" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints maxHeight="223.19998779296873" minHeight="25.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ScrollPane fx:id="productTabScrollPane" GridPane.columnSpan="4" GridPane.rowIndex="1">
+            <ScrollPane fx:id="productTabScrollPane" fitToHeight="true" fitToWidth="true" GridPane.columnSpan="4" GridPane.rowIndex="1">
                <content>
                   <FlowPane fx:id="productsFlowPane" alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="688.0">
                      <padding>
@@ -67,7 +68,6 @@
                <children>
                   <Label text="Insert the product price:" />
                   <TextField fx:id="priceTextField" />
-                  <Button fx:id="addProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickAdd" text="Add!" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -76,7 +76,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <HBox fx:id="statusHBox" alignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <HBox fx:id="statusHBox" alignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                <children>
                   <Label fx:id="statusStaticLabel" text="Status:" />
                   <Label fx:id="statusLabel" prefHeight="18.0" text="The product was added sucssessfully!">
@@ -94,6 +94,12 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onBack" text="Back" />
+                  <Button fx:id="addProductButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickAdd" text="Add!" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </content>

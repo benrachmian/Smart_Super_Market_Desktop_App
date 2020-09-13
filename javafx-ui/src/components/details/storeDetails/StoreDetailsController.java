@@ -64,6 +64,7 @@ public class StoreDetailsController {
     @FXML private FlowPane productsFlowPane;
     @FXML private VBox discountsVbox;
     @FXML private ScrollPane discountsTabScrollPane;
+    @FXML private ScrollPane storeDetailsScrollPain;
 
 
 
@@ -211,10 +212,17 @@ public class StoreDetailsController {
         //show delete product form
         loadDeleteProductForm();
         mainBorderPane.setCenter(deleteProductScrollPane);
-        deleteProductScrollPane.fitToWidthProperty().set(true);
-        deleteProductScrollPane.fitToHeightProperty().set(true);
-        deleteProductController.setSdmSystem(sdmSystem);
-        deleteProductController.setStoreDetailsController(this);
+        deleteProductController.initDetails(
+                sdmSystem,
+                this,
+                mainBorderPane,
+                storeDetailsScrollPain
+        );
+
+//        deleteProductController.setSdmSystem(sdmSystem);
+//        deleteProductController.setStoreDetailsController(this);
+//        deleteProductController.setMainBorderPane(mainBorderPane);
+//        deleteProductController.setStoreDetailsScrollPain(storeDetailsScrollPain);
         //deleteProductController.setStore(store);
         addProductsFromStoreToFlowPane(deleteProductController.getProductsFlowPane());
         addProductsToProductChoisBox(deleteProductController.getProductChoiseBox());
@@ -225,10 +233,11 @@ public class StoreDetailsController {
         //show add product form
         loadAddProductForm();
         mainBorderPane.setCenter(addProductScrollPane);
-        addProductScrollPane.fitToWidthProperty().set(true);
-        addProductScrollPane.fitToHeightProperty().set(true);
-        addProductController.setSdmSystem(sdmSystem);
-        addProductController.setStoreDetailsController(this);
+        addProductController.initDetails(sdmSystem,this, mainBorderPane,storeDetailsScrollPain);
+//        addProductScrollPane.fitToWidthProperty().set(true);
+//        addProductScrollPane.fitToHeightProperty().set(true);
+//        addProductController.setSdmSystem(sdmSystem);
+//        addProductController.setStoreDetailsController(this);
         initProductsYouCanAddToStore();
     }
 
@@ -237,10 +246,11 @@ public class StoreDetailsController {
         //show update product form
         loadUpdateProductForm();
         mainBorderPane.setCenter(updateProductScrollPane);
-        updateProductScrollPane.fitToWidthProperty().set(true);
-        updateProductScrollPane.fitToHeightProperty().set(true);
-        updateProductPriceController.setSdmSystem(sdmSystem);
-        updateProductPriceController.setStoreDetailsController(this);
+//        updateProductScrollPane.fitToWidthProperty().set(true);
+//        updateProductScrollPane.fitToHeightProperty().set(true);
+        updateProductPriceController.initDetails(sdmSystem,this,mainBorderPane,storeDetailsScrollPain);
+//        updateProductPriceController.setSdmSystem(sdmSystem);
+//        updateProductPriceController.setStoreDetailsController(this);
         initProductsYouCanUpdate();
     }
 
