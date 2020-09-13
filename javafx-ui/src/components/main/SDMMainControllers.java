@@ -7,6 +7,7 @@ import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.store.DTOStore;
 
 import common.FxmlLoader;
+import common.JavaFxHelper;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
@@ -46,8 +47,8 @@ public class SDMMainControllers {
     private Stage primaryStage;
     private SimpleStringProperty selectedFileProperty;
     private SimpleBooleanProperty isFileSelected;
-    private GridPane productsDetailsGridPane;
-    private GridPane customersDetailsGridPane;
+    private ScrollPane productsDetailsScrollPane;
+    private ScrollPane customersDetailsScrollPane;
     private ScrollPane storesDetailsScrollPane;
     private ProductDetailsController productDetailsController;
     private CustomerDetailsController customerDetailsController;
@@ -76,14 +77,14 @@ public class SDMMainControllers {
         showMapButton.disableProperty().bind(fileLoaded.not());
     }
 
-    public void setProductsDetailsGridPane(GridPane productsDetailsGridPane) {
-        this.productsDetailsGridPane = productsDetailsGridPane;
-        productsDetailsGridPane.setAlignment(Pos.CENTER);
+    public void setProductsDetailsScrollPane(ScrollPane productsDetailsScrollPane) {
+        this.productsDetailsScrollPane = productsDetailsScrollPane;
+        JavaFxHelper.initMainScrollPane(productsDetailsScrollPane);
     }
 
-    public void setCustomersDetailsGridPane(GridPane customersDetailsGridPane) {
-        this.customersDetailsGridPane = customersDetailsGridPane;
-        customersDetailsGridPane.setAlignment(Pos.CENTER);
+    public void setCustomersDetailsScrollPane(ScrollPane customersDetailsScrollPane) {
+        this.customersDetailsScrollPane = customersDetailsScrollPane;
+        JavaFxHelper.initMainScrollPane(customersDetailsScrollPane);
     }
 
     public void setStoreDetailsScrollPane(ScrollPane storeDetailsScrollPane){
@@ -172,7 +173,7 @@ public class SDMMainControllers {
     @FXML
     void customerItemClicked(MouseEvent event) {
         if(customerListView.getSelectionModel().getSelectedIndex() != -1) {
-            mainBorderPane.setCenter(customersDetailsGridPane);
+            mainBorderPane.setCenter(customersDetailsScrollPane);
             customerDetailsController.updateGrid(sdmSystem.getCustomer(customerListView.getSelectionModel().getSelectedItem().getCustomerSerialNumber()));
         }
     }
@@ -180,7 +181,7 @@ public class SDMMainControllers {
     @FXML
     void productItemClicked(MouseEvent event) {
         if(productsListView.getSelectionModel().getSelectedIndex() != -1) {
-            mainBorderPane.setCenter(productsDetailsGridPane);
+            mainBorderPane.setCenter(productsDetailsScrollPane);
             productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
         }
     }

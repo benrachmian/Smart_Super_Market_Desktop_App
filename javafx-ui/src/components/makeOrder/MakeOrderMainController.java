@@ -7,6 +7,7 @@ import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
+import common.JavaFxHelper;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeDynamicOrder.MakeDynamicOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
@@ -115,12 +116,13 @@ public class MakeOrderMainController {
     }
 
     private void initMainScrollPainSettings() {
-        makeOrderMainScrollPain.setMinWidth(250);
-        makeOrderMainScrollPain.setMinHeight(250);
-        makeOrderMainScrollPain.setMaxHeight(1000);
-        makeOrderMainScrollPain.setMaxWidth(4000);
-        makeOrderMainScrollPain.fitToWidthProperty().set(true);
-        makeOrderMainScrollPain.fitToHeightProperty().set(true);
+        JavaFxHelper.initMainScrollPane(makeOrderMainScrollPain);
+//        makeOrderMainScrollPain.setMinWidth(250);
+//        makeOrderMainScrollPain.setMinHeight(250);
+//        makeOrderMainScrollPain.setMaxHeight(1000);
+//        makeOrderMainScrollPain.setMaxWidth(4000);
+//        makeOrderMainScrollPain.fitToWidthProperty().set(true);
+//        makeOrderMainScrollPain.fitToHeightProperty().set(true);
     }
 
     private void initTableSettings() {

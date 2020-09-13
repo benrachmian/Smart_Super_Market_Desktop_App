@@ -3,8 +3,6 @@ import common.SDMResourcesConstants;
 import components.main.SDMMainControllers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -64,7 +62,7 @@ public class SDMJavaFXMain extends Application {
         mainFXML = getClass().getResource("/components/details/productsDetails/productDetails.fxml");
         loader.setLocation(mainFXML);
         try {
-            sdmMainControllers.setProductsDetailsGridPane(loader.load());
+            sdmMainControllers.setProductsDetailsScrollPane(loader.load());
             sdmMainControllers.setProductDetailsController(loader.getController());
 
         } catch (IOException e) {
@@ -79,7 +77,7 @@ public class SDMJavaFXMain extends Application {
         mainFXML = getClass().getResource("/components/details/customersDetails/customersDetails.fxml");
         loader.setLocation(mainFXML);
         try {
-            sdmMainControllers.setCustomersDetailsGridPane(loader.load());
+            sdmMainControllers.setCustomersDetailsScrollPane(loader.load());
             sdmMainControllers.setCustomerDetailsController(loader.getController());
 
         } catch (IOException e) {

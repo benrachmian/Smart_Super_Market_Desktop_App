@@ -4,7 +4,10 @@ import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.DTOProduct;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 
 public class ProductDetailsController {
     @FXML private Label serialNumberAnswerLabel;
@@ -13,8 +16,15 @@ public class ProductDetailsController {
     @FXML private Label numOfStoresSellingAnswerLabel;
     @FXML private Label averagePriceAnswerLabel;
     @FXML private Label amountSoldAnswerLabel;
+    @FXML private ScrollPane productsDetailsScrollPane;
+    @FXML private GridPane productsDetailsGridPane;
 
     private SDMSystem sdmSystem;
+
+    @FXML
+    public void initialize(){
+        productsDetailsGridPane.setAlignment(Pos.CENTER);
+    }
 
     public void updateGrid(DTOProduct selectedItem) {
         serialNumberAnswerLabel.setText(String.format("%d",selectedItem.getProductSerialNumber()));

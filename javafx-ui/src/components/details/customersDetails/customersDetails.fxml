@@ -1,42 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.customersDetails.CustomerDetailsController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="NEVER" maxWidth="114.39996337890625" minWidth="4.799989223480225" prefWidth="6.399964809417725" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label alignment="CENTER" text="Customer details:" GridPane.columnIndex="1" GridPane.columnSpan="2">
-         <font>
-            <Font size="51.0" />
-         </font></Label>
-      <Label text="ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Customer's name:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Location:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label text="Number of orders made:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <Label text="Orders average products cost:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Label text="Average orders delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label fx:id="IdAnswerLabel" text="[ID]" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Label fx:id="customerNameAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Label fx:id="customerLocationAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      <Label fx:id="numOfOrdersMadeAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label fx:id="averageOrdersProductCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <Label fx:id="averageOrdersDeliveryCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-   </children>
-</GridPane>
+
+<ScrollPane fx:id="customerDetailsScrollPane" fitToHeight="true" fitToWidth="true" minHeight="470.0" minWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.customersDetails.CustomerDetailsController">
+   <content>
+      <GridPane fx:id="customerDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" maxWidth="114.39996337890625" minWidth="4.799989223480225" prefWidth="6.399964809417725" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="200.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="200.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="120.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints minHeight="300.0" prefHeight="4.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" minWidth="400.0" text="Customer details:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </Label>
+            <GridPane alignment="CENTER" minHeight="100.0" prefHeight="334.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="ID:" GridPane.halignment="RIGHT" />
+                  <Label text="Customer's name:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label text="Location:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label text="Number of orders made:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Label text="Orders average products cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <Label text="Average orders delivery cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                  <Label fx:id="IdAnswerLabel" text="[ID]" GridPane.columnIndex="2" />
+                  <Label fx:id="customerNameAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="customerLocationAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label fx:id="numOfOrdersMadeAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label fx:id="averageOrdersProductCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label fx:id="averageOrdersDeliveryCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>

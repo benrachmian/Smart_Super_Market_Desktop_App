@@ -3,7 +3,9 @@ package components.details.customersDetails;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 public class CustomerDetailsController {
 
@@ -26,9 +28,18 @@ public class CustomerDetailsController {
     @FXML
     private Label averageOrdersDeliveryCostAnswerLabel;
 
+    @FXML
+    private GridPane customerDetailsGridPane;
+
     private SDMSystem sdmSystem;
     private final String NO_ORDERS = "The customer hasn't made any orders yet!";
 
+
+    @FXML
+    public void initialize(){
+        customerDetailsGridPane.setAlignment(Pos.CENTER);
+
+    }
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;
