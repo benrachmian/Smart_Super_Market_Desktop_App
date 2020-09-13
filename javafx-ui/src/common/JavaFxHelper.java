@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 
 
@@ -32,5 +33,14 @@ public class JavaFxHelper {
 
     public static boolean isInteger(Float number) {
         return number % 1 == 0;// if the modulus(remainder of the division) of the argument(number) with 1 is 0 then return true otherwise false.
+    }
+
+    public static void initMainScrollPane(ScrollPane scrollPane) {
+        scrollPane.setMinWidth(250);
+        scrollPane.setMinHeight(250);
+        scrollPane.setMaxHeight(1000);
+        scrollPane.setMaxWidth(4000);
+        scrollPane.fitToWidthProperty().set(true);
+        scrollPane.fitToHeightProperty().set(true);
     }
 }

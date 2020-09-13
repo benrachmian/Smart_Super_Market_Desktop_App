@@ -4,13 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="orderSummaryMainScrollPane" minHeight="800.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.OrderSummaryMainController">
+<ScrollPane fx:id="storesParticipatingScrollPane" minHeight="800.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.StoresParticipatingInDynamicOrderController">
    <content>
       <GridPane alignment="CENTER">
          <columnConstraints>
@@ -36,9 +36,9 @@
                   <Button mnemonicParsing="false" onAction="#onConfirmOrder" text="Continue" />
                </children>
             </HBox>
-            <ScrollPane fx:id="storeAndProductsParticipatingScrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+            <ScrollPane fx:id="singleStoreScrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <content>
-                  <VBox fx:id="storesInOrderSummaryVBox" alignment="CENTER" prefHeight="497.0" prefWidth="706.0" />
+                  <FlowPane fx:id="storesParticipatingFlowPane" prefHeight="489.0" prefWidth="702.0" />
                </content>
             </ScrollPane>
          </children>

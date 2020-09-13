@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" stylesheets="@../../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.SingleStoreParticipatingInDynamicStoreController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="5.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <Label text="Store ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="storeNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Store name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label text="Location" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="pricePerUnitLabel" text="PPK:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="Number of products kinds bought:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label fx:id="storeIdLabel" text="storeIdLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label fx:id="locationLabel" text="locationLabel" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label fx:id="ppkLabel" text="ppkLabel" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label fx:id="numProductsKindLabel" text="numProductsKindLabel" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Label text="Distance from customer:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="distanceFromCustomerLabel" text="distanceFromCustomerLabel" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label text="Delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label fx:id="deliveryCostLabel" text="deliveryCostLabel" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Label text="Total products cost:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label fx:id="totalProductsCostLabel" text="totalProductsCostLabel" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+      <Label fx:id="isPartOfDiscountLabel11" text="Total cost:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <Label fx:id="totalCostLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

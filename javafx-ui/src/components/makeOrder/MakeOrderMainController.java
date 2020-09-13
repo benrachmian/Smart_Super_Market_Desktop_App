@@ -225,7 +225,8 @@ public class MakeOrderMainController {
                 this,
                 shoppingCart,
                 totalProductsCost,
-                totalDeliveryCost
+                totalDeliveryCost,
+                mainBorderPane
         );
     }
 

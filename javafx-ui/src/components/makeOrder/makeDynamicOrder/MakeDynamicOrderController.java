@@ -6,9 +6,11 @@ import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
+import common.FxmlLoader;
 import common.JavaFxHelper;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
+import components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.StoresParticipatingInDynamicOrderController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
@@ -17,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Pair;
 
 import java.util.Collection;
@@ -38,6 +41,10 @@ public class MakeDynamicOrderController {
     //pair: key = product bought, value: amount
     private Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasket;
     private Collection<Pair<DTOProduct, Float>> productsInOrder;
+    private ScrollPane storesParticipatingInDynamicOrderScrollPane;
+    private StoresParticipatingInDynamicOrderController storesParticipatingInDynamicOrderController;
+    private BorderPane mainBorderPane;
+
 
 
     @FXML private ScrollPane makeDynamicOrderMainScrollPain;
@@ -61,6 +68,7 @@ public class MakeDynamicOrderController {
 
     public MakeDynamicOrderController() {
         productsInOrder = new LinkedList<>();
+        amountInTextField = new SimpleFloatProperty();
     }
 
     @FXML
@@ -186,6 +194,21 @@ public class MakeDynamicOrderController {
     @FXML
     void onClickContinue(ActionEvent event) {
         cheapestBasket = sdmSystem.getCheapestBasket(productsInOrder);
+        createStoresParticipatingInDynamicOrderForm();
+
+    }
+
+    private void createStoresParticipatingInDynamicOrderForm() {
+        loadStoresParticipatingInDynamicOrderForm();
+        mainBorderPane.setCenter(storesParticipatingInDynamicOrderScrollPane);
+        storesParticipatingInDynamicOrderController.initDetails(sdmSystem,cheapestBasket,customerMakingTheOrder);
+
+    }
+
+    private void loadStoresParticipatingInDynamicOrderForm() {
+        FxmlLoader<ScrollPane,StoresParticipatingInDynamicOrderController> loaderStoresParticipatingInDynamicOrderForm = new FxmlLoader<>(StoresParticipatingInDynamicOrderController.STORES_PARTICIPATING_IN_DYNAMIC_ORDER_FORM_FXML_PATH);
+        storesParticipatingInDynamicOrderScrollPane = loaderStoresParticipatingInDynamicOrderForm.getFormBasePane();
+        storesParticipatingInDynamicOrderController = loaderStoresParticipatingInDynamicOrderForm.getFormController();
     }
 
     @FXML
@@ -198,13 +221,15 @@ public class MakeDynamicOrderController {
                             MakeOrderMainController makeOrderMainController,
                             Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart,
                             SimpleFloatProperty totalProductsCost,
-                            SimpleFloatProperty totalDeliveryCost) {
+                            SimpleFloatProperty totalDeliveryCost,
+                            BorderPane mainBorderPane) {
         this.sdmSystem = sdmSystem;
         this.customerMakingTheOrder = customerMakingTheOrder;
         this.makeOrderMainController = makeOrderMainController;
         this.cheapestBasket = shoppingCart;
         this.totalProductsCost = totalProductsCost;
         this.totalDeliveryCost = totalDeliveryCost;
+        this.mainBorderPane = mainBorderPane;
         initProductsToBuyTable();
     }
 

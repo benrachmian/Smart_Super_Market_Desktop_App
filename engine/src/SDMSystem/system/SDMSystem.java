@@ -421,10 +421,10 @@ public class SDMSystem {
         return allProductsInOrder;
     }
 
-    public float calcProductsInOrderCost(Collection<Pair<Float, DTOProductInStore>> productsInOrder) {
+    public float calcProductsInOrderCost(Collection<Pair<IDTOProductInStore, Float>> productsInOrder) {
         float res = 0;
-        for(Pair<Float, DTOProductInStore> dtoProductInorder : productsInOrder){
-            res += (dtoProductInorder.getValue().getPrice() * dtoProductInorder.getKey());
+        for(Pair<IDTOProductInStore, Float> dtoProductInorder : productsInOrder){
+            res += (dtoProductInorder.getKey().getPrice() * dtoProductInorder.getValue());
         }
 
         return res;
@@ -605,7 +605,7 @@ public class SDMSystem {
             }
             else{
                 productsFromSameStore = new LinkedList<>();
-                productsFromSameStore.add(new Pair(dtoProductInOrder.getKey(),cheapestProductAsDTO));
+                productsFromSameStore.add(new Pair(cheapestProductAsDTO, dtoProductInOrder.getValue()));
                 cheapestBasket.put(storeWithCheapestProductSerialNumber,productsFromSameStore);
             }
         }
