@@ -3,9 +3,11 @@ package common;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+
+import java.util.Optional;
 
 
 public class JavaFxHelper {
@@ -42,5 +44,17 @@ public class JavaFxHelper {
         scrollPane.setMaxWidth(4000);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.fitToHeightProperty().set(true);
+    }
+
+    public static void cancelOrderAlert(BorderPane mainBorderPane, GridPane startingFormGridPane) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Warning");
+        alert.setHeaderText("You are about to cancel the order");
+        alert.setContentText("You can't undo the action.\nAre you sure about it?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            mainBorderPane.setCenter(startingFormGridPane);
+        }
     }
 }

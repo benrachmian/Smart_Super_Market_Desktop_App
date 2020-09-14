@@ -8,11 +8,13 @@ import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
+import common.JavaFxHelper;
 import components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -54,6 +56,7 @@ public class OrderSummaryMainController {
     @FXML private Label totalOrderCostLabel;
     @FXML private Button cancelButton;
     @FXML private Button confirmOrderButton;
+    private GridPane startingFormGridPane;
 
     @FXML
     public void initialize(){
@@ -76,7 +79,8 @@ public class OrderSummaryMainController {
             DTOStore storeFromWhomTheOrderWasMade,
             LocalDate orderDate,
             BorderPane mainBorderPane,
-            SDMSystem sdmSystem) {
+            SDMSystem sdmSystem,
+            GridPane startingFormGridPane) {
         this.shoppingCart = shoppingCart;
         this.customerMakingTheOrder = customerMakingTheOrder;
         this.totalDeliveryCost = totalDeliveryCost;
@@ -89,6 +93,7 @@ public class OrderSummaryMainController {
         this.orderDate = orderDate;
         this.mainBorderPane = mainBorderPane;
         this.sdmSystem = sdmSystem;
+        this.startingFormGridPane = startingFormGridPane;
 
         addStoresToSummary();
 
@@ -139,12 +144,27 @@ public class OrderSummaryMainController {
                     customerMakingTheOrder
             );
         }
-        mainBorderPane.setCenter(null);
+        orderSuccessfullyMsg();
+        mainBorderPane.setCenter(startingFormGridPane);
+    }
+
+    private void orderSuccessfullyMsg() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Great News");
+        alert.setHeaderText(null);
+        alert.setContentText("The order was made successfully!");
+
+        alert.showAndWait();
     }
 
 
     public void makeButtonsUnvisible() {
         cancelButton.visibleProperty().set(false);
         confirmOrderButton.visibleProperty().set(false);
+    }
+
+    @FXML
+    void onClickCancel(ActionEvent event) {
+        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane);
     }
 }

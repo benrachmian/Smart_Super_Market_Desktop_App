@@ -244,7 +244,7 @@ public class DiscountsInOrderController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-
+        makeOrderMainController.cancelOrderAlert();
     }
 
     @FXML

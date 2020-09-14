@@ -162,7 +162,7 @@ public class SDMSystem {
                // checkIfProductInStoreAndThrowException(sdmDiscount.getIfYouBuy().getItemId(), storeSerialNumber);
                 checkLoadedProductInDiscountAndThrowException(sdmDiscount.getIfYouBuy().getItemId(), productsTheStoreSelling, sdmDiscount.getName());
                 Discount newDiscount = new Discount(
-                        sdmDiscount.getName(),
+                        sdmDiscount.getName().trim(),
                         new Pair<>(sdmDiscount.getIfYouBuy().getItemId(), sdmDiscount.getIfYouBuy().getQuantity()),
                         getDiscountKind(sdmDiscount.getThenYouGet().getOperator()),
                         getOffers(sdmDiscount.getThenYouGet().getSDMOffer(),productsTheStoreSelling,sdmDiscount.getName()),

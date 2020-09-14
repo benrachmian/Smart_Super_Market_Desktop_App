@@ -77,6 +77,7 @@ public class SDMMainControllers {
         fileLoaded = new SimpleBooleanProperty(false);
     }
 
+
     @FXML
     public void initialize(){
         loadStartingForm();
@@ -246,7 +247,8 @@ public class SDMMainControllers {
                     null,
                     order.getOrderDate(),
                     mainBorderPane,
-                    sdmSystem);
+                    sdmSystem,
+                    startingFormGridPane);
             orderSummaryMainController.makeButtonsUnvisible();
             //productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
         }
@@ -276,7 +278,7 @@ public class SDMMainControllers {
         mainBorderPane.setCenter(makeOrderMainScrollPain);
 //        makeOrderMainController.setSdmSystem(sdmSystem);
 //        makeOrderMainController.setMainBorderPane(mainBorderPane);
-        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView);
+        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView,startingFormGridPane);
 
     }
 

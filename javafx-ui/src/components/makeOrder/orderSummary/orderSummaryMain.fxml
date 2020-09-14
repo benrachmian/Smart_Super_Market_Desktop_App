@@ -40,7 +40,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                <children>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onClickCancel" text="Cancel" />
                   <Button fx:id="confirmOrderButton" mnemonicParsing="false" onAction="#onConfirmOrder" text="Confirm Order" />
                </children>
             </HBox>

@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.time.LocalDate;
@@ -69,6 +70,8 @@ public class MakeOrderMainController {
     private DTOStore storeFromWhomTheOrderWasMade = null;
     //for all orders:
     private LocalDate orderDate;
+    private GridPane startingFormGridPane;
+
 
 
     @FXML private ScrollPane makeOrderMainScrollPain;
@@ -100,6 +103,19 @@ public class MakeOrderMainController {
         orderTypeComboBox.getItems().add(OrderType.DYNAMIC_ORDER);
         storesScrollPane.visibleProperty().bind(orderTypeComboBox.valueProperty().isEqualTo(OrderType.STATIC_ORDER));
         initTableSettings();
+        initDatePicker();
+    }
+
+    private void initDatePicker() {
+        //make impossible to pick passed date
+        pickDateBox.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
     }
 
     private void initContinueButtonBinding() {
@@ -153,12 +169,13 @@ public class MakeOrderMainController {
     }
 
 
-    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView) {
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane) {
         this.sdmSystem = sdmSystem;
         this.mainBorderPane = mainBorderPane;
         this.ordersListView = ordersListView;
         initChooseCustomerComboBox();
         initStoresTableWithDetails();
+        this.startingFormGridPane = startingFormGridPane;
     }
 
     private void initStoresTableWithDetails() {
@@ -197,19 +214,11 @@ public class MakeOrderMainController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        cancelOrderAlert();
+        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane);
     }
 
     public void cancelOrderAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Cancel Warning");
-        alert.setHeaderText("You are about to cancel the order");
-        alert.setContentText("You can't undo the action.\nAre you sure about it?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            mainBorderPane.setCenter(null);
-        }
+        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane);
     }
 
     @FXML
@@ -304,7 +313,8 @@ public class MakeOrderMainController {
                 storeFromWhomTheOrderWasMade,
                 orderDate,
                 mainBorderPane,
-                sdmSystem
+                sdmSystem,
+                startingFormGridPane
                 );
     }
 
