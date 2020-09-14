@@ -11,6 +11,7 @@ import common.JavaFxHelper;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
+import components.main.loadingSystemBar.LoadingSystemBarController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -22,8 +23,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import tasks.loadXmlTask.LoadXmlTask;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -59,6 +63,8 @@ public class SDMMainControllers {
     private SimpleBooleanProperty fileLoaded;
     private ScrollPane orderSummaryScrollPane;
     private OrderSummaryMainController orderSummaryMainController;
+    private GridPane loadingSystemBarGridPane;
+    private LoadingSystemBarController loadingSystemBarController;
 
 
 
@@ -120,21 +126,32 @@ public class SDMMainControllers {
     void loadSystemXmlMenuItemAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select XML file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files","*.xml"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             return;
         }
         String absolutePath = selectedFile.getAbsolutePath();
         selectedFileProperty.set(absolutePath);
         isFileSelected.set(true);
-        try {
-            sdmSystem.loadSystem(absolutePath);
-            initMainAccordion();
-            fileLoaded.set(true);
-        } catch (FileNotFoundException | JAXBException | RuntimeException e) {
-            showLoadingFileError(e.getMessage());
-        }
+
+        loadLoadingSystemBar();
+
+        LoadXmlTask loadXmlTask = new LoadXmlTask(sdmSystem, absolutePath, this);
+        loadingSystemBarController.init(loadXmlTask);
+        mainBorderPane.setCenter(loadingSystemBarGridPane);
+        new Thread(loadXmlTask).start();
+        //initMainAccordion();
+        fileLoaded.set(true);
+        //  } catch (FileNotFoundException | JAXBException | RuntimeException e) {
+        //  showLoadingFileError(e.getMessage());
+        //  }
+    }
+
+    private void loadLoadingSystemBar() {
+        FxmlLoader<GridPane,LoadingSystemBarController> loaderLoadingSystemBar = new FxmlLoader<>(LoadingSystemBarController.LOADING_SYSTEM_FXML_PATH);
+        loadingSystemBarGridPane = loaderLoadingSystemBar.getFormBasePane();
+        loadingSystemBarController = loaderLoadingSystemBar.getFormController();
     }
 
     private void initMainAccordion() {
@@ -144,7 +161,7 @@ public class SDMMainControllers {
         initOrdersInAccordion();
     }
 
-    private void initOrdersInAccordion() {
+    public void initOrdersInAccordion() {
         ordersListView.getItems().clear();
         ordersListView.setPlaceholder(new Label("No content yet"));
         for(DTOOrder order : sdmSystem.getAllOrders()){
@@ -152,7 +169,7 @@ public class SDMMainControllers {
         }
     }
 
-    private void initProductsInAccordion() {
+    public void initProductsInAccordion() {
         productsListView.getItems().clear();
         productsListView.setPlaceholder(new Label("No content yet"));
         for(DTOProduct product : sdmSystem.getProductsInSystem().values()){
@@ -160,7 +177,7 @@ public class SDMMainControllers {
         }
     }
 
-    private void initStoresInAccordion() {
+    public void initStoresInAccordion() {
         storeListView.getItems().clear();
         storeListView.setPlaceholder(new Label("No content yet"));
         for(DTOStore store : sdmSystem.getStoresInSystemBySerialNumber().values()){
@@ -168,7 +185,7 @@ public class SDMMainControllers {
         }
     }
 
-    private void initCustomersInAccordion() {
+    public void initCustomersInAccordion() {
         customerListView.getItems().clear();
         customerListView.setPlaceholder(new Label("No content yet"));
         for(DTOCustomer customer : sdmSystem.getCustomers().values()){
@@ -176,13 +193,13 @@ public class SDMMainControllers {
         }
     }
 
-    private void showLoadingFileError(String errorMsg){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(errorMsg);
-        alert.setContentText("Please try different file");
-        alert.showAndWait();
-    }
+        private void showLoadingFileError(String errorMsg){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(errorMsg);
+            alert.setContentText("Please try different file");
+            alert.showAndWait();
+        }
 
 
 

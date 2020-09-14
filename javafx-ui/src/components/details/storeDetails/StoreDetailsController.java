@@ -165,7 +165,7 @@ public class StoreDetailsController {
             }
         }
         else {
-            Label noOrders = new Label("There are no any discounts yet!");
+            Label noOrders = new Label("There are no any orders yet!");
             noOrders.paddingProperty().setValue(new Insets(8, 8, 8, 8));
             ordersFlowPane.getChildren().add(noOrders);
         }
