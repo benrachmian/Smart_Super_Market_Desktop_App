@@ -36,22 +36,6 @@ public class MakeStaticOrderController {
 
     @FXML private ScrollPane makeStaticOrderMainScrollPain;
     @FXML private Button continueButton;
-//    @FXML private ScrollPane storesScrollPane;
-//    @FXML private ScrollPane tableScrollPane;
-//    @FXML private TableView<?> storesTable11;
-//    @FXML private TableColumn<?, ?> storeNameCol11;
-//    @FXML private TableColumn<?, ?> storeIdCol11;
-//    @FXML private TableColumn<?, ?> locationCol11;
-//    @FXML private TableColumn<?, ?> ppkCol11;
-//    @FXML private ScrollPane storesScrollPane1;
-//    @FXML private ScrollPane tableScrollPane1;
-//    @FXML private TableView<?> storesTable1;
-//    @FXML private TableColumn<?, ?> storeNameCol1;
-//    @FXML private TableColumn<?, ?> storeIdCol1;
-//    @FXML private TableColumn<?, ?> locationCol1;
-//    @FXML private TableColumn<?, ?> ppkCol1;
-//    @FXML private ComboBox<?> chooseStoreComboBox1;
-//    @FXML private TextField priceTextField;
     @FXML private TableView<ProductInTable> productsToBuyTable;
     @FXML private TableColumn<ProductInTable, String> productNameCol;
     @FXML private TableColumn<ProductInTable, Integer> productIdCol;
@@ -106,23 +90,6 @@ public class MakeStaticOrderController {
 
         amountTextField.disableProperty().bind(chooseProductComboBox.valueProperty().isNull());
         JavaFxHelper.makeTextFieldInputOnlyFloat(amountTextField,errorInputLabel,amountInTextField);
-//        amountTextField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                if(!newValue.matches("\\d*(\\.\\d*)?")) {
-//                    amountTextField.setText(oldValue);
-//                    errorInputLabel.visibleProperty().set(true);
-//                    errorInputLabel.setManaged(true);
-//                }
-//                else{
-//                    errorInputLabel.visibleProperty().set(false);
-//                    errorInputLabel.setManaged(false);
-//                    if(!amountTextField.getText().isEmpty() && !amountTextField.getText().equals(".")) {
-//                        amountInTextField.set(Float.parseFloat(amountTextField.getText()));
-//                    }
-//                }
-//            }
-//        });
         addToCartButton.disableProperty().bind(
                 chooseProductComboBox.valueProperty().isNull().or(
                         amountTextField.textProperty().isEmpty()
@@ -259,11 +226,29 @@ public class MakeStaticOrderController {
                     amountEntered
             ));
             //add product to shopping cart
-            shoppingCart.add(new Pair(
-                    storeFromWhomTheOrderIsMade.getProductFromStore(chosenProduct.getProductSerialNumber()),
-                    amountEntered));
+            IDTOProductInStore productToAdd = storeFromWhomTheOrderIsMade.getProductFromStore(chosenProduct.getProductSerialNumber());
+            addProductToShoppingCart(productToAdd,amountEntered);
+
             totalProductsCost.set(totalProductsCost.get() + (chosenProduct.getPrice() * amountEntered));
             clearLabelsAfterAddingProductToCart();
+        }
+    }
+
+    private void addProductToShoppingCart(IDTOProductInStore productToAdd, Float amountEntered) {
+        if(shoppingCart.size() > 0) {
+            for (Pair<IDTOProductInStore, Float> productInCart : shoppingCart) {
+                //if already bought this product - need to update the amount bought
+                if (productInCart.getKey().equals(productToAdd)) {
+                    shoppingCart.remove(productInCart);
+                    shoppingCart.add(new Pair<IDTOProductInStore, Float>(productToAdd, productInCart.getValue() + amountEntered));
+
+                } else {
+                    shoppingCart.add(new Pair(productToAdd, amountEntered));
+                }
+            }
+        }
+        else{
+            shoppingCart.add(new Pair(productToAdd, amountEntered));
         }
     }
 

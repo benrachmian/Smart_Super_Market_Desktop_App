@@ -14,6 +14,7 @@ import components.makeOrder.makeDynamicOrder.MakeDynamicOrderController;
 import components.makeOrder.makeStaticOrder.MakeStaticOrderController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,6 +72,7 @@ public class MakeOrderMainController {
     //for all orders:
     private LocalDate orderDate;
     private GridPane startingFormGridPane;
+    private SimpleBooleanProperty orderInProgress;
 
 
 
@@ -169,13 +171,14 @@ public class MakeOrderMainController {
     }
 
 
-    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane) {
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress) {
         this.sdmSystem = sdmSystem;
         this.mainBorderPane = mainBorderPane;
         this.ordersListView = ordersListView;
         initChooseCustomerComboBox();
         initStoresTableWithDetails();
         this.startingFormGridPane = startingFormGridPane;
+        this.orderInProgress = orderInProgress;
     }
 
     private void initStoresTableWithDetails() {
@@ -314,7 +317,8 @@ public class MakeOrderMainController {
                 orderDate,
                 mainBorderPane,
                 sdmSystem,
-                startingFormGridPane
+                startingFormGridPane,
+                orderInProgress
                 );
     }
 

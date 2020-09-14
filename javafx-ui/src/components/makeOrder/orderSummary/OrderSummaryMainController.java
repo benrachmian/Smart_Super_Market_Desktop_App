@@ -4,13 +4,13 @@ import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.order.DTOOrder;
-import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import common.JavaFxHelper;
 import components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +25,6 @@ import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 
 public class OrderSummaryMainController {
@@ -57,6 +56,7 @@ public class OrderSummaryMainController {
     @FXML private Button cancelButton;
     @FXML private Button confirmOrderButton;
     private GridPane startingFormGridPane;
+    private SimpleBooleanProperty orderInProgress;
 
     @FXML
     public void initialize(){
@@ -80,7 +80,8 @@ public class OrderSummaryMainController {
             LocalDate orderDate,
             BorderPane mainBorderPane,
             SDMSystem sdmSystem,
-            GridPane startingFormGridPane) {
+            GridPane startingFormGridPane,
+            SimpleBooleanProperty orderInProgress) {
         this.shoppingCart = shoppingCart;
         this.customerMakingTheOrder = customerMakingTheOrder;
         this.totalDeliveryCost = totalDeliveryCost;
@@ -94,6 +95,7 @@ public class OrderSummaryMainController {
         this.mainBorderPane = mainBorderPane;
         this.sdmSystem = sdmSystem;
         this.startingFormGridPane = startingFormGridPane;
+        this.orderInProgress = orderInProgress;
 
         addStoresToSummary();
 
@@ -145,6 +147,7 @@ public class OrderSummaryMainController {
             );
         }
         orderSuccessfullyMsg();
+        orderInProgress.set(false);
         mainBorderPane.setCenter(startingFormGridPane);
     }
 

@@ -24,15 +24,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tasks.loadXmlTask.LoadXmlTask;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class SDMMainControllers {
 
@@ -69,12 +66,14 @@ public class SDMMainControllers {
     private LoadingSystemBarController loadingSystemBarController;
     private GridPane startingFormGridPane;
     private StartingFormController startingFormController;
+    private SimpleBooleanProperty orderInProgress;
 
 
     public SDMMainControllers() {
         selectedFileProperty = new SimpleStringProperty();
         isFileSelected = new SimpleBooleanProperty(false);
         fileLoaded = new SimpleBooleanProperty(false);
+        orderInProgress = new SimpleBooleanProperty(false);
     }
 
 
@@ -86,7 +85,7 @@ public class SDMMainControllers {
         storeListView.setPlaceholder(new Label("No content yet"));
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
-        makeOrderButton.disableProperty().bind(fileLoaded.not());
+        makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         showMapButton.disableProperty().bind(fileLoaded.not());
 
         ordersTitledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
@@ -248,7 +247,7 @@ public class SDMMainControllers {
                     order.getOrderDate(),
                     mainBorderPane,
                     sdmSystem,
-                    startingFormGridPane);
+                    startingFormGridPane, orderInProgress);
             orderSummaryMainController.makeButtonsUnvisible();
             //productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
         }
@@ -274,11 +273,12 @@ public class SDMMainControllers {
     @FXML
     void clickOnMakeOrder(ActionEvent event) {
         //loadMakeOrderMainForm();
+        orderInProgress.set(true);
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
 //        makeOrderMainController.setSdmSystem(sdmSystem);
 //        makeOrderMainController.setMainBorderPane(mainBorderPane);
-        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView,startingFormGridPane);
+        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView,startingFormGridPane,orderInProgress);
 
     }
 
