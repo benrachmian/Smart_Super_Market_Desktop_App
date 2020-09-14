@@ -4,6 +4,7 @@ import SDMSystem.customer.Customer;
 import SDMSystem.product.IProductInStore;
 import SDMSystem.product.ProductInStore;
 import SDMSystemDTO.order.DTOOrder;
+import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import javafx.util.Pair;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class DynamicOrder extends Order {
     private Collection<StaticOrder> subOrders;
@@ -22,8 +24,8 @@ public class DynamicOrder extends Order {
                         int amountOfProducts,
                         int amountOfProductsKinds,
                         Collection<StaticOrder> subOrders,
-                        Customer whoOrdered) {
-        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds, whoOrdered, null);
+                        Customer whoOrdered, Map<Integer, Collection<Pair<IProductInStore, Float>>> shoppingCartForOrder, Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasketDTO) {
+        super(orderDate, productsInOrder, productsCost, deliveryCost, amountOfProducts, amountOfProductsKinds, whoOrdered, null,shoppingCartForOrder,cheapestBasketDTO);
         this.subOrders = subOrders;
     }
 
@@ -37,7 +39,12 @@ public class DynamicOrder extends Order {
                 getSerialNumber(),
                 createDTOStoresFromWhomTheOrderWasMade(),
                 getAmountOfProducts(),
-                getAmountOfProductsKinds());
+                getAmountOfProductsKinds(),
+                shoppingCartAsDTO,
+                whoOrdered.getSerialNumber(),
+                null,
+                false);
+
     }
 
     private Collection<DTOStore> createDTOStoresFromWhomTheOrderWasMade() {

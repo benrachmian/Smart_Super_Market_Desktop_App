@@ -3,6 +3,7 @@ package components.makeOrder;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
@@ -29,6 +30,7 @@ import java.util.*;
 
 public class MakeOrderMainController {
 
+
     public enum OrderType {
         STATIC_ORDER {
             @Override
@@ -43,6 +45,7 @@ public class MakeOrderMainController {
         }
     }
 
+    private ListView<DTOOrder> ordersListView;
     private SDMSystem sdmSystem;
     private BorderPane mainBorderPane;
     private static final String STATIC_ORDER_FORM_FXML_PATH = "/components/makeOrder/makeStaticOrder/makeStaticOrder.fxml";
@@ -150,7 +153,10 @@ public class MakeOrderMainController {
     }
 
 
-    public void initDetails() {
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView) {
+        this.sdmSystem = sdmSystem;
+        this.mainBorderPane = mainBorderPane;
+        this.ordersListView = ordersListView;
         initChooseCustomerComboBox();
         initStoresTableWithDetails();
     }
@@ -297,7 +303,8 @@ public class MakeOrderMainController {
                 isStaticOrder,
                 storeFromWhomTheOrderWasMade,
                 orderDate,
-                mainBorderPane
+                mainBorderPane,
+                sdmSystem
                 );
     }
 

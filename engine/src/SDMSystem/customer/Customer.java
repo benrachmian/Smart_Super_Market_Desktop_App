@@ -51,10 +51,16 @@ public class Customer implements HasSerialNumber<Integer>, Locationable {
     }
 
     public DTOCustomer createDTOCustomer(){
-        Collection<DTOOrder> dtoOrders = new LinkedList<>();
-        ordersMade.forEach(
-                (order) -> dtoOrders.add(order.createDTOOrderFromOrder())
-        );
+        Collection<DTOOrder> dtoOrders = null;
+//        ordersMade.forEach(
+//                (order) -> dtoOrders.add(order.createDTOOrderFromOrder())
+        if(ordersMade != null) {
+            dtoOrders = new LinkedList<>();
+            for (Order order : ordersMade) {
+                dtoOrders.add(order.createDTOOrderFromOrder());
+            }
+        }
+
         return new DTOCustomer(this.customerName,this.customerId,this.customerLocation, dtoOrders);
     }
 

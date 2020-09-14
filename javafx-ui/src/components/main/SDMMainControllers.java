@@ -12,16 +12,16 @@ import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
 import components.makeOrder.MakeOrderMainController;
+import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -41,7 +41,7 @@ public class SDMMainControllers {
     @FXML private BorderPane mainBorderPane;
     @FXML private Button makeOrderButton;
     @FXML private Button showMapButton;
-
+    @FXML private TitledPane ordersTitledPane;
 
     private SDMSystem sdmSystem;
     private Stage primaryStage;
@@ -57,6 +57,8 @@ public class SDMMainControllers {
     private ScrollPane makeOrderMainScrollPain;
     private MakeOrderMainController makeOrderMainController;
     private SimpleBooleanProperty fileLoaded;
+    private ScrollPane orderSummaryScrollPane;
+    private OrderSummaryMainController orderSummaryMainController;
 
 
 
@@ -75,6 +77,11 @@ public class SDMMainControllers {
         ordersListView.setPlaceholder(new Label("No content yet"));
         makeOrderButton.disableProperty().bind(fileLoaded.not());
         showMapButton.disableProperty().bind(fileLoaded.not());
+
+        ordersTitledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            initOrdersInAccordion();
+        });
+
     }
 
     public void setProductsDetailsScrollPane(ScrollPane productsDetailsScrollPane) {
@@ -134,6 +141,15 @@ public class SDMMainControllers {
         initCustomersInAccordion();
         initStoresInAccordion();
         initProductsInAccordion();
+        initOrdersInAccordion();
+    }
+
+    private void initOrdersInAccordion() {
+        ordersListView.getItems().clear();
+        ordersListView.setPlaceholder(new Label("No content yet"));
+        for(DTOOrder order : sdmSystem.getAllOrders()){
+            ordersListView.getItems().add(order);
+        }
     }
 
     private void initProductsInAccordion() {
@@ -186,6 +202,32 @@ public class SDMMainControllers {
         }
     }
 
+    @FXML
+    void orderItemClicked(MouseEvent event) {
+        if(ordersListView.getSelectionModel().getSelectedIndex() != -1) {
+            DTOOrder order = ordersListView.getSelectionModel().getSelectedItem();
+            loadOrderSummaryForm();
+            mainBorderPane.setCenter(orderSummaryScrollPane);
+            orderSummaryMainController.initDetails(
+                    order.getProductsInOrderByStores(),
+                    sdmSystem.getCustomer(order.getCustomerOrderedId()),
+                    new SimpleFloatProperty(order.getProductsCost()),
+                    new SimpleFloatProperty(order.getDeliveryCost()),
+                    order.isStaticOrder(),
+                    null,
+                    order.getOrderDate(),
+                    mainBorderPane,
+                    sdmSystem);
+            orderSummaryMainController.makeButtonsUnvisible();
+            //productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
+        }
+    }
+
+    private void loadOrderSummaryForm() {
+        FxmlLoader<ScrollPane,OrderSummaryMainController> loaderOrderSummaryForm = new FxmlLoader<>(OrderSummaryMainController.ORDER_SUMMARY_FORM_FXML_PATH);
+        orderSummaryScrollPane = loaderOrderSummaryForm.getFormBasePane();
+        orderSummaryMainController = loaderOrderSummaryForm.getFormController();
+    }
 
     @FXML
     void storeItemClicked(MouseEvent event) {
@@ -202,9 +244,9 @@ public class SDMMainControllers {
         //loadMakeOrderMainForm();
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
-        makeOrderMainController.setSdmSystem(sdmSystem);
-        makeOrderMainController.setMainBorderPane(mainBorderPane);
-        makeOrderMainController.initDetails();
+//        makeOrderMainController.setSdmSystem(sdmSystem);
+//        makeOrderMainController.setMainBorderPane(mainBorderPane);
+        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView);
 
     }
 
@@ -236,6 +278,8 @@ public class SDMMainControllers {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+
 
 
 }

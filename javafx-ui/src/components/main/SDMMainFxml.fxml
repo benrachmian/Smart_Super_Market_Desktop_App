@@ -43,11 +43,11 @@
                   </AnchorPane>
             </content>
           </TitledPane>
-            <TitledPane animated="false" text="Orders">
+            <TitledPane fx:id="ordersTitledPane" animated="false" text="Orders">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="ordersListView" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="ordersListView" onMouseClicked="#orderItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>

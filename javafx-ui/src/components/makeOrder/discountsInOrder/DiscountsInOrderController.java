@@ -159,9 +159,11 @@ public class DiscountsInOrderController {
             //for every product in products bought from store
             for (Pair<IDTOProductInStore, Float> product : shoppingCart.get(storeId)) {
                 discountsForProduct = sdmSystem.getDiscountsForProductFromDiscountsCollection(product, currentStore.getStoreDiscounts(),discountsInOrder);
-                for (Pair<DTODiscount, Integer> discountForProduct : discountsForProduct) {
-                    createSingleDiscountFormAndAddIt(discountForProduct);
-                    selectDiscountComboBox.getItems().add(discountForProduct.getKey());
+                if(discountsForProduct != null) {
+                    for (Pair<DTODiscount, Integer> discountForProduct : discountsForProduct) {
+                        createSingleDiscountFormAndAddIt(discountForProduct);
+                        selectDiscountComboBox.getItems().add(discountForProduct.getKey());
+                    }
                 }
             }
         }

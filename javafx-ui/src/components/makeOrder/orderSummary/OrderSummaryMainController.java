@@ -3,6 +3,7 @@ package components.makeOrder.orderSummary;
 import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
+import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
@@ -12,6 +13,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -50,6 +52,8 @@ public class OrderSummaryMainController {
     @FXML private Label totalProductsCostLabel;
     @FXML private Label totalDeliveryCostLabel;
     @FXML private Label totalOrderCostLabel;
+    @FXML private Button cancelButton;
+    @FXML private Button confirmOrderButton;
 
     @FXML
     public void initialize(){
@@ -71,7 +75,8 @@ public class OrderSummaryMainController {
             boolean isStaticOrder,
             DTOStore storeFromWhomTheOrderWasMade,
             LocalDate orderDate,
-            BorderPane mainBorderPane) {
+            BorderPane mainBorderPane,
+            SDMSystem sdmSystem) {
         this.shoppingCart = shoppingCart;
         this.customerMakingTheOrder = customerMakingTheOrder;
         this.totalDeliveryCost = totalDeliveryCost;
@@ -83,8 +88,13 @@ public class OrderSummaryMainController {
         this.storeFromWhomTheOrderWasMade = storeFromWhomTheOrderWasMade;
         this.orderDate = orderDate;
         this.mainBorderPane = mainBorderPane;
+        this.sdmSystem = sdmSystem;
 
         addStoresToSummary();
+
+    }
+
+    public void initDetailsForPresentOrder(DTOOrder order) {
 
     }
 
@@ -130,5 +140,11 @@ public class OrderSummaryMainController {
             );
         }
         mainBorderPane.setCenter(null);
+    }
+
+
+    public void makeButtonsUnvisible() {
+        cancelButton.visibleProperty().set(false);
+        confirmOrderButton.visibleProperty().set(false);
     }
 }
