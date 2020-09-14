@@ -3,6 +3,7 @@ package tasks.loadXmlTask;
 import SDMSystem.system.SDMSystem;
 import components.main.SDMMainControllers;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 
@@ -13,13 +14,15 @@ public class LoadXmlTask extends Task<Boolean> {
 
     private final SDMSystem sdmSystem;
     private final SDMMainControllers sdmMainControllers;
+    private final SimpleBooleanProperty fileLoaded;
     private String filePath;
 
 
-    public LoadXmlTask(SDMSystem sdmSystem, String filePath, SDMMainControllers sdmMainControllers) {
+    public LoadXmlTask(SDMSystem sdmSystem, String filePath, SDMMainControllers sdmMainControllers, SimpleBooleanProperty fileLoaded) {
         this.filePath = filePath;
         this.sdmSystem = sdmSystem;
         this.sdmMainControllers = sdmMainControllers;
+        this.fileLoaded = fileLoaded;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class LoadXmlTask extends Task<Boolean> {
             updateProgress(0.9, 1);
             updateMessage("Done!");
             updateProgress(1, 1);
+            fileLoaded.set(true);
             return true;
         } catch (FileNotFoundException | JAXBException | RuntimeException e) {
             updateMessage("Error!");

@@ -12,6 +12,7 @@ import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
 import components.main.loadingSystemBar.LoadingSystemBarController;
+import components.main.startingForm.StartingFormController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -47,6 +48,7 @@ public class SDMMainControllers {
     @FXML private Button showMapButton;
     @FXML private TitledPane ordersTitledPane;
 
+
     private SDMSystem sdmSystem;
     private Stage primaryStage;
     private SimpleStringProperty selectedFileProperty;
@@ -65,7 +67,8 @@ public class SDMMainControllers {
     private OrderSummaryMainController orderSummaryMainController;
     private GridPane loadingSystemBarGridPane;
     private LoadingSystemBarController loadingSystemBarController;
-
+    private GridPane startingFormGridPane;
+    private StartingFormController startingFormController;
 
 
     public SDMMainControllers() {
@@ -76,6 +79,7 @@ public class SDMMainControllers {
 
     @FXML
     public void initialize(){
+        loadStartingForm();
         //systemAccordion.disableProperty().bind(isFileSelected.not());
         customerListView.setPlaceholder(new Label("No content yet"));
         storeListView.setPlaceholder(new Label("No content yet"));
@@ -88,6 +92,14 @@ public class SDMMainControllers {
             initOrdersInAccordion();
         });
 
+    }
+
+    private void loadStartingForm() {
+        FxmlLoader<GridPane,StartingFormController> loaderStartingForm = new FxmlLoader<>(StartingFormController.STARTING_FORM_FXML_PATH);
+        startingFormGridPane = loaderStartingForm.getFormBasePane();
+        startingFormController = loaderStartingForm.getFormController();
+        startingFormController.init(fileLoaded);
+        mainBorderPane.setCenter(startingFormGridPane);
     }
 
     public void setProductsDetailsScrollPane(ScrollPane productsDetailsScrollPane) {
@@ -137,7 +149,7 @@ public class SDMMainControllers {
 
         loadLoadingSystemBar();
 
-        LoadXmlTask loadXmlTask = new LoadXmlTask(sdmSystem, absolutePath, this);
+        LoadXmlTask loadXmlTask = new LoadXmlTask(sdmSystem, absolutePath, this,fileLoaded);
         loadingSystemBarController.init(loadXmlTask);
         mainBorderPane.setCenter(loadingSystemBarGridPane);
         new Thread(loadXmlTask).start();
