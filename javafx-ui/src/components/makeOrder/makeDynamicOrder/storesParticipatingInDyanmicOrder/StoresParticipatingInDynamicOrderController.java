@@ -36,6 +36,7 @@ public class StoresParticipatingInDynamicOrderController {
     @FXML private ScrollPane storesParticipatingScrollPane;
     @FXML  private FlowPane storesParticipatingFlowPane;
     @FXML private ScrollPane singleStoreScrollPane;
+    private MakeOrderMainController makeOrderMainController;
 
     @FXML
     public void initialize(){
@@ -71,6 +72,11 @@ public class StoresParticipatingInDynamicOrderController {
         makeDynamicOrderController.ifHasDiscountMakeDiscountsForm();
     }
 
+    @FXML
+    void onCancelButton(ActionEvent event) {
+        makeOrderMainController.cancelOrderAlert();
+    }
+
 
 
     public void initDetails(SDMSystem sdmSystem, Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> cheapestBasket, DTOCustomer customerMakingTheOrder, MakeOrderMainController makeOrderMainController, MakeDynamicOrderController makeDynamicOrderController)
@@ -79,6 +85,7 @@ public class StoresParticipatingInDynamicOrderController {
         this.sdmSystem = sdmSystem;
         this.customerOrdering = customerMakingTheOrder;
         this.makeDynamicOrderController = makeDynamicOrderController;
+        this.makeOrderMainController = makeOrderMainController;
         for(Integer storeId : cheapestBasket.keySet()){
             DTOStore storeParticipating = sdmSystem.getStoreFromStores(storeId);
             addStoreToFlowPane(storeParticipating);

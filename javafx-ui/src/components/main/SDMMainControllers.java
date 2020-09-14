@@ -236,6 +236,7 @@ public class SDMMainControllers {
             //in order to get the most updated store I always get the store from the system even though I got it in the listview.
             storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeListView.getSelectionModel().getSelectedItem().getStoreSerialNumber()));
             storeDetailsController.updateStoreDetailsTab();
+
         }
     }
 

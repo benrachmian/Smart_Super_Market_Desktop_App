@@ -24,7 +24,7 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50.0" vgrow="NEVER" />
          </rowConstraints>
          <children>
             <HBox alignment="CENTER" prefHeight="29.0" prefWidth="624.0" spacing="9.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
@@ -80,7 +80,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane fx:id="productTabScrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="productTabScrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <FlowPane fx:id="productsFlowPane" alignment="CENTER_LEFT" prefHeight="322.0" prefWidth="602.0">
                                        <padding>
@@ -95,14 +95,26 @@
                   </Tab>
                   <Tab text="Orders">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="400.0" minWidth="400.0">
+                           <children>
+                              <ScrollPane fx:id="ordersTabScrollPane" fitToHeight="true" fitToWidth="true" layoutX="6.0" minHeight="306.0" minWidth="252.0" prefHeight="399.2" prefWidth="933.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <FlowPane fx:id="ordersFlowPane" minHeight="400.0" minWidth="400.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </FlowPane>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
                   <Tab text="Discounts">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane fx:id="discountsTabScrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="discountsTabScrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <VBox fx:id="discountsVbox">
                                        <children>

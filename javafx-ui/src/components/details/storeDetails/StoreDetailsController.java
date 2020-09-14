@@ -3,13 +3,17 @@ package components.details.storeDetails;
 import SDMSystem.product.Product;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.discount.DTODiscount;
+import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
+import common.FxmlLoader;
+import common.JavaFxHelper;
 import components.details.storeDetails.addProduct.AddProductController;
 import components.details.storeDetails.addProduct.ProductYouCanAddController;
 import components.details.storeDetails.deleteProduct.DeleteProductController;
 import components.details.storeDetails.discountsInStoreDetails.SingleDiscountController;
+import components.details.storeDetails.ordersInStoreDetails.OrderInStoreDetailsController;
 import components.details.storeDetails.productInStoreDetails.ProductInStoreController;
 import components.details.storeDetails.updateProductPrice.UpdateProductPriceController;
 import javafx.application.Platform;
@@ -39,6 +43,8 @@ public class StoreDetailsController {
     private ProductInStoreController productInStoreController;
     private GridPane productYouCanAddGridPane;
     private ProductYouCanAddController productYouCanAddController;
+    private GridPane orderGridPane;
+    private OrderInStoreDetailsController orderInStoreDetailsController;
     private GridPane discountGridPane;
     private SingleDiscountController singleDiscountController;
     private static final String PRODUCT_IN_STORE_DETAILS_FXML_PATH = "/components/details/storeDetails/productInStoreDetails/productInStoreDetails.fxml";
@@ -65,6 +71,8 @@ public class StoreDetailsController {
     @FXML private VBox discountsVbox;
     @FXML private ScrollPane discountsTabScrollPane;
     @FXML private ScrollPane storeDetailsScrollPain;
+    @FXML private ScrollPane ordersTabScrollPane;
+    @FXML private FlowPane ordersFlowPane;
 
 
 
@@ -82,12 +90,12 @@ public class StoreDetailsController {
 
     @FXML
     public void initialize(){
-        productTabScrollPane.fitToWidthProperty().set(true);
-        discountsTabScrollPane.fitToWidthProperty().set(true);
-        discountsTabScrollPane.fitToHeightProperty().set(true);
-//        productsFlowPane.setPadding(new Insets(10,10,10,10));
-//        productsFlowPane.setVgap(4);
-//        productsFlowPane.setHgap(4);
+       // JavaFxHelper.initMainScrollPane(ordersTabScrollPane);
+//        ordersTabScrollPane.fitToHeightProperty().set(true);
+//        ordersTabScrollPane.fitToWidthProperty().set(true);
+//        productTabScrollPane.fitToWidthProperty().set(true);
+//        discountsTabScrollPane.fitToWidthProperty().set(true);
+//        discountsTabScrollPane.fitToHeightProperty().set(true);
     }
 
     public DTOStore getStore() {
@@ -98,7 +106,10 @@ public class StoreDetailsController {
         updateStoreGeneralDetailsTab();
         updateProductsTab();
         updateDiscountsTab();
+        updateOrdersTab();
     }
+
+
 
     private void updateDiscountsTab( ) {
         discountsVbox.getChildren().clear();
@@ -108,6 +119,18 @@ public class StoreDetailsController {
             );
         }).start();
     }
+
+    private void updateOrdersTab() {
+        ordersFlowPane.getChildren().clear();
+        addOrdersFromStoreToFlowPane();
+//        new Thread(() -> {
+//            Platform.runLater(
+//                    () -> addOrdersFromStoreToFlowPane()
+//            );
+//        }).start();
+    }
+
+
 
     private void updateProductsTab( ) {
         productsFlowPane.getChildren().clear();
@@ -124,6 +147,31 @@ public class StoreDetailsController {
         storePpkAnswerLabel.setText(String.format("%.2f", store.getPpk()));
         totalProfitFromDeliveryAnswerLabel.setText(String.format("%.2f", store.getTotalProfitFromDelivery()));
     }
+
+    private synchronized void addOrdersFromStoreToFlowPane() {
+        ordersFlowPane.getChildren().clear();
+        if(sdmSystem.getOrdersFromStore(store.getStoreSerialNumber()).size() > 0){
+            for(DTOOrder order : sdmSystem.getOrdersFromStore(store.getStoreSerialNumber())){
+                loadOrderInStoreDetails();
+                orderInStoreDetailsController.initDetails(
+                        order.getOrderDate(),
+                        order.getAmountOfProducts(),
+                        order.getProductsCost(),
+                        order.getDeliveryCost(),
+                        order.getOrderCost(),
+                        order.getMainOrder()
+                );
+                ordersFlowPane.getChildren().add(orderGridPane);
+            }
+        }
+        else {
+            Label noOrders = new Label("There are no any discounts yet!");
+            noOrders.paddingProperty().setValue(new Insets(8, 8, 8, 8));
+            ordersFlowPane.getChildren().add(noOrders);
+        }
+    }
+
+
 
     public synchronized void addProductsFromStoreToFlowPane(FlowPane productsFlowPane ) {
         productsFlowPane.getChildren().clear();
@@ -163,48 +211,28 @@ public class StoreDetailsController {
     }
 
     private void loadDiscountDetails() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(SINGLE_DISCOUNT_DETAILS_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            discountGridPane = loader.load();
-            singleDiscountController = loader.getController();
+        FxmlLoader<GridPane,SingleDiscountController> loaderDiscountDetails = new FxmlLoader<>(SINGLE_DISCOUNT_DETAILS_FXML_PATH);
+        discountGridPane = loaderDiscountDetails.getFormBasePane();
+        singleDiscountController = loaderDiscountDetails.getFormController();
+    }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void loadOrderInStoreDetails() {
+        FxmlLoader<GridPane,OrderInStoreDetailsController> loaderOrderInStoreDetails = new FxmlLoader<>(OrderInStoreDetailsController.ORDER_IN_STORE_DETAILS_FXML_PATH);
+        orderGridPane = loaderOrderInStoreDetails.getFormBasePane();
+        orderInStoreDetailsController = loaderOrderInStoreDetails.getFormController();
+
     }
 
      private void loadProductInStoreDetails() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(PRODUCT_IN_STORE_DETAILS_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            productGridPane = loader.load();
-            productInStoreController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+         FxmlLoader<GridPane,ProductInStoreController> loaderProductInStoreDetails = new FxmlLoader<>(PRODUCT_IN_STORE_DETAILS_FXML_PATH);
+         productGridPane = loaderProductInStoreDetails.getFormBasePane();
+         productInStoreController = loaderProductInStoreDetails.getFormController();
     }
 
     private void loadProductYouCanAddDetails() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(PRODUCT_YOU_CAN_ADD_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            productYouCanAddGridPane = loader.load();
-            productYouCanAddController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FxmlLoader<GridPane,ProductYouCanAddController> loaderProductYouCanAddDetails = new FxmlLoader<>(PRODUCT_YOU_CAN_ADD_FXML_PATH);
+        productYouCanAddGridPane = loaderProductYouCanAddDetails.getFormBasePane();
+        productYouCanAddController = loaderProductYouCanAddDetails.getFormController();
     }
 
     @FXML
@@ -218,12 +246,6 @@ public class StoreDetailsController {
                 mainBorderPane,
                 storeDetailsScrollPain
         );
-
-//        deleteProductController.setSdmSystem(sdmSystem);
-//        deleteProductController.setStoreDetailsController(this);
-//        deleteProductController.setMainBorderPane(mainBorderPane);
-//        deleteProductController.setStoreDetailsScrollPain(storeDetailsScrollPain);
-        //deleteProductController.setStore(store);
         addProductsFromStoreToFlowPane(deleteProductController.getProductsFlowPane());
         addProductsToProductChoisBox(deleteProductController.getProductChoiseBox());
     }
@@ -234,10 +256,6 @@ public class StoreDetailsController {
         loadAddProductForm();
         mainBorderPane.setCenter(addProductScrollPane);
         addProductController.initDetails(sdmSystem,this, mainBorderPane,storeDetailsScrollPain);
-//        addProductScrollPane.fitToWidthProperty().set(true);
-//        addProductScrollPane.fitToHeightProperty().set(true);
-//        addProductController.setSdmSystem(sdmSystem);
-//        addProductController.setStoreDetailsController(this);
         initProductsYouCanAddToStore();
     }
 
@@ -246,11 +264,7 @@ public class StoreDetailsController {
         //show update product form
         loadUpdateProductForm();
         mainBorderPane.setCenter(updateProductScrollPane);
-//        updateProductScrollPane.fitToWidthProperty().set(true);
-//        updateProductScrollPane.fitToHeightProperty().set(true);
         updateProductPriceController.initDetails(sdmSystem,this,mainBorderPane,storeDetailsScrollPain);
-//        updateProductPriceController.setSdmSystem(sdmSystem);
-//        updateProductPriceController.setStoreDetailsController(this);
         initProductsYouCanUpdate();
     }
 
@@ -287,51 +301,21 @@ public class StoreDetailsController {
     }
 
     private void loadAddProductForm() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(ADD_PRODUCT_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            addProductScrollPane = loader.load();
-            addProductController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FxmlLoader<ScrollPane,AddProductController> loaderAddProductForm = new FxmlLoader<>(ADD_PRODUCT_FXML_PATH);
+        addProductScrollPane = loaderAddProductForm.getFormBasePane();
+        addProductController = loaderAddProductForm.getFormController();
     }
 
     private void loadUpdateProductForm() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(UPDATE_PRODUCT_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            updateProductScrollPane = loader.load();
-            updateProductPriceController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FxmlLoader<ScrollPane,UpdateProductPriceController> loaderUpdateProductForm = new FxmlLoader<>(UPDATE_PRODUCT_FXML_PATH);
+        updateProductScrollPane = loaderUpdateProductForm.getFormBasePane();
+        updateProductPriceController = loaderUpdateProductForm.getFormController();
     }
 
     private void loadDeleteProductForm() {
-        FXMLLoader loader;
-        URL mainFXML;
-        loader = new FXMLLoader();
-        mainFXML = getClass().getResource(DELETE_PRODUCT_FXML_PATH);
-        loader.setLocation(mainFXML);
-        try {
-            deleteProductScrollPane = loader.load();
-            deleteProductController = loader.getController();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FxmlLoader<ScrollPane,DeleteProductController> loaderDeleteProductForm = new FxmlLoader<>(DELETE_PRODUCT_FXML_PATH);
+        deleteProductScrollPane = loaderDeleteProductForm.getFormBasePane();
+        deleteProductController = loaderDeleteProductForm.getFormController();
     }
-
-
-
 
 }

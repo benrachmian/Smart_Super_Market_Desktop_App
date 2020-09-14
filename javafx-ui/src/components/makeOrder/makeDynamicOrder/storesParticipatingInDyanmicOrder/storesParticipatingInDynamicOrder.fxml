@@ -32,7 +32,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onCancelButton" text="Cancel" />
                   <Button mnemonicParsing="false" onAction="#onContinue" text="Continue" />
                </children>
             </HBox>
