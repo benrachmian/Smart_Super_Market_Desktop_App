@@ -12,23 +12,34 @@ import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
 import components.main.loadingSystemBar.LoadingSystemBarController;
+import components.main.map.SingleSquareController;
 import components.main.startingForm.StartingFormController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tasks.loadXmlTask.LoadXmlTask;
 
+import java.awt.*;
 import java.io.File;
 
 public class SDMMainControllers {
@@ -67,6 +78,12 @@ public class SDMMainControllers {
     private GridPane startingFormGridPane;
     private StartingFormController startingFormController;
     private SimpleBooleanProperty orderInProgress;
+    private SimpleIntegerProperty maxXCoordinate;
+    private SimpleIntegerProperty maxYCoordinate;
+    private GridPane singleSquareGridPane;
+    private SingleSquareController singleSquareController;
+    private GridPane map;
+    private ScrollPane mapScrollPane;
 
 
     public SDMMainControllers() {
@@ -74,19 +91,26 @@ public class SDMMainControllers {
         isFileSelected = new SimpleBooleanProperty(false);
         fileLoaded = new SimpleBooleanProperty(false);
         orderInProgress = new SimpleBooleanProperty(false);
+        maxXCoordinate = new SimpleIntegerProperty();
+        maxYCoordinate = new SimpleIntegerProperty();
+        map = new GridPane();
+        mapScrollPane = new ScrollPane();
     }
 
 
     @FXML
     public void initialize(){
         loadStartingForm();
-        //systemAccordion.disableProperty().bind(isFileSelected.not());
         customerListView.setPlaceholder(new Label("No content yet"));
         storeListView.setPlaceholder(new Label("No content yet"));
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
         makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         showMapButton.disableProperty().bind(fileLoaded.not());
+        mapScrollPane.fitToWidthProperty().set(true);
+        mapScrollPane.fitToHeightProperty().set(true);
+        mapScrollPane.setContent(map);
+        map.setAlignment(Pos.CENTER);
 
         ordersTitledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
             initOrdersInAccordion();
@@ -153,11 +177,23 @@ public class SDMMainControllers {
         loadingSystemBarController.init(loadXmlTask);
         mainBorderPane.setCenter(loadingSystemBarGridPane);
         new Thread(loadXmlTask).start();
-        //initMainAccordion();
         fileLoaded.set(true);
-        //  } catch (FileNotFoundException | JAXBException | RuntimeException e) {
-        //  showLoadingFileError(e.getMessage());
-        //  }
+    }
+
+    public int getMaxXCoordinate() {
+        return maxXCoordinate.get();
+    }
+
+    public SimpleIntegerProperty maxXCoordinateProperty() {
+        return maxXCoordinate;
+    }
+
+    public int getMaxYCoordinate() {
+        return maxYCoordinate.get();
+    }
+
+    public SimpleIntegerProperty maxYCoordinateProperty() {
+        return maxYCoordinate;
     }
 
     private void loadLoadingSystemBar() {
@@ -166,12 +202,18 @@ public class SDMMainControllers {
         loadingSystemBarController = loaderLoadingSystemBar.getFormController();
     }
 
-    private void initMainAccordion() {
-        initCustomersInAccordion();
-        initStoresInAccordion();
-        initProductsInAccordion();
-        initOrdersInAccordion();
+    private void loadSingleSquare() {
+        FxmlLoader<GridPane,SingleSquareController> loaderSingleSquare = new FxmlLoader<>(SingleSquareController.SINGLE_SQUARE_FXML_PATH);
+        singleSquareGridPane = loaderSingleSquare.getFormBasePane();
+        singleSquareController = loaderSingleSquare.getFormController();
     }
+
+//    private void initMainAccordion() {
+//        initCustomersInAccordion();
+//        initStoresInAccordion();
+//        initProductsInAccordion();
+//        initOrdersInAccordion();
+//    }
 
     public void initOrdersInAccordion() {
         ordersListView.getItems().clear();
@@ -272,12 +314,9 @@ public class SDMMainControllers {
 
     @FXML
     void clickOnMakeOrder(ActionEvent event) {
-        //loadMakeOrderMainForm();
         orderInProgress.set(true);
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
-//        makeOrderMainController.setSdmSystem(sdmSystem);
-//        makeOrderMainController.setMainBorderPane(mainBorderPane);
         makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView,startingFormGridPane,orderInProgress);
 
     }
@@ -288,20 +327,62 @@ public class SDMMainControllers {
         makeOrderMainController = loaderMakeOrderMainForm.getFormController();
     }
 
-//    private void loadMakeOrderMainForm() {
-//        FXMLLoader loader;
-//        URL mainFXML;
-//        loader = new FXMLLoader();
-//        mainFXML = getClass().getResource(MAKE_ORDER_MAIN_FXML_PATH);
-//        loader.setLocation(mainFXML);
-//        try {
-//            makeOrderMainScrollPain = loader.load();
-//            makeOrderMainController = loader.getController();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    @FXML
+    void onShowMap(ActionEvent event) {
+        mainBorderPane.setCenter(mapScrollPane);
+
+        Label numLabel;
+        Image customerImage =new Image("/components/main/map/customer.png");
+        Image storeImage =new Image("/components/main/map/store.png");
+
+
+
+        for(int i=0; i<maxYCoordinate.get(); i++){
+            for(int j=0; j<maxXCoordinate.get(); j++) {
+                loadSingleSquare();
+                if (i == 0 && j != 0) {
+                    singleSquareGridPane.add(createNumLabel(j), 0, 0);
+                }
+                else if (j == 0 && i != 0) {
+                    singleSquareGridPane.add(createNumLabel(i), 0, 0);
+                }
+//                else {
+//                    ImageView customerImageView = new ImageView(customerImage);
+//                    customerImageView.fitHeightProperty().setValue(40);
+//                    customerImageView.fitWidthProperty().setValue(40);
+//                    singleSquareGridPane.getChildren().add(customerImageView);
+//                }
+                map.add(singleSquareGridPane, j, i);
+            }
+        }
+
+        for(Point currPoint : sdmSystem.getCustomersAndStoresLocationMap().keySet()) {
+            singleSquareGridPane = (GridPane) map.getChildren().get(((maxXCoordinate.get()) * currPoint.y) + currPoint.x);
+
+            if(sdmSystem.ifStoreInLocation(currPoint)){
+                ImageView storeImageView = new ImageView(storeImage);
+                storeImageView.fitHeightProperty().setValue(40);
+                storeImageView.fitWidthProperty().setValue(40);
+                singleSquareGridPane.getChildren().add(storeImageView);
+            }
+            else{
+                ImageView customerImageView = new ImageView(customerImage);
+                customerImageView.fitHeightProperty().setValue(40);
+                customerImageView.fitWidthProperty().setValue(40);
+                singleSquareGridPane.getChildren().add(customerImageView);
+            }
+        }
+    }
+
+    public Label createNumLabel(int value){
+        Label numLabel = new Label(String.valueOf(value));
+        numLabel.alignmentProperty().setValue(Pos.CENTER);
+        numLabel.minWidth(35);
+        numLabel.prefWidth(Region.USE_COMPUTED_SIZE);
+
+        return numLabel;
+    }
 
     public void setSdmSystem(SDMSystem sdmSystem) {
         this.sdmSystem = sdmSystem;

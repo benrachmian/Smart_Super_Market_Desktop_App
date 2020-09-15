@@ -61,6 +61,10 @@ public class SDMSystem {
         }
     }
 
+    public Map<Point, Locationable> getCustomersAndStoresLocationMap() {
+        return customersAndStoresLocationMap;
+    }
+
     public void addStoreToSystem(Store newStore) {
         Point newStoreLocation = newStore.getStoreLocation();
         //if the store doesn't exist
@@ -895,5 +899,31 @@ public class SDMSystem {
 
     public DTOCustomer getCustomer(int customerSerialNumber) {
         return customersInSystem.getCustomer(customerSerialNumber).createDTOCustomer();
+    }
+
+    public int getMaxXCoordinate() {
+        int maxX = 0;
+        for(Point currPoint : customersAndStoresLocationMap.keySet()){
+            if(currPoint.x > maxX){
+                maxX = currPoint.x;
+            }
+        }
+
+        return maxX;
+    }
+
+    public int getMaxYCoordinate() {
+        int maxY = 0;
+        for(Point currPoint : customersAndStoresLocationMap.keySet()){
+            if(currPoint.y > maxY){
+                maxY = currPoint.y;
+            }
+        }
+
+        return maxY;
+    }
+
+    public boolean ifStoreInLocation(Point currPoint) {
+        return customersAndStoresLocationMap.get(currPoint) instanceof Store;
     }
 }

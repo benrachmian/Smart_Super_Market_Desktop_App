@@ -33,6 +33,7 @@ public class LoadXmlTask extends Task<Boolean> {
             sdmSystem.loadSystem(filePath);
             updateMessage("init customers...");
             updateProgress(0.2, 1);
+            Thread.sleep(120);
             new Thread(() -> {
                 Platform.runLater(
                         () -> sdmMainControllers.initCustomersInAccordion()
@@ -40,26 +41,45 @@ public class LoadXmlTask extends Task<Boolean> {
             }).start();
             updateMessage("init products...");
             updateProgress(0.4, 1);
+            Thread.sleep(120);
             new Thread(() -> {
                 Platform.runLater(
                         () -> sdmMainControllers.initProductsInAccordion()
                 );
             }).start();
             updateMessage("init stores...");
-            updateProgress(0.6, 1);
+            updateProgress(0.5, 1);
+            Thread.sleep(120);
             new Thread(() -> {
                 Platform.runLater(
                         () -> sdmMainControllers.initStoresInAccordion()
                 );
             }).start();
             updateMessage("init orders...");
-            updateProgress(0.8, 1);
+            updateProgress(0.6, 1);
+            Thread.sleep(120);
             new Thread(() -> {
                 Platform.runLater(
                         () -> sdmMainControllers.initOrdersInAccordion()
                 );
             }).start();
-            updateProgress(0.9, 1);
+            updateMessage("calc max X coordinate...");
+            updateProgress(0.7, 1);
+            Thread.sleep(120);
+            new Thread(() -> {
+                Platform.runLater(
+                        () -> sdmMainControllers.maxXCoordinateProperty().set(sdmSystem.getMaxXCoordinate() + 1)
+                );
+            }).start();
+            updateMessage("calc max Y coordinate...");
+            updateProgress(0.87, 1);
+            Thread.sleep(120);
+            new Thread(() -> {
+                Platform.runLater(
+                        () -> sdmMainControllers.maxYCoordinateProperty().set(sdmSystem.getMaxYCoordinate() + 1)
+                );
+            }).start();
+
             updateMessage("Done!");
             updateProgress(1, 1);
             fileLoaded.set(true);

@@ -79,7 +79,7 @@
       <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" text="Make Order" />
-            <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Show Map" />
+            <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
          </children>
          <opaqueInsets>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
