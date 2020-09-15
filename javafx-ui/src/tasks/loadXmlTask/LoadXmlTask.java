@@ -76,13 +76,27 @@ public class LoadXmlTask extends Task<Boolean> {
             Thread.sleep(120);
             new Thread(() -> {
                 Platform.runLater(
-                        () -> sdmMainControllers.maxYCoordinateProperty().set(sdmSystem.getMaxYCoordinate() + 1)
+                        () -> {
+                            sdmMainControllers.maxYCoordinateProperty().set(sdmSystem.getMaxYCoordinate() + 1);
+                        }
+                );
+            }).start();
+
+            updateMessage("Init map...");
+            updateProgress(0.95, 1);
+            Thread.sleep(120);
+            new Thread(() -> {
+                Platform.runLater(
+                        () -> {
+                            sdmMainControllers.createNewMapInstance();
+                            fileLoaded.set(true);
+                            sdmMainControllers.initMapThread();
+                        }
                 );
             }).start();
 
             updateMessage("Done!");
             updateProgress(1, 1);
-            fileLoaded.set(true);
             return true;
         } catch (FileNotFoundException | JAXBException | RuntimeException e) {
             updateMessage("Error!");
@@ -98,13 +112,5 @@ public class LoadXmlTask extends Task<Boolean> {
             return false;
         }
     }
-
-//    private void showLoadingFileError(String errorMsg) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Error");
-//        alert.setHeaderText(errorMsg);
-//        alert.setContentText("Please try different file");
-//        alert.showAndWait();
-//    }
 
 }

@@ -168,6 +168,6 @@ public class OrderSummaryMainController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane);
+        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress);
     }
 }

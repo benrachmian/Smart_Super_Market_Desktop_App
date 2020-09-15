@@ -16,6 +16,7 @@ import components.main.map.SingleSquareController;
 import components.main.startingForm.StartingFormController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -31,10 +32,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tasks.loadXmlTask.LoadXmlTask;
@@ -84,6 +82,7 @@ public class SDMMainControllers {
     private SingleSquareController singleSquareController;
     private GridPane map;
     private ScrollPane mapScrollPane;
+    private SimpleBooleanProperty mapLoaded;
 
 
     public SDMMainControllers() {
@@ -93,8 +92,7 @@ public class SDMMainControllers {
         orderInProgress = new SimpleBooleanProperty(false);
         maxXCoordinate = new SimpleIntegerProperty();
         maxYCoordinate = new SimpleIntegerProperty();
-        map = new GridPane();
-        mapScrollPane = new ScrollPane();
+        mapLoaded = new SimpleBooleanProperty(false);
     }
 
 
@@ -106,16 +104,22 @@ public class SDMMainControllers {
         productsListView.setPlaceholder(new Label("No content yet"));
         ordersListView.setPlaceholder(new Label("No content yet"));
         makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
-        showMapButton.disableProperty().bind(fileLoaded.not());
-        mapScrollPane.fitToWidthProperty().set(true);
-        mapScrollPane.fitToHeightProperty().set(true);
-        mapScrollPane.setContent(map);
-        map.setAlignment(Pos.CENTER);
+        showMapButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
+
 
         ordersTitledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
             initOrdersInAccordion();
         });
 
+    }
+
+    public void createNewMapInstance() {
+        map = new GridPane();
+        mapScrollPane = new ScrollPane();
+        mapScrollPane.fitToWidthProperty().set(true);
+        mapScrollPane.fitToHeightProperty().set(true);
+        mapScrollPane.setContent(map);
+        map.setAlignment(Pos.CENTER);
     }
 
     private void loadStartingForm() {
@@ -177,7 +181,17 @@ public class SDMMainControllers {
         loadingSystemBarController.init(loadXmlTask);
         mainBorderPane.setCenter(loadingSystemBarGridPane);
         new Thread(loadXmlTask).start();
-        fileLoaded.set(true);
+    }
+
+    public void initMapThread() {
+        new Thread(() -> {
+            Platform.runLater(
+                    () -> {
+                        initMap();
+                        mapLoaded.set(true);
+                    }
+            );
+        }).start();
     }
 
     public int getMaxXCoordinate() {
@@ -207,13 +221,6 @@ public class SDMMainControllers {
         singleSquareGridPane = loaderSingleSquare.getFormBasePane();
         singleSquareController = loaderSingleSquare.getFormController();
     }
-
-//    private void initMainAccordion() {
-//        initCustomersInAccordion();
-//        initStoresInAccordion();
-//        initProductsInAccordion();
-//        initOrdersInAccordion();
-//    }
 
     public void initOrdersInAccordion() {
         ordersListView.getItems().clear();
@@ -259,40 +266,72 @@ public class SDMMainControllers {
 
     @FXML
     void customerItemClicked(MouseEvent event) {
-        if(customerListView.getSelectionModel().getSelectedIndex() != -1) {
-            mainBorderPane.setCenter(customersDetailsScrollPane);
-            customerDetailsController.updateGrid(sdmSystem.getCustomer(customerListView.getSelectionModel().getSelectedItem().getCustomerSerialNumber()));
+        if(orderInProgress.getValue()){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+                showCustomerDetails();
+            }
         }
+        else {
+            if (customerListView.getSelectionModel().getSelectedIndex() != -1) {
+                showCustomerDetails();
+            }
+        }
+    }
+
+    private void showCustomerDetails() {
+        mainBorderPane.setCenter(customersDetailsScrollPane);
+        customerDetailsController.updateGrid(sdmSystem.getCustomer(customerListView.getSelectionModel().getSelectedItem().getCustomerSerialNumber()));
     }
 
     @FXML
     void productItemClicked(MouseEvent event) {
-        if(productsListView.getSelectionModel().getSelectedIndex() != -1) {
-            mainBorderPane.setCenter(productsDetailsScrollPane);
-            productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
+        if(orderInProgress.getValue()){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+                showProductDetails();
+            }
         }
+        else{
+            if (productsListView.getSelectionModel().getSelectedIndex() != -1) {
+                showProductDetails();
+            }
+        }
+    }
+
+    private void showProductDetails() {
+        mainBorderPane.setCenter(productsDetailsScrollPane);
+        productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
     }
 
     @FXML
     void orderItemClicked(MouseEvent event) {
-        if(ordersListView.getSelectionModel().getSelectedIndex() != -1) {
-            DTOOrder order = ordersListView.getSelectionModel().getSelectedItem();
-            loadOrderSummaryForm();
-            mainBorderPane.setCenter(orderSummaryScrollPane);
-            orderSummaryMainController.initDetails(
-                    order.getProductsInOrderByStores(),
-                    sdmSystem.getCustomer(order.getCustomerOrderedId()),
-                    new SimpleFloatProperty(order.getProductsCost()),
-                    new SimpleFloatProperty(order.getDeliveryCost()),
-                    order.isStaticOrder(),
-                    null,
-                    order.getOrderDate(),
-                    mainBorderPane,
-                    sdmSystem,
-                    startingFormGridPane, orderInProgress);
-            orderSummaryMainController.makeButtonsUnvisible();
-            //productDetailsController.updateGrid(sdmSystem.getProductFromSystem(productsListView.getSelectionModel().getSelectedItem().getProductSerialNumber()));
+        if(orderInProgress.getValue()){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+                showOrderDetails();
+            }
         }
+        else {
+            if (ordersListView.getSelectionModel().getSelectedIndex() != -1) {
+                showOrderDetails();
+            }
+        }
+    }
+
+    private void showOrderDetails() {
+        DTOOrder order = ordersListView.getSelectionModel().getSelectedItem();
+        loadOrderSummaryForm();
+        mainBorderPane.setCenter(orderSummaryScrollPane);
+        orderSummaryMainController.initDetails(
+                order.getProductsInOrderByStores(),
+                sdmSystem.getCustomer(order.getCustomerOrderedId()),
+                new SimpleFloatProperty(order.getProductsCost()),
+                new SimpleFloatProperty(order.getDeliveryCost()),
+                order.isStaticOrder(),
+                null,
+                order.getOrderDate(),
+                mainBorderPane,
+                sdmSystem,
+                startingFormGridPane, orderInProgress);
+        orderSummaryMainController.makeButtonsUnvisible();
     }
 
     private void loadOrderSummaryForm() {
@@ -303,13 +342,24 @@ public class SDMMainControllers {
 
     @FXML
     void storeItemClicked(MouseEvent event) {
-        if(storeListView.getSelectionModel().getSelectedIndex() != -1) {
-            mainBorderPane.setCenter(storesDetailsScrollPane);
-            //in order to get the most updated store I always get the store from the system even though I got it in the listview.
-            storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeListView.getSelectionModel().getSelectedItem().getStoreSerialNumber()));
-            storeDetailsController.updateStoreDetailsTab();
-
+        if(orderInProgress.getValue()){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+                showStoreDetails();
+            }
         }
+        else {
+            if (storeListView.getSelectionModel().getSelectedIndex() != -1) {
+                showStoreDetails();
+
+            }
+        }
+    }
+
+    private void showStoreDetails() {
+        mainBorderPane.setCenter(storesDetailsScrollPane);
+        //in order to get the most updated store I always get the store from the system even though I got it in the listview.
+        storeDetailsController.setStore(sdmSystem.getStoreFromStores(storeListView.getSelectionModel().getSelectedItem().getStoreSerialNumber()));
+        storeDetailsController.updateStoreDetailsTab();
     }
 
     @FXML
@@ -330,47 +380,58 @@ public class SDMMainControllers {
 
     @FXML
     void onShowMap(ActionEvent event) {
-        mainBorderPane.setCenter(mapScrollPane);
+        if(mapLoaded.getValue()) {
+            mainBorderPane.setCenter(mapScrollPane);
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bad News");
+            alert.setHeaderText(null);
+            alert.setContentText("The map is not fully loaded yet, please try again in a few seconds");
+            alert.showAndWait();
+        }
+    }
 
+    public void initMap() {
         Label numLabel;
         Image customerImage =new Image("/components/main/map/customer.png");
         Image storeImage =new Image("/components/main/map/store.png");
 
 
-
         for(int i=0; i<maxYCoordinate.get(); i++){
             for(int j=0; j<maxXCoordinate.get(); j++) {
                 loadSingleSquare();
+                singleSquareController.initDetails(j,i);
                 if (i == 0 && j != 0) {
-                    singleSquareGridPane.add(createNumLabel(j), 0, 0);
+                    //singleSquareGridPane.add(createNumLabel(j), 0, 0);
+                    singleSquareGridPane.getChildren().add(new Pane(createNumLabel(j)));
                 }
                 else if (j == 0 && i != 0) {
-                    singleSquareGridPane.add(createNumLabel(i), 0, 0);
+                    singleSquareGridPane.getChildren().add(new Pane(createNumLabel(i)));
                 }
-//                else {
-//                    ImageView customerImageView = new ImageView(customerImage);
-//                    customerImageView.fitHeightProperty().setValue(40);
-//                    customerImageView.fitWidthProperty().setValue(40);
-//                    singleSquareGridPane.getChildren().add(customerImageView);
-//                }
                 map.add(singleSquareGridPane, j, i);
             }
         }
 
+        addCustomersAndStoresToMap(customerImage, storeImage);
+    }
+
+    private void addCustomersAndStoresToMap(Image customerImage, Image storeImage) {
         for(Point currPoint : sdmSystem.getCustomersAndStoresLocationMap().keySet()) {
             singleSquareGridPane = (GridPane) map.getChildren().get(((maxXCoordinate.get()) * currPoint.y) + currPoint.x);
-
             if(sdmSystem.ifStoreInLocation(currPoint)){
                 ImageView storeImageView = new ImageView(storeImage);
                 storeImageView.fitHeightProperty().setValue(40);
                 storeImageView.fitWidthProperty().setValue(40);
                 singleSquareGridPane.getChildren().add(storeImageView);
+                singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
             }
             else{
                 ImageView customerImageView = new ImageView(customerImage);
                 customerImageView.fitHeightProperty().setValue(40);
                 customerImageView.fitWidthProperty().setValue(40);
                 singleSquareGridPane.getChildren().add(customerImageView);
+                singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
             }
         }
     }
@@ -380,6 +441,7 @@ public class SDMMainControllers {
         numLabel.alignmentProperty().setValue(Pos.CENTER);
         numLabel.minWidth(35);
         numLabel.prefWidth(Region.USE_COMPUTED_SIZE);
+        numLabel.setAlignment(Pos.CENTER);
 
         return numLabel;
     }

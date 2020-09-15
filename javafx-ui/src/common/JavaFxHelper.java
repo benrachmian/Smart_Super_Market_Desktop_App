@@ -1,5 +1,6 @@
 package common;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -46,7 +47,8 @@ public class JavaFxHelper {
         scrollPane.fitToHeightProperty().set(true);
     }
 
-    public static void cancelOrderAlert(BorderPane mainBorderPane, GridPane startingFormGridPane) {
+    public static boolean cancelOrderAlert(BorderPane mainBorderPane, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress) {
+        boolean answer = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
         alert.setHeaderText("You are about to cancel the order");
@@ -55,6 +57,10 @@ public class JavaFxHelper {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             mainBorderPane.setCenter(startingFormGridPane);
+            orderInProgress.set(false);
+            answer = true;
         }
+
+        return answer;
     }
 }
