@@ -420,21 +420,25 @@ public class SDMMainControllers {
         for(Point currPoint : sdmSystem.getCustomersAndStoresLocationMap().keySet()) {
             singleSquareGridPane = (GridPane) map.getChildren().get(((maxXCoordinate.get()) * currPoint.y) + currPoint.x);
             if(sdmSystem.ifStoreInLocation(currPoint)){
-                ImageView storeImageView = new ImageView(storeImage);
-                storeImageView.fitHeightProperty().setValue(40);
-                storeImageView.fitWidthProperty().setValue(40);
+                ImageView storeImageView = createImageViewForMap(storeImage);
                 singleSquareGridPane.getChildren().add(storeImageView);
                 singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
             }
             else{
-                ImageView customerImageView = new ImageView(customerImage);
-                customerImageView.fitHeightProperty().setValue(40);
-                customerImageView.fitWidthProperty().setValue(40);
+                ImageView customerImageView = createImageViewForMap(customerImage);
                 singleSquareGridPane.getChildren().add(customerImageView);
                 singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
             }
         }
     }
+
+    private ImageView createImageViewForMap(Image image){
+        ImageView imageView = new ImageView(image);
+        imageView.fitHeightProperty().setValue(40);
+        imageView.fitWidthProperty().setValue(40);
+        return imageView;
+    }
+
 
     public Label createNumLabel(int value){
         Label numLabel = new Label(String.valueOf(value));
