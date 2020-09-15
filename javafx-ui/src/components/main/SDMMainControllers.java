@@ -39,6 +39,8 @@ import tasks.loadXmlTask.LoadXmlTask;
 
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SDMMainControllers {
 
@@ -83,6 +85,7 @@ public class SDMMainControllers {
     private GridPane map;
     private ScrollPane mapScrollPane;
     private SimpleBooleanProperty mapLoaded;
+    private Map<GridPane,SingleSquareController> cellsControllersInMap;
 
 
     public SDMMainControllers() {
@@ -116,6 +119,7 @@ public class SDMMainControllers {
     public void createNewMapInstance() {
         map = new GridPane();
         mapScrollPane = new ScrollPane();
+        cellsControllersInMap = new HashMap<>();
         mapScrollPane.fitToWidthProperty().set(true);
         mapScrollPane.fitToHeightProperty().set(true);
         mapScrollPane.setContent(map);
@@ -403,13 +407,15 @@ public class SDMMainControllers {
                 loadSingleSquare();
                 singleSquareController.initDetails(j,i);
                 if (i == 0 && j != 0) {
-                    //singleSquareGridPane.add(createNumLabel(j), 0, 0);
-                    singleSquareGridPane.getChildren().add(new Pane(createNumLabel(j)));
+                    singleSquareGridPane.add(createNumLabel(j), 0, 0);
+                    //singleSquareGridPane.getChildren().add(new Pane(createNumLabel(j)));
                 }
                 else if (j == 0 && i != 0) {
-                    singleSquareGridPane.getChildren().add(new Pane(createNumLabel(i)));
+                    //singleSquareGridPane.getChildren().add(new Pane(createNumLabel(i)));
+                    singleSquareGridPane.add(createNumLabel(i),0,0);
                 }
                 map.add(singleSquareGridPane, j, i);
+                cellsControllersInMap.put(singleSquareGridPane,singleSquareController);
             }
         }
 
@@ -422,12 +428,12 @@ public class SDMMainControllers {
             if(sdmSystem.ifStoreInLocation(currPoint)){
                 ImageView storeImageView = createImageViewForMap(storeImage);
                 singleSquareGridPane.getChildren().add(storeImageView);
-                singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
+                cellsControllersInMap.get(singleSquareGridPane).setSquareType(SingleSquareController.SquareType.STORE);
             }
             else{
                 ImageView customerImageView = createImageViewForMap(customerImage);
                 singleSquareGridPane.getChildren().add(customerImageView);
-                singleSquareGridPane.alignmentProperty().setValue(Pos.CENTER);
+                cellsControllersInMap.get(singleSquareGridPane).setSquareType(SingleSquareController.SquareType.CUSTOMER);
             }
         }
     }

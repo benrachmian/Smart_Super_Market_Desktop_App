@@ -1,9 +1,13 @@
 package components.main.map;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class SingleSquareController {
         public enum SquareType{
@@ -20,6 +24,7 @@ public class SingleSquareController {
 
         @FXML
         public void initialize(){
+                productGridPane.setAlignment(Pos.CENTER);
 
         }
 
@@ -38,6 +43,12 @@ public class SingleSquareController {
 
         @FXML
         void onClick(MouseEvent event) {
+                if(squareType == SquareType.STORE){
+                        Stage stage = new Stage();
+                        stage.setTitle("My New Stage Title");
+                        stage.setScene(new Scene(new Label("Ben Rachmian"), 450, 450));
+                        stage.show();
+                }
         }
 
 
