@@ -43,6 +43,10 @@ public class DTOCustomer {
     public int getCustomerSerialNumber() {
         return customerSerialNumber;
     }
+
+    public int getTotalOrders() {
+        return ordersMade.size();
+    }
 }
 
 

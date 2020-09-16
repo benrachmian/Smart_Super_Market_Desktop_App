@@ -926,4 +926,12 @@ public class SDMSystem {
     public boolean ifStoreInLocation(Point currPoint) {
         return customersAndStoresLocationMap.get(currPoint) instanceof Store;
     }
+
+    public DTOStore getStoreInSystemByLocation(Point currPoint) {
+        return storesInSystem.getStoresInSystemByLocation().get(currPoint).createDTOStore();
+    }
+
+    public DTOCustomer getCustomer(Point customerLocation) {
+        return customersInSystem.getCustomersInSystemByLocation().get(customerLocation).createDTOCustomer();
+    }
 }

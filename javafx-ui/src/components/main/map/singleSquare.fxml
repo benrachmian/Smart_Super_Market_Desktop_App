@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane id="productInStoreGridPane" fx:id="productGridPane" minHeight="70.0" minWidth="70.0" onMouseClicked="#onClick" prefHeight="70.0" prefWidth="70.0" stylesheets="@../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.map.SingleSquareController">
+<GridPane id="productInStoreGridPane" fx:id="singleSquareGridPane" minHeight="70.0" minWidth="70.0" onMouseClicked="#onClick" prefHeight="70.0" prefWidth="70.0" stylesheets="@../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.map.SingleSquareController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
    </columnConstraints>

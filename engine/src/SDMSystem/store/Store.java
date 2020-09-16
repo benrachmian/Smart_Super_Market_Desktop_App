@@ -9,6 +9,7 @@ import SDMSystem.order.Order;
 import SDMSystem.product.Product;
 import SDMSystem.product.ProductInStore;
 import SDMSystem.exceptions.*;
+import SDMSystem.system.ItemInSystem;
 import SDMSystemDTO.discount.DTODiscount;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInDiscount;
@@ -115,38 +116,6 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         return storeSerialNumber;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Store ID: " + storeSerialNumber +
-//                "\nStore name: " + storeName +
-//                "\nProducts in store:\n\n" + productsInStoreToSting() +
-//                "\nOrders history: " + ordersToString() +
-//                "\nPPK: " + ppk +
-//                "\nTotal profit from delivery: " + totalProfitFromDelivery;
-//    }
-
-//    private String ordersToString() {
-//        String res = "";
-//        if (ordersFromStore.size() != 0) {
-//            for (Order order : ordersFromStore) {
-//                res = res.concat(order.toString());
-//            }
-//        }
-//        else{
-//            res = res.concat("There are no any orders yet!");
-//        }
-//
-//        return res;
-//    }
-
-//    private String productsInStoreToSting() {
-//        String res = "";
-//        for(ProductInStore productInStore : productsInStore.values()){
-//            res = res.concat(productInStore.toString() + "\n");
-//        }
-//
-//        return res;
-//    }
 
     public Map<Integer, DTOProductInStore> getDTOProductsInStore() {
         Map<Integer, DTOProductInStore> DTOProductsInStore = new HashMap<>();
@@ -157,16 +126,6 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
         return DTOProductsInStore;
     }
 
-//    private DTOProductInStore createDTOProductInStoreFromProductInStore(ProductInStore productInStore) {
-//        DTOProductInStore newDTOProductInStore = new DTOProductInStore(
-//                productInStore.getSerialNumber(),
-//                productInStore.getProductName(),
-//                productInStore.getWayOfBuying(),
-//                productInStore.getAmountSoldInAllStores(),
-//                productInStore.getPrice(),
-//                productInStore.getAmountSoldInStore());
-//        return newDTOProductInStore;
-//    }
 
     public DTOStore createDTOStore() {
         return new DTOStore(
@@ -175,9 +134,9 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
                 ppk,
                 storeSerialNumber,
                 storeName,
-                //getDTOOrdersFromStore(),
                 totalProfitFromDelivery,
-                getDTODiscountsInStore());
+                getDTODiscountsInStore(),
+                ordersFromStore.size());
     }
 
     private Collection<DTODiscount> getDTODiscountsInStore() {
@@ -347,4 +306,6 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
 
         return answer;
     }
+
+
 }

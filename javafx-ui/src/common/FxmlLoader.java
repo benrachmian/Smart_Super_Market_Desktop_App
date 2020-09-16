@@ -12,7 +12,7 @@ public class FxmlLoader<FormBasePane,FormController> {
 
     public FxmlLoader(String fxmlFilePath) {
         this.fxmlFilePath = fxmlFilePath;
-        loadDiscountsInOrderForm();
+        loadForm();
     }
 
     public FormBasePane getFormBasePane() {
@@ -23,7 +23,7 @@ public class FxmlLoader<FormBasePane,FormController> {
         return formController;
     }
 
-    private void loadDiscountsInOrderForm() {
+    private void loadForm() {
         FXMLLoader loader;
         URL mainFXML;
         loader = new FXMLLoader();

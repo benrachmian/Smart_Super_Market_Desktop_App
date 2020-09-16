@@ -18,6 +18,8 @@ public class DTOStore {
     //private Collection<DTOFeedback> storeFeedbacks;
     private final float totalProfitFromDelivery;
     private final Collection<DTODiscount> storeDiscounts;
+    private final int totalOrders;
+
     @Override
     public String toString() {
         return storeName + ", ID:" + getStoreSerialNumber();
@@ -29,7 +31,8 @@ public class DTOStore {
                     int storeSerialNumber,
                     String storeName,
                     float totalProfitFromDelivery,
-                    Collection<DTODiscount> storeDiscounts ) {
+                    Collection<DTODiscount> storeDiscounts,
+                    int totalOrders) {
         this.productsInStore = productsInStore;
         this.storeLocation = storeLocation;
         this.ppk = ppk;
@@ -37,6 +40,7 @@ public class DTOStore {
         this.storeName = storeName;
         this.totalProfitFromDelivery = totalProfitFromDelivery;
         this.storeDiscounts = storeDiscounts;
+        this.totalOrders = totalOrders;
     }
 
     public Collection<DTODiscount> getStoreDiscounts() {
@@ -68,13 +72,9 @@ public class DTOStore {
         return storeName;
     }
 
-//    public Collection<DTOOrder> getOrdersFromStore() {
-//        return ordersFromStore;
-//    }
-
-//    public Collection<DTOFeedback> getStoreFeedbacks() {
-//        return storeFeedbacks;
-//    }
+    public int getTotalOrders() {
+        return totalOrders;
+    }
 
     public float getTotalProfitFromDelivery() {
         return totalProfitFromDelivery;

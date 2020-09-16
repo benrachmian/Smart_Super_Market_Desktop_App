@@ -397,21 +397,17 @@ public class SDMMainControllers {
     }
 
     public void initMap() {
-        Label numLabel;
         Image customerImage =new Image("/components/main/map/customer.png");
         Image storeImage =new Image("/components/main/map/store.png");
-
 
         for(int i=0; i<maxYCoordinate.get(); i++){
             for(int j=0; j<maxXCoordinate.get(); j++) {
                 loadSingleSquare();
-                singleSquareController.initDetails(j,i);
+                singleSquareController.initDetails(j,i,sdmSystem,primaryStage);
                 if (i == 0 && j != 0) {
                     singleSquareGridPane.add(createNumLabel(j), 0, 0);
-                    //singleSquareGridPane.getChildren().add(new Pane(createNumLabel(j)));
                 }
                 else if (j == 0 && i != 0) {
-                    //singleSquareGridPane.getChildren().add(new Pane(createNumLabel(i)));
                     singleSquareGridPane.add(createNumLabel(i),0,0);
                 }
                 map.add(singleSquareGridPane, j, i);
@@ -428,12 +424,17 @@ public class SDMMainControllers {
             if(sdmSystem.ifStoreInLocation(currPoint)){
                 ImageView storeImageView = createImageViewForMap(storeImage);
                 singleSquareGridPane.getChildren().add(storeImageView);
-                cellsControllersInMap.get(singleSquareGridPane).setSquareType(SingleSquareController.SquareType.STORE);
+                SingleSquareController currController =  cellsControllersInMap.get(singleSquareGridPane);
+                currController.setSquareType(SingleSquareController.SquareType.STORE);
+                currController.getTooltip().setText(sdmSystem.getStoreInSystemByLocation(currPoint).getStoreName());
             }
             else{
                 ImageView customerImageView = createImageViewForMap(customerImage);
                 singleSquareGridPane.getChildren().add(customerImageView);
-                cellsControllersInMap.get(singleSquareGridPane).setSquareType(SingleSquareController.SquareType.CUSTOMER);
+                SingleSquareController currController =  cellsControllersInMap.get(singleSquareGridPane);
+                currController.setSquareType(SingleSquareController.SquareType.STORE);
+                currController.setSquareType(SingleSquareController.SquareType.CUSTOMER);
+                currController.getTooltip().setText(sdmSystem.getCustomer(currPoint).getCustomerName());
             }
         }
     }
