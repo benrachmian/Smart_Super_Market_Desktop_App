@@ -401,8 +401,8 @@ public class SDMMainControllers {
         Image customerImage =new Image("/components/main/map/customer.png");
         Image storeImage =new Image("/components/main/map/store.png");
 
-        for(int i=0; i<maxYCoordinate.get(); i++){
-            for(int j=0; j<maxXCoordinate.get(); j++) {
+        for(int i=0; i<maxYCoordinate.get() + 1; i++){
+            for(int j=0; j<maxXCoordinate.get() + 1; j++) {
                 loadSingleSquare();
                 singleSquareController.initDetails(j,i,sdmSystem,primaryStage);
                 if (i == 0 && j != 0) {
@@ -421,7 +421,7 @@ public class SDMMainControllers {
 
     private void addCustomersAndStoresToMap(Image customerImage, Image storeImage) {
         for(Point currPoint : sdmSystem.getCustomersAndStoresLocationMap().keySet()) {
-            singleSquareGridPane = (GridPane) map.getChildren().get(((maxXCoordinate.get()) * currPoint.y) + currPoint.x);
+            singleSquareGridPane = (GridPane) map.getChildren().get(((maxXCoordinate.get() +1 ) * currPoint.y) + currPoint.x);
             if(sdmSystem.ifStoreInLocation(currPoint)){
                 ImageView storeImageView = createImageViewForMap(storeImage);
                 singleSquareGridPane.getChildren().add(storeImageView);
