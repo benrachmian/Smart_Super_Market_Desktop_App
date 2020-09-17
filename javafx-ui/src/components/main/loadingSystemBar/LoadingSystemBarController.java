@@ -11,6 +11,7 @@ public class LoadingSystemBarController {
 
     @FXML private ProgressBar loadingProgressBar;
     @FXML private Label statusLabel;
+    @FXML private Label filePathLabel;
 
 
     public ProgressBar getLoadingProgressBar() {
@@ -21,8 +22,9 @@ public class LoadingSystemBarController {
         return statusLabel;
     }
 
-    public void init(LoadXmlTask loadXmlTask) {
+    public void init(LoadXmlTask loadXmlTask, String absolutePath) {
         loadingProgressBar.progressProperty().bind(loadXmlTask.progressProperty());
         statusLabel.textProperty().bind(loadXmlTask.messageProperty());
+        filePathLabel.setText(absolutePath);
     }
 }

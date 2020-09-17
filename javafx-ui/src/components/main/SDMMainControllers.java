@@ -73,7 +73,7 @@ public class SDMMainControllers {
     private SimpleBooleanProperty fileLoaded;
     private ScrollPane orderSummaryScrollPane;
     private OrderSummaryMainController orderSummaryMainController;
-    private GridPane loadingSystemBarGridPane;
+    private ScrollPane loadingSystemBarScrollPane;
     private LoadingSystemBarController loadingSystemBarController;
     private GridPane startingFormGridPane;
     private StartingFormController startingFormController;
@@ -182,8 +182,8 @@ public class SDMMainControllers {
         loadLoadingSystemBar();
 
         LoadXmlTask loadXmlTask = new LoadXmlTask(sdmSystem, absolutePath, this,fileLoaded);
-        loadingSystemBarController.init(loadXmlTask);
-        mainBorderPane.setCenter(loadingSystemBarGridPane);
+        loadingSystemBarController.init(loadXmlTask,absolutePath);
+        mainBorderPane.setCenter(loadingSystemBarScrollPane);
         new Thread(loadXmlTask).start();
     }
 
@@ -215,8 +215,9 @@ public class SDMMainControllers {
     }
 
     private void loadLoadingSystemBar() {
-        FxmlLoader<GridPane,LoadingSystemBarController> loaderLoadingSystemBar = new FxmlLoader<>(LoadingSystemBarController.LOADING_SYSTEM_FXML_PATH);
-        loadingSystemBarGridPane = loaderLoadingSystemBar.getFormBasePane();
+        FxmlLoader<ScrollPane,LoadingSystemBarController> loaderLoadingSystemBar = new FxmlLoader<>(LoadingSystemBarController.LOADING_SYSTEM_FXML_PATH);
+        loadingSystemBarScrollPane = loaderLoadingSystemBar.getFormBasePane();
+        //JavaFxHelper.initMainScrollPane(loadingSystemBarScrollPane);
         loadingSystemBarController = loaderLoadingSystemBar.getFormController();
     }
 
