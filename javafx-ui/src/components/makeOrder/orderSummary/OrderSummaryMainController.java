@@ -44,6 +44,8 @@ public class OrderSummaryMainController {
     private DTOStore storeFromWhomTheOrderWasMade = null;
     //for orders:
     private LocalDate orderDate;
+    private GridPane startingFormGridPane;
+    private SimpleBooleanProperty orderInProgress;
 
 
 
@@ -55,8 +57,8 @@ public class OrderSummaryMainController {
     @FXML private Label totalOrderCostLabel;
     @FXML private Button cancelButton;
     @FXML private Button confirmOrderButton;
-    private GridPane startingFormGridPane;
-    private SimpleBooleanProperty orderInProgress;
+    @FXML private Label customerMadeTheOrderLabel;
+    @FXML private Label dateLabel;
 
     @FXML
     public void initialize(){
@@ -96,6 +98,8 @@ public class OrderSummaryMainController {
         this.sdmSystem = sdmSystem;
         this.startingFormGridPane = startingFormGridPane;
         this.orderInProgress = orderInProgress;
+        dateLabel.setText(orderDate.toString());
+        customerMadeTheOrderLabel.setText(customerMakingTheOrder.toString());
 
         addStoresToSummary();
 
@@ -161,7 +165,7 @@ public class OrderSummaryMainController {
     }
 
 
-    public void makeButtonsUnvisible() {
+    public void makeButtonsInvisible() {
         cancelButton.visibleProperty().set(false);
         confirmOrderButton.visibleProperty().set(false);
     }

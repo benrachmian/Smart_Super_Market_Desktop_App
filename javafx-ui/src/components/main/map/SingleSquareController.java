@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -98,5 +99,10 @@ public class SingleSquareController {
                 FxmlLoader<GridPane, StoreInfoController> loaderStoreInfo = new FxmlLoader<>(StoreInfoController.STORE_INFO_FXML_PATH);
                 storeInfoGridPane = loaderStoreInfo.getFormBasePane();
                 storeInfoController = loaderStoreInfo.getFormController();
+        }
+
+        @FXML
+        void onHover(MouseEvent event) {
+
         }
 }

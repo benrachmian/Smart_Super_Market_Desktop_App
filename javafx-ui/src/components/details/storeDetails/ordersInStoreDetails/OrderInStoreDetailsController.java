@@ -1,5 +1,6 @@
 package components.details.storeDetails.ordersInStoreDetails;
 
+import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.order.DTOOrder;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -23,18 +24,24 @@ public class OrderInStoreDetailsController {
     @FXML private Label orderCostLabel;
     @FXML private Label theOrderIsPartOfLabel;
     @FXML private Label mainOrderIdLabel;
+    @FXML private Label idLabel;
+    @FXML private Label customerLabel;
 
     public void initDetails(LocalDate orderDate,
                             int amountOfProducts,
                             float productsCost,
                             float deliveryCost,
                             float orderCost,
-                            DTOOrder mainOrder){
+                            DTOOrder mainOrder,
+                            int orderID,
+                            DTOCustomer customer){
         orderDateLabel.setText(orderDate.toString());
         numOfProductsLabel.setText(String.valueOf(amountOfProducts));
         productsCostLabel.setText(String.valueOf(productsCost));
         deliveryCostLabel.setText(String.valueOf(deliveryCost));
         orderCostLabel.setText(String.valueOf(orderCost));
+        idLabel.setText(String.valueOf(orderID));
+        customerLabel.setText(customer.toString());
         if(mainOrder != null){
             mainOrderIdLabel.setText(String.valueOf(mainOrder.getOrderSerialNumber()));
 

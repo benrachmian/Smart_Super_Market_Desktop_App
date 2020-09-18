@@ -342,7 +342,7 @@ public class SDMMainControllers {
                 mainBorderPane,
                 sdmSystem,
                 startingFormGridPane, orderInProgress);
-        orderSummaryMainController.makeButtonsUnvisible();
+        orderSummaryMainController.makeButtonsInvisible();
     }
 
     private void loadOrderSummaryForm() {

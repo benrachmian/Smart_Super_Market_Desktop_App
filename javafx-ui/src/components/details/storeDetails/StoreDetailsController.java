@@ -159,7 +159,9 @@ public class StoreDetailsController {
                         order.getProductsCost(),
                         order.getDeliveryCost(),
                         order.getOrderCost(),
-                        order.getMainOrder()
+                        order.getMainOrder(),
+                        order.getOrderSerialNumber(),
+                        sdmSystem.getCustomer(order.getCustomerOrderedId())
                 );
                 ordersFlowPane.getChildren().add(orderGridPane);
             }
