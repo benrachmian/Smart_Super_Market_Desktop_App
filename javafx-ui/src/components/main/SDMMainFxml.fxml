@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="852.0" stylesheets="@SDMMaintyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.SDMMainControllers">
+<BorderPane id="border-pane" fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.SDMMainControllers">
    <left>
-      <Accordion fx:id="systemAccordion" BorderPane.alignment="CENTER">
+      <Accordion fx:id="systemAccordion" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER">
         <panes>
           <TitledPane animated="false" text="Customers">
             <content>
@@ -78,7 +79,7 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" text="Make Order" />
+            <Button id="ipad-dark-grey" fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" stylesheets="@../../css/style1/style1.css" text="Make Order" />
             <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
          </children>
          <opaqueInsets>
@@ -90,6 +91,10 @@
       </HBox>
    </bottom>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane id="center-main" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER" />
    </center>
+   <stylesheets>
+      <URL value="@SDMMaintyle1.css" />
+      <URL value="@../../css/style1/style1.css" />
+   </stylesheets>
 </BorderPane>

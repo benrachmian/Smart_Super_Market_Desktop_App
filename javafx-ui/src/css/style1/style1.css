@@ -1,0 +1,45 @@
+.button {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width:2px ;
+    -fx-border-style: solid;
+    transition: -fx-background-color 2s;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #555555;
+    -fx-text-fill: white;
+}
+
+.accordion{
+    -fx-font-family: "Lucida Sans Unicode";
+}
+
+#accordion-details-grid-pain > #title{
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Rounded MT Bold";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-font-weight: bold;
+}
+
+#accordion-details-grid-pain > #details > .label{
+    -fx-font-size: 14px;
+    -fx-font-family: "Verdana";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+
+
+
+/*
+#center-main{
+    -fx-background-image: url('background1.jpg');
+}
+
+#border-pane{
+    -fx-background-image: url('background1.jpg');
+}*/

@@ -9,7 +9,7 @@
 
 <ScrollPane fx:id="customerDetailsScrollPane" fitToHeight="true" fitToWidth="true" minHeight="470.0" minWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.customersDetails.CustomerDetailsController">
    <content>
-      <GridPane fx:id="customerDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0">
+      <GridPane id="accordion-details-grid-pain" fx:id="customerDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0" stylesheets="@../../../css/style1/style1.css">
         <columnConstraints>
           <ColumnConstraints hgrow="NEVER" maxWidth="114.39996337890625" minWidth="4.799989223480225" prefWidth="6.399964809417725" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="200.0" />
@@ -21,7 +21,7 @@
             <RowConstraints minHeight="300.0" prefHeight="4.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" minWidth="400.0" text="Customer details:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label id="title" alignment="CENTER" minWidth="400.0" text="Customer details:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="51.0" />
                </font>

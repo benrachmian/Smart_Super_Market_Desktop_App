@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="productsDetailsScrollPane" fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.productsDetails.ProductDetailsController">
+<ScrollPane id="border-pane" fx:id="productsDetailsScrollPane" fitToHeight="true" fitToWidth="true" stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.productsDetails.ProductDetailsController">
    <content>
-      <GridPane fx:id="productsDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0">
+      <GridPane id="accordion-details-grid-pain" fx:id="productsDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0" stylesheets="@../../../css/style1/style1.css">
         <columnConstraints>
           <ColumnConstraints hgrow="NEVER" maxWidth="114.39996337890625" minWidth="4.799989223480225" prefWidth="6.399964809417725" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -20,12 +20,12 @@
             <RowConstraints minHeight="350.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" minWidth="400.0" prefHeight="74.0" text="Product details:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+            <Label id="title" alignment="CENTER" minWidth="400.0" prefHeight="74.0" text="Product details:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
                <font>
                   <Font size="51.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER" minHeight="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+            <GridPane id="details" alignment="CENTER" minHeight="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
