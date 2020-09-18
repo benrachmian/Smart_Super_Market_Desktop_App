@@ -131,7 +131,13 @@ public class SDMMainControllers {
         startingFormGridPane = loaderStartingForm.getFormBasePane();
         startingFormController = loaderStartingForm.getFormController();
         startingFormController.init(fileLoaded);
-        mainBorderPane.setCenter(startingFormGridPane);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(startingFormGridPane);
+        scrollPane.fitToHeightProperty().set(true);
+        scrollPane.fitToWidthProperty().set(true);
+        startingFormGridPane.setAlignment(Pos.CENTER);
+        mainBorderPane.setCenter(scrollPane);
+
     }
 
     public void setProductsDetailsScrollPane(ScrollPane productsDetailsScrollPane) {
