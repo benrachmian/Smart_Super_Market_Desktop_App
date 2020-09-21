@@ -11,6 +11,7 @@ import common.JavaFxHelper;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
+import components.main.addNewStore.AddNewStoreInsertDetailsController;
 import components.main.loadingSystemBar.LoadingSystemBarController;
 import components.main.map.SingleSquareController;
 import components.main.startingForm.StartingFormController;
@@ -58,6 +59,7 @@ public class SDMMainControllers {
     @FXML private Button showMapButton;
     @FXML private TitledPane ordersTitledPane;
     @FXML private ToggleButton animationToggle;
+    @FXML private Button addNewStoreButton;
 
 
     private SDMSystem sdmSystem;
@@ -72,6 +74,8 @@ public class SDMMainControllers {
     private StoreDetailsController storeDetailsController;
     private static final String MAKE_ORDER_MAIN_FXML_PATH = "/components/makeOrder/makeOrderMain.fxml";
     private ScrollPane makeOrderMainScrollPain;
+    private ScrollPane addNewStoreScrollPane;
+    private AddNewStoreInsertDetailsController addNewStoreInsertDetailsController;
     private MakeOrderMainController makeOrderMainController;
     private SimpleBooleanProperty fileLoaded;
     private ScrollPane orderSummaryScrollPane;
@@ -114,6 +118,7 @@ public class SDMMainControllers {
         ordersListView.setPlaceholder(new Label("No content yet"));
         makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         showMapButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
+        addNewStoreButton.disableProperty().bind(showMapButton.disabledProperty());
         animationStatus.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -400,6 +405,21 @@ public class SDMMainControllers {
 
     }
 
+    @FXML
+    void onAddNewStore(ActionEvent event) {
+        loadAddNewStoreForm();
+        JavaFxHelper.initMainScrollPane(addNewStoreScrollPane);
+        mainBorderPane.setCenter(addNewStoreScrollPane);
+        addNewStoreInsertDetailsController.initDetails(sdmSystem);
+
+    }
+
+    private void loadAddNewStoreForm() {
+        FxmlLoader<ScrollPane, AddNewStoreInsertDetailsController> loaderAddNewStoreForm = new FxmlLoader<>(AddNewStoreInsertDetailsController.NEW_STORE_DETAILS_FXML_PATH);
+        addNewStoreScrollPane = loaderAddNewStoreForm.getFormBasePane();
+        addNewStoreInsertDetailsController = loaderAddNewStoreForm.getFormController();
+    }
+
     private void loadMakeOrderMainForm() {
         FxmlLoader<ScrollPane, MakeOrderMainController> loaderMakeOrderMainForm = new FxmlLoader<>(MAKE_ORDER_MAIN_FXML_PATH);
         makeOrderMainScrollPain = loaderMakeOrderMainForm.getFormBasePane();
@@ -494,6 +514,7 @@ public class SDMMainControllers {
     void onAnimationToggle(ActionEvent event) {
         animationStatus.set(!animationStatus.getValue());
     }
+
 
 
 }

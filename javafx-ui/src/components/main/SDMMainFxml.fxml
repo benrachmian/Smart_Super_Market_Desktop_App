@@ -92,7 +92,7 @@
                <children>
                   <Button id="ipad-dark-grey" fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" stylesheets="@../../css/style1/style1.css" text="Make Order" />
                   <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
-                  <Button mnemonicParsing="false" text="Add New Store" />
+                  <Button fx:id="addNewStoreButton" mnemonicParsing="false" onAction="#onAddNewStore" text="Add New Store" />
                </children>
                <opaqueInsets>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
