@@ -21,6 +21,7 @@ import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.product.*;
 import SDMSystemDTO.order.DTOOrder;
 import SDMSystemDTO.store.DTOStore;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Pair;
 import xml.XMLHelper;
 import xml.generated.*;
@@ -933,5 +934,9 @@ public class SDMSystem {
 
     public DTOCustomer getCustomer(Point customerLocation) {
         return customersInSystem.getCustomersInSystemByLocation().get(customerLocation).createDTOCustomer();
+    }
+
+    public boolean isAvailableStoreId(SimpleIntegerProperty storeID) {
+        return storesInSystem.getStoresInSystemBySerialNumber().get(storeID.get()) == null;
     }
 }
