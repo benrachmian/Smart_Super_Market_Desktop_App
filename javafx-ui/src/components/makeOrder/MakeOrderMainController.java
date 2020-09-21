@@ -4,7 +4,6 @@ import SDMSystem.location.LocationUtility;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.customer.DTOCustomer;
 import SDMSystemDTO.order.DTOOrder;
-import SDMSystemDTO.product.DTOProductInStore;
 import SDMSystemDTO.product.IDTOProductInStore;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
@@ -24,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.time.LocalDate;
@@ -73,7 +71,7 @@ public class MakeOrderMainController {
     private DTOStore storeFromWhomTheOrderWasMade = null;
     //for all orders:
     private LocalDate orderDate;
-    private GridPane startingFormGridPane;
+    private ScrollPane startingFormScrollPane;
     private SimpleBooleanProperty orderInProgress;
 
 
@@ -99,13 +97,13 @@ public class MakeOrderMainController {
         totalProductsCost = new SimpleFloatProperty();
     }
 
-    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress, SimpleBooleanProperty animationStatus) {
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, ScrollPane startingFormScrollPane, SimpleBooleanProperty orderInProgress, SimpleBooleanProperty animationStatus) {
         this.sdmSystem = sdmSystem;
         this.mainBorderPane = mainBorderPane;
         this.ordersListView = ordersListView;
         initChooseCustomerComboBox();
         initStoresTableWithDetails();
-        this.startingFormGridPane = startingFormGridPane;
+        this.startingFormScrollPane = startingFormScrollPane;
         this.orderInProgress = orderInProgress;
         this.animationStatus = animationStatus;
     }
@@ -221,11 +219,11 @@ public class MakeOrderMainController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress);
+        JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress);
     }
 
     public void cancelOrderAlert() {
-        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress);
+        JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress);
     }
 
     @FXML
@@ -322,7 +320,7 @@ public class MakeOrderMainController {
                 orderDate,
                 mainBorderPane,
                 sdmSystem,
-                startingFormGridPane,
+                startingFormScrollPane,
                 orderInProgress
                 );
     }

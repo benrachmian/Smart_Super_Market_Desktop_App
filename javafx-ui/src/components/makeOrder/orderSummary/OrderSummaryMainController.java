@@ -44,7 +44,7 @@ public class OrderSummaryMainController {
     private DTOStore storeFromWhomTheOrderWasMade = null;
     //for orders:
     private LocalDate orderDate;
-    private GridPane startingFormGridPane;
+    private ScrollPane startingFormScrollPane;
     private SimpleBooleanProperty orderInProgress;
 
 
@@ -82,7 +82,7 @@ public class OrderSummaryMainController {
             LocalDate orderDate,
             BorderPane mainBorderPane,
             SDMSystem sdmSystem,
-            GridPane startingFormGridPane,
+            ScrollPane startingFormScrollPane,
             SimpleBooleanProperty orderInProgress) {
         this.shoppingCart = shoppingCart;
         this.customerMakingTheOrder = customerMakingTheOrder;
@@ -96,7 +96,7 @@ public class OrderSummaryMainController {
         this.orderDate = orderDate;
         this.mainBorderPane = mainBorderPane;
         this.sdmSystem = sdmSystem;
-        this.startingFormGridPane = startingFormGridPane;
+        this.startingFormScrollPane = startingFormScrollPane;
         this.orderInProgress = orderInProgress;
         dateLabel.setText(orderDate.toString());
         customerMadeTheOrderLabel.setText(customerMakingTheOrder.toString());
@@ -152,7 +152,7 @@ public class OrderSummaryMainController {
         }
         orderSuccessfullyMsg();
         orderInProgress.set(false);
-        mainBorderPane.setCenter(startingFormGridPane);
+        mainBorderPane.setCenter(startingFormScrollPane);
     }
 
     private void orderSuccessfullyMsg() {
@@ -172,6 +172,6 @@ public class OrderSummaryMainController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress);
+        JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormScrollPane,orderInProgress);
     }
 }

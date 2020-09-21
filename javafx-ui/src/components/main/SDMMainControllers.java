@@ -17,7 +17,6 @@ import components.main.startingForm.StartingFormController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -79,7 +78,7 @@ public class SDMMainControllers {
     private OrderSummaryMainController orderSummaryMainController;
     private ScrollPane loadingSystemBarScrollPane;
     private LoadingSystemBarController loadingSystemBarController;
-    private GridPane startingFormGridPane;
+    private ScrollPane startingFormScrollPane;
     private StartingFormController startingFormController;
     private SimpleBooleanProperty orderInProgress;
     private SimpleIntegerProperty maxXCoordinate;
@@ -140,16 +139,16 @@ public class SDMMainControllers {
     }
 
     private void loadStartingForm() {
-        FxmlLoader<GridPane,StartingFormController> loaderStartingForm = new FxmlLoader<>(StartingFormController.STARTING_FORM_FXML_PATH);
-        startingFormGridPane = loaderStartingForm.getFormBasePane();
+        FxmlLoader<ScrollPane,StartingFormController> loaderStartingForm = new FxmlLoader<>(StartingFormController.STARTING_FORM_FXML_PATH);
+        startingFormScrollPane = loaderStartingForm.getFormBasePane();
         startingFormController = loaderStartingForm.getFormController();
         startingFormController.init(fileLoaded);
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(startingFormGridPane);
-        scrollPane.fitToHeightProperty().set(true);
-        scrollPane.fitToWidthProperty().set(true);
-        startingFormGridPane.setAlignment(Pos.CENTER);
-        mainBorderPane.setCenter(scrollPane);
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.setContent(startingFormGridPane);
+//        scrollPane.fitToHeightProperty().set(true);
+//        scrollPane.fitToWidthProperty().set(true);
+        //startingFormScrollPane.setAlignment(Pos.CENTER);
+        mainBorderPane.setCenter(startingFormScrollPane);
 
     }
 
@@ -291,7 +290,7 @@ public class SDMMainControllers {
     @FXML
     void customerItemClicked(MouseEvent event) {
         if(orderInProgress.getValue()){
-            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress)){
                 showCustomerDetails();
             }
         }
@@ -310,7 +309,7 @@ public class SDMMainControllers {
     @FXML
     void productItemClicked(MouseEvent event) {
         if(orderInProgress.getValue()){
-            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress)){
                 showProductDetails();
             }
         }
@@ -329,7 +328,7 @@ public class SDMMainControllers {
     @FXML
     void orderItemClicked(MouseEvent event) {
         if(orderInProgress.getValue()){
-            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress)){
                 showOrderDetails();
             }
         }
@@ -354,7 +353,7 @@ public class SDMMainControllers {
                 order.getOrderDate(),
                 mainBorderPane,
                 sdmSystem,
-                startingFormGridPane, orderInProgress);
+                startingFormScrollPane, orderInProgress);
         orderSummaryMainController.makeButtonsInvisible();
     }
 
@@ -367,7 +366,7 @@ public class SDMMainControllers {
     @FXML
     void storeItemClicked(MouseEvent event) {
         if(orderInProgress.getValue()){
-            if(JavaFxHelper.cancelOrderAlert(mainBorderPane,startingFormGridPane,orderInProgress)){
+            if(JavaFxHelper.cancelOrderAlert(mainBorderPane, startingFormScrollPane,orderInProgress)){
                 showStoreDetails();
             }
         }
@@ -395,7 +394,7 @@ public class SDMMainControllers {
                 sdmSystem,
                 mainBorderPane,
                 ordersListView,
-                startingFormGridPane,
+                startingFormScrollPane,
                 orderInProgress,
                 animationStatus);
 

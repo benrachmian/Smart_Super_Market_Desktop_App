@@ -6,7 +6,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public class JavaFxHelper {
         scrollPane.fitToHeightProperty().set(true);
     }
 
-    public static boolean cancelOrderAlert(BorderPane mainBorderPane, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress) {
+    public static boolean cancelOrderAlert(BorderPane mainBorderPane, ScrollPane startingFormScrollPane, SimpleBooleanProperty orderInProgress) {
         boolean answer = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
@@ -56,7 +55,7 @@ public class JavaFxHelper {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            mainBorderPane.setCenter(startingFormGridPane);
+            mainBorderPane.setCenter(startingFormScrollPane);
             orderInProgress.set(false);
             answer = true;
         }
