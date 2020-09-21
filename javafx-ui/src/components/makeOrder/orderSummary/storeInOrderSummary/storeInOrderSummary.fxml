@@ -35,7 +35,7 @@
       <Label id="detailLabel" fx:id="PpkLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <Label id="detailLabel" fx:id="distanceFromCustomerLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <Label id="detailLabel" fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label id="title" text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+      <Label id="sub-title" text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
          <font>
             <Font size="25.0" />
          </font></Label>

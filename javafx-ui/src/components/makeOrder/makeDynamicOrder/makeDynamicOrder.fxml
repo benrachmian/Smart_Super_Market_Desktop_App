@@ -50,7 +50,7 @@
                   <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onClickContinue" text="Continue" />
                </children>
             </HBox>
-            <Label id="title" alignment="CENTER" contentDisplay="CENTER" text="Choose products to buy:" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+            <Label id="sub-title" alignment="CENTER" contentDisplay="CENTER" text="Choose products to buy:" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <font>
                   <Font name="Bell MT" size="24.0" />
                </font>

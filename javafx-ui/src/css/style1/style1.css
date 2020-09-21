@@ -54,7 +54,15 @@
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
     -fx-text-fill: #ff0000;
     -fx-font-weight: bold;
+}
 
+#sub-title{
+    -fx-font-size: 22px;
+    -fx-font-family: "Levenim MT";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-text-fill: #5b67a5;
+    -fx-font-weight: bold;
 }
 
 /*

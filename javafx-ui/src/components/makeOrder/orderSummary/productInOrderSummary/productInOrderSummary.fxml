@@ -26,7 +26,7 @@
    </rowConstraints>
    <children>
       <Label id="detailLabel" text="Product ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label id="title" fx:id="productNameLabel" alignment="CENTER" contentDisplay="CENTER" text="product name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+      <Label id="sub-title" fx:id="productNameLabel" alignment="CENTER" contentDisplay="CENTER" text="product name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
          <font>
             <Font size="20.0" />
          </font></Label>

@@ -43,7 +43,7 @@
             </FlowPane>
          </content>
       </ScrollPane>
-      <Label id="title" fx:id="discountNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="558.0" text="Discount Name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label id="sub-title" fx:id="discountNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="558.0" text="Discount Name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets top="7.0" />
          </GridPane.margin>

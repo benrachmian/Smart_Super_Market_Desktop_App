@@ -272,7 +272,7 @@ public class MakeStaticOrderController {
         path.getElements().add(new MoveTo(0,0));
         path.getElements().add(new LineTo(574,370));
         transition.setNode(productNameLabel);
-        transition.setDuration(Duration.seconds(1));
+        transition.setDuration(Duration.seconds(1.7));
         transition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         transition.setPath(path);
         transition.setCycleCount(1);

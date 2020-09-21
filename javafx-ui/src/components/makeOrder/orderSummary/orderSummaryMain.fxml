@@ -33,7 +33,7 @@
                   <Font size="43.0" />
                </font>
             </Label>
-            <Label id="title" text="Stores and products participating:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label id="sub-title" text="Stores and products participating:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="33.0" />
                </font>
@@ -75,7 +75,7 @@
                   <Label id="detailLabel" text="Order date:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Label id="title" text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Label id="sub-title" text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="37.0" />
                </font>
