@@ -12,14 +12,24 @@ import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.StoresParticipatingInDynamicOrderController;
 import components.makeOrder.makeStaticOrder.ProductInTable;
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.util.Collection;
@@ -44,6 +54,7 @@ public class MakeDynamicOrderController {
     private ScrollPane storesParticipatingInDynamicOrderScrollPane;
     private StoresParticipatingInDynamicOrderController storesParticipatingInDynamicOrderController;
     private BorderPane mainBorderPane;
+    private SimpleBooleanProperty animationStatus;
 
 
 
@@ -65,10 +76,29 @@ public class MakeDynamicOrderController {
     @FXML private TableColumn<ProductInTable, Integer> idCartTableCol;
     @FXML private TableColumn<ProductInTable, String> wayOfBuyingCartTableCol;
     @FXML private TableColumn<ProductInTable, Float> amountCartTableCol;
+    @FXML private GridPane orderGridPane;
 
     public MakeDynamicOrderController() {
         productsInOrder = new LinkedList<>();
         amountInTextField = new SimpleFloatProperty();
+    }
+
+    public void initDetails(SDMSystem sdmSystem,
+                            DTOCustomer customerMakingTheOrder,
+                            MakeOrderMainController makeOrderMainController,
+                            Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart,
+                            SimpleFloatProperty totalProductsCost,
+                            SimpleFloatProperty totalDeliveryCost,
+                            BorderPane mainBorderPane, SimpleBooleanProperty animationStatus) {
+        this.sdmSystem = sdmSystem;
+        this.customerMakingTheOrder = customerMakingTheOrder;
+        this.makeOrderMainController = makeOrderMainController;
+        this.cheapestBasket = shoppingCart;
+        this.totalProductsCost = totalProductsCost;
+        this.totalDeliveryCost = totalDeliveryCost;
+        this.mainBorderPane = mainBorderPane;
+        this.animationStatus = animationStatus;
+        initProductsToBuyTable();
     }
 
     @FXML
@@ -157,7 +187,33 @@ public class MakeDynamicOrderController {
             //add product to shopping cart
             productsInOrder.add(new Pair(chosenProduct,amountEntered));
             clearLabelsAfterAddingProductToCart();
+            if(animationStatus.getValue() == true) {
+                startProductToCartAnimation(chosenProduct);
+            }
         }
+    }
+
+    private void startProductToCartAnimation(DTOProduct chosenProduct) {
+        PathTransition transition = new PathTransition();
+        Label productNameLabel = new Label(chosenProduct.getProductName());
+        orderGridPane.add(productNameLabel,0,2);
+        transition.statusProperty().addListener(new ChangeListener<Animation.Status>() {
+            @Override
+            public void changed(ObservableValue<? extends Animation.Status> observable, Animation.Status oldValue, Animation.Status newValue) {
+                if(newValue == Animation.Status.STOPPED){
+                    orderGridPane.getChildren().remove(productNameLabel);
+                }
+            }
+        });
+        Path path = new Path();
+        path.getElements().add(new MoveTo(0,0));
+        path.getElements().add(new LineTo(650,420));
+        transition.setNode(productNameLabel);
+        transition.setDuration(Duration.seconds(1.5));
+        transition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        transition.setPath(path);
+        transition.setCycleCount(1);
+        transition.play();
     }
 
     private void clearLabelsAfterAddingProductToCart() {
@@ -215,22 +271,6 @@ public class MakeDynamicOrderController {
 
     }
 
-    public void initDetails(SDMSystem sdmSystem,
-                            DTOCustomer customerMakingTheOrder,
-                            MakeOrderMainController makeOrderMainController,
-                            Map<Integer, Collection<Pair<IDTOProductInStore, Float>>> shoppingCart,
-                            SimpleFloatProperty totalProductsCost,
-                            SimpleFloatProperty totalDeliveryCost,
-                            BorderPane mainBorderPane) {
-        this.sdmSystem = sdmSystem;
-        this.customerMakingTheOrder = customerMakingTheOrder;
-        this.makeOrderMainController = makeOrderMainController;
-        this.cheapestBasket = shoppingCart;
-        this.totalProductsCost = totalProductsCost;
-        this.totalDeliveryCost = totalDeliveryCost;
-        this.mainBorderPane = mainBorderPane;
-        initProductsToBuyTable();
-    }
 
     private void initProductsToBuyTable() {
         for(DTOProduct product : sdmSystem.getProductsInSystem().values()){

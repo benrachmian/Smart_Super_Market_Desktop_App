@@ -33,6 +33,7 @@ import java.util.*;
 public class MakeOrderMainController {
 
 
+
     public enum OrderType {
         STATIC_ORDER {
             @Override
@@ -47,6 +48,7 @@ public class MakeOrderMainController {
         }
     }
 
+    private SimpleBooleanProperty animationStatus;
     private ListView<DTOOrder> ordersListView;
     private SDMSystem sdmSystem;
     private BorderPane mainBorderPane;
@@ -95,6 +97,17 @@ public class MakeOrderMainController {
         shoppingCart = new HashMap<>();
         totalDeliveryCost = new SimpleFloatProperty();
         totalProductsCost = new SimpleFloatProperty();
+    }
+
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress, SimpleBooleanProperty animationStatus) {
+        this.sdmSystem = sdmSystem;
+        this.mainBorderPane = mainBorderPane;
+        this.ordersListView = ordersListView;
+        initChooseCustomerComboBox();
+        initStoresTableWithDetails();
+        this.startingFormGridPane = startingFormGridPane;
+        this.orderInProgress = orderInProgress;
+        this.animationStatus = animationStatus;
     }
 
     @FXML
@@ -171,15 +184,6 @@ public class MakeOrderMainController {
     }
 
 
-    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ListView<DTOOrder> ordersListView, GridPane startingFormGridPane, SimpleBooleanProperty orderInProgress) {
-        this.sdmSystem = sdmSystem;
-        this.mainBorderPane = mainBorderPane;
-        this.ordersListView = ordersListView;
-        initChooseCustomerComboBox();
-        initStoresTableWithDetails();
-        this.startingFormGridPane = startingFormGridPane;
-        this.orderInProgress = orderInProgress;
-    }
 
     private void initStoresTableWithDetails() {
         for(DTOStore store : sdmSystem.getStoresInSystemBySerialNumber().values()){
@@ -246,7 +250,8 @@ public class MakeOrderMainController {
                 shoppingCart,
                 totalProductsCost,
                 totalDeliveryCost,
-                mainBorderPane
+                mainBorderPane,
+                animationStatus
         );
     }
 
@@ -267,7 +272,7 @@ public class MakeOrderMainController {
         Collection<Pair<IDTOProductInStore, Float>> shoppingCartFromStaticOrder = new LinkedList<>();
         shoppingCart.put(chooseStoreComboBox.getValue().getStoreSerialNumber(),shoppingCartFromStaticOrder);
         makeStaticOrderController.setShoppingCart(shoppingCartFromStaticOrder);
-        makeStaticOrderController.initDetails(totalProductsCost,totalDeliveryCost);
+        makeStaticOrderController.initDetails(totalProductsCost,totalDeliveryCost,animationStatus);
     }
 
     public DiscountsInOrderController createDiscountsInOrderForm(ObservableList<ProductInTable> productsInTable) {

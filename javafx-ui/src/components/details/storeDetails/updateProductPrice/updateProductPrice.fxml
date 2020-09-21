@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="449.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.updateProductPrice.UpdateProductPriceController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="449.0" prefWidth="712.0" stylesheets="@../../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.updateProductPrice.UpdateProductPriceController">
    <content>
       <GridPane alignment="CENTER" prefHeight="439.0" prefWidth="702.0">
          <columnConstraints>
@@ -43,14 +43,14 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ScrollPane>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="The products you can update are:" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+            <Label id="title" alignment="CENTER" contentDisplay="CENTER" text="The products you can update are:" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
             <HBox fx:id="selectProductHBox" alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
-                  <Label prefHeight="42.0" text="Select the product you would like to update its price:" />
+                  <Label id="detailLabel" prefHeight="42.0" text="Select the product you would like to update its price:" />
                   <ChoiceBox fx:id="productChoiseBox" prefWidth="150.0">
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -66,7 +66,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <children>
-                  <Label text="Insert the product new price:" />
+                  <Label id="detailLabel" text="Insert the product new price:" />
                   <TextField fx:id="priceTextField" />
                </children>
                <opaqueInsets>
@@ -78,15 +78,15 @@
             </HBox>
             <HBox fx:id="statusHBox" alignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                <children>
-                  <Label fx:id="statusStaticLabel" text="Status:" />
-                  <Label fx:id="statusLabel" prefHeight="18.0" text="The product was updated sucssessfully!">
+                  <Label id="errorLabel" fx:id="statusStaticLabel" text="Status:" />
+                  <Label id="detailLabel" fx:id="statusLabel" prefHeight="18.0" text="The product was updated sucssessfully!">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textFill="#ff0000" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <Label id="errorLabel" fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textFill="#ff0000" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <padding>
                   <Insets left="20.0" />
                </padding>

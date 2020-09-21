@@ -43,7 +43,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="624.0">
                            <children>
-                              <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <GridPane alignment="CENTER" stylesheets="@../../../css/style1/style1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="8.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -57,19 +57,19 @@
                                     <RowConstraints minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="566.0" text="Store Details:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <Label id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="566.0" text="Store Details:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="30.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Store serial number:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                    <Label text="Store's name:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Label text="PPK:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    <Label text="Total profit from delivery cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <Label fx:id="storeSerialNumberAnswerLabel" text="storeSerialNumberAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <Label fx:id="storeNameAnswerLabel" text="storeNameAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Label fx:id="storePpkAnswerLabel" text="storePpkAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    <Label fx:id="totalProfitFromDeliveryAnswerLabel" text="totalProfitFromDeliveryAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                    <Label id="detailLabel" alignment="CENTER" contentDisplay="CENTER" text="Store serial number:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Label id="detailLabel" text="Store's name:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Label id="detailLabel" text="PPK:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <Label id="detailLabel" text="Total profit from delivery cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                    <Label id="detailLabel" fx:id="storeSerialNumberAnswerLabel" text="storeSerialNumberAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Label id="detailLabel" fx:id="storeNameAnswerLabel" text="storeNameAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Label id="detailLabel" fx:id="storePpkAnswerLabel" text="storePpkAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <Label id="detailLabel" fx:id="totalProfitFromDeliveryAnswerLabel" text="totalProfitFromDeliveryAnswerLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                            </children>

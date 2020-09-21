@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="makeOrderMainScrollPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.MakeOrderMainController">
+<ScrollPane fx:id="makeOrderMainScrollPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="802.0" stylesheets="@../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.MakeOrderMainController">
    <content>
       <GridPane alignment="CENTER">
         <columnConstraints>
@@ -34,7 +34,7 @@
             <RowConstraints minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Make Order" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+            <Label id="title" text="Make Order" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
                <font>
                   <Font name="Bell MT" size="37.0" />
                </font>
@@ -44,19 +44,19 @@
             </Label>
             <HBox alignment="CENTER" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
-                  <Label text="Choose customer:" />
+                  <Label id="detailLabel" text="Choose customer:" />
                   <ComboBox fx:id="chooseCustomerComboBox" onAction="#chooseCustomerAction" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <children>
-                  <Label text="Insert date:" />
+                  <Label id="detailLabel" text="Insert date:" />
                   <DatePicker fx:id="pickDateBox" onAction="#onPickDate" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
                <children>
-                  <Label text="Order type:" />
+                  <Label id="detailLabel" text="Order type:" />
                   <ComboBox fx:id="orderTypeComboBox" />
                </children>
             </HBox>
@@ -88,7 +88,7 @@
                         </ScrollPane>
                         <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Label text="Choose store:" />
+                              <Label id="detailLabel" text="Choose store:" />
                               <ComboBox fx:id="chooseStoreComboBox" />
                            </children>
                         </HBox>

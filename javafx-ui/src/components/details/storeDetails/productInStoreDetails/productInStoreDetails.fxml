@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane id="productInStoreGridPane" fx:id="productGridPane" stylesheets="@productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.productInStoreDetails.ProductInStoreController">
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.productInStoreDetails.ProductInStoreController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -21,18 +22,22 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Product ID:" GridPane.columnIndex="1" />
-      <Label text="Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Way of buying:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Price:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label text="Total bought from store:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <Label fx:id="productIdLabel" text="Label" GridPane.columnIndex="3" />
-      <Label fx:id="productNameLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Label fx:id="wayOfBuyingLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Label fx:id="productPriceLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Label fx:id="productTotalBoughtLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label id="detailLabel" text="Product ID:" GridPane.columnIndex="1" />
+      <Label id="detailLabel" text="Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label id="detailLabel" text="Way of buying:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label id="detailLabel" text="Price:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label id="detailLabel" text="Total bought from store:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label id="detailLabel" fx:id="productIdLabel" text="Label" GridPane.columnIndex="3" />
+      <Label id="detailLabel" fx:id="productNameLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label id="detailLabel" fx:id="wayOfBuyingLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label id="detailLabel" fx:id="productPriceLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label id="detailLabel" fx:id="productTotalBoughtLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
+   <stylesheets>
+      <URL value="@productInStoreDetailsStyle1.css" />
+      <URL value="@../../../../css/style1/style1.css" />
+   </stylesheets>
 </GridPane>

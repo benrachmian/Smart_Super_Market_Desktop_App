@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane id="productInStoreGridPane" fx:id="productGridPane" alignment="CENTER" stylesheets="@../productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.ordersInStoreDetails.OrderInStoreDetailsController">
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.ordersInStoreDetails.OrderInStoreDetailsController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -25,17 +26,17 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Order date:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Label text="Number of products:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Label text="Products cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Label text="Delivery cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-      <Label text="Order cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-      <Label fx:id="orderDateLabel" text="orderDateLabel" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Label fx:id="numOfProductsLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Label fx:id="productsCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Label fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-      <Label fx:id="orderCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-      <HBox spacing="8.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+      <Label id="detailLabel" text="Order date:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label id="detailLabel" text="Number of products:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Label id="detailLabel" text="Products cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Label id="detailLabel" text="Delivery cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <Label id="detailLabel" text="Order cost:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <Label id="detailLabel" fx:id="orderDateLabel" text="orderDateLabel" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label id="detailLabel" fx:id="numOfProductsLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Label id="detailLabel" fx:id="productsCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Label id="detailLabel" fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <Label id="detailLabel" fx:id="orderCostLabel" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <HBox id="detailLabel" spacing="8.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="7">
          <children>
             <Label fx:id="theOrderIsPartOfLabel" text="This order is part of order ID:" textFill="#1865ff" />
             <Label fx:id="mainOrderIdLabel" text="[ID]" textFill="#1865ff" />
@@ -44,12 +45,16 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <Label text="Order ID:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <Label fx:id="idLabel" text="[ID]" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-      <Label text="Customer made the order:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Label fx:id="customerLabel" text="[customer]" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Label id="detailLabel" text="Order ID:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <Label id="detailLabel" fx:id="idLabel" text="[ID]" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+      <Label id="detailLabel" text="Customer made the order:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Label id="detailLabel" fx:id="customerLabel" text="[customer]" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
+   <stylesheets>
+      <URL value="@../productInStoreDetails/productInStoreDetailsStyle1.css" />
+      <URL value="@../../../../css/style1/style1.css" />
+   </stylesheets>
 </GridPane>

@@ -13,6 +13,7 @@ import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -70,11 +71,22 @@ public class MakeStaticOrderController {
     @FXML private Label totalOrderCostLabel;
     @FXML private GridPane orderGridPane;
     @FXML private ImageView cartImage;
+    private SimpleBooleanProperty animationStatus;
 
 
     public MakeStaticOrderController() {
         selectedProductPrice = new SimpleFloatProperty();
         amountInTextField = new SimpleFloatProperty();
+    }
+
+    public void initDetails(SimpleFloatProperty totalProductsCost, SimpleFloatProperty totalDeliveryCost, SimpleBooleanProperty animationStatus) {
+        initProductsToBuyTable();
+        this.totalProductsCost = totalProductsCost;
+        this.deliveryCost = totalDeliveryCost;
+        deliveryCostLabel.setText(String.format("%.2f",deliveryCost.get()));
+        productsCostLabel.textProperty().bind(this.totalProductsCost.asString());
+        totalOrderCostLabel.textProperty().bind(Bindings.add(deliveryCost, this.totalProductsCost).asString());
+        this.animationStatus = animationStatus;
     }
 
     public void setCustomerMakingTheOrder(DTOCustomer customerMakingTheOrder) {
@@ -190,14 +202,6 @@ public class MakeStaticOrderController {
 
 
 
-    public void initDetails(SimpleFloatProperty totalProductsCost, SimpleFloatProperty totalDeliveryCost) {
-        initProductsToBuyTable();
-        this.totalProductsCost = totalProductsCost;
-        this.deliveryCost = totalDeliveryCost;
-        deliveryCostLabel.setText(String.format("%.2f",deliveryCost.get()));
-        productsCostLabel.textProperty().bind(this.totalProductsCost.asString());
-        totalOrderCostLabel.textProperty().bind(Bindings.add(deliveryCost, this.totalProductsCost).asString());
-    }
 
     private void initProductsToBuyTable() {
         for(DTOProductInStore product : storeFromWhomTheOrderIsMade.getProductsInStore().values()){
@@ -246,7 +250,9 @@ public class MakeStaticOrderController {
 
             totalProductsCost.set(totalProductsCost.get() + (chosenProduct.getPrice() * amountEntered));
             clearLabelsAfterAddingProductToCart();
-            startProductToCartAnimation(chosenProduct);
+            if(animationStatus.getValue() == true) {
+                startProductToCartAnimation(chosenProduct);
+            }
         }
     }
 

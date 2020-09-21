@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane id="productInStoreGridPane" fx:id="productGridPane" minWidth="900.0" stylesheets="@../../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController">
+<GridPane id="productInStoreGridPane" fx:id="productGridPane" minWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.storeInOrderSummary.StoreInOrderSummaryController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
@@ -26,19 +27,19 @@
       <RowConstraints vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Store ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="PPK:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Distance from customer:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label text="Delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <Label fx:id="storeIdLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Label fx:id="PpkLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Label fx:id="distanceFromCustomerLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Label fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+      <Label id="detailLabel" text="Store ID:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label id="detailLabel" text="PPK:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label id="detailLabel" text="Distance from customer:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label id="detailLabel" text="Delivery cost:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label id="detailLabel" fx:id="storeIdLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label id="detailLabel" fx:id="PpkLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label id="detailLabel" fx:id="distanceFromCustomerLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label id="detailLabel" fx:id="deliveryCostLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label id="title" text="Products bought from store:" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Label fx:id="storeNameLabel" text="Store name" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+      <Label id="title" fx:id="storeNameLabel" text="Store name" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
          <font>
             <Font size="37.0" />
          </font>
@@ -52,4 +53,8 @@
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
+   <stylesheets>
+      <URL value="@../../../details/storeDetails/productInStoreDetails/productInStoreDetailsStyle1.css" />
+      <URL value="@../../../../css/style1/style1.css" />
+   </stylesheets>
 </GridPane>

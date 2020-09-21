@@ -17,10 +17,13 @@ import components.main.startingForm.StartingFormController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.orderSummary.OrderSummaryMainController;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -55,6 +58,7 @@ public class SDMMainControllers {
     @FXML private Button makeOrderButton;
     @FXML private Button showMapButton;
     @FXML private TitledPane ordersTitledPane;
+    @FXML private ToggleButton animationToggle;
 
 
     private SDMSystem sdmSystem;
@@ -86,6 +90,8 @@ public class SDMMainControllers {
     private ScrollPane mapScrollPane;
     private SimpleBooleanProperty mapLoaded;
     private Map<GridPane,SingleSquareController> cellsControllersInMap;
+    private SimpleBooleanProperty animationStatus;
+
 
 
     public SDMMainControllers() {
@@ -96,6 +102,7 @@ public class SDMMainControllers {
         maxXCoordinate = new SimpleIntegerProperty();
         maxYCoordinate = new SimpleIntegerProperty();
         mapLoaded = new SimpleBooleanProperty(false);
+        animationStatus = new SimpleBooleanProperty(false);
     }
 
 
@@ -108,6 +115,12 @@ public class SDMMainControllers {
         ordersListView.setPlaceholder(new Label("No content yet"));
         makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         showMapButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
+        animationStatus.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                animationToggle.textProperty().set(newValue ? "Animation: ON" : "Animation: OFF");
+            }
+        });
 
 
         ordersTitledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
@@ -378,7 +391,13 @@ public class SDMMainControllers {
         orderInProgress.set(true);
         loadMakeOrderMainForm();
         mainBorderPane.setCenter(makeOrderMainScrollPain);
-        makeOrderMainController.initDetails(sdmSystem,mainBorderPane,ordersListView,startingFormGridPane,orderInProgress);
+        makeOrderMainController.initDetails(
+                sdmSystem,
+                mainBorderPane,
+                ordersListView,
+                startingFormGridPane,
+                orderInProgress,
+                animationStatus);
 
     }
 
@@ -472,7 +491,10 @@ public class SDMMainControllers {
         this.primaryStage = primaryStage;
     }
 
-
+    @FXML
+    void onAnimationToggle(ActionEvent event) {
+        animationStatus.set(!animationStatus.getValue());
+    }
 
 
 }

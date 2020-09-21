@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.discountsInOrder.SingleDiscountInOrderController">
+<VBox stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.discountsInOrder.SingleDiscountInOrderController">
    <children>
       <Separator prefWidth="200.0" />
       <HBox fx:id="singleDiscountMainHBox" minHeight="280.0" prefWidth="722.0">
@@ -14,8 +13,8 @@
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <VBox alignment="CENTER" prefHeight="200.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Amount left&#10;to implement:" textAlignment="CENTER" />
-                  <Label fx:id="amountLeftToImplementLabel" alignment="CENTER" contentDisplay="CENTER" text="[num]" textAlignment="CENTER" />
+                  <Label id="detailLabel" alignment="CENTER" contentDisplay="CENTER" text="Amount left&#10;to implement:" textAlignment="CENTER" />
+                  <Label id="detailLabel" fx:id="amountLeftToImplementLabel" alignment="CENTER" contentDisplay="CENTER" text="[num]" textAlignment="CENTER" />
                </children>
             </VBox>
          </children>

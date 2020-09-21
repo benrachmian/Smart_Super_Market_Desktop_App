@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="makeStaticOrderMainScrollPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.makeStaticOrder.MakeStaticOrderController">
+<ScrollPane fx:id="makeStaticOrderMainScrollPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="802.0" stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.makeStaticOrder.MakeStaticOrderController">
    <content>
       <GridPane fx:id="orderGridPane" alignment="CENTER" prefHeight="828.0" prefWidth="844.0">
          <columnConstraints>
@@ -39,7 +39,7 @@
             <RowConstraints minHeight="30.0" prefHeight="65.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Make Static Order" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+            <Label id="title" text="Make Static Order" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
                <font>
                   <Font name="Bell MT" size="37.0" />
                </font>
@@ -53,12 +53,12 @@
                   <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onClickContinue" text="Continue" />
                </children>
             </HBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Choose products to buy:" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+            <Label id="title" alignment="CENTER" contentDisplay="CENTER" text="Choose products to buy:" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <font>
                   <Font name="Bell MT" size="24.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" minWidth="50.0" text="Shopping Cart:" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+            <Label id="title" alignment="CENTER" contentDisplay="CENTER" minWidth="50.0" text="Shopping Cart:" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
                <font>
                   <Font name="Bell MT" size="24.0" />
                </font>
@@ -69,7 +69,7 @@
                      <children>
                         <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Label text="Select product:" />
+                              <Label id="detailLabel" text="Select product:" />
                               <ComboBox fx:id="chooseProductComboBox" onAction="#onSelectProduct" />
                            </children>
                            <padding>
@@ -80,7 +80,7 @@
                            <children>
                               <HBox alignment="CENTER" spacing="10.0">
                                  <children>
-                                    <Label text="Insert amount" />
+                                    <Label id="detailLabel" text="Insert amount" />
                                     <TextField fx:id="amountTextField" />
                                  </children>
                                  <opaqueInsets>
@@ -90,17 +90,17 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </HBox>
-                              <Label fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textAlignment="CENTER" textFill="RED">
+                              <Label id="errorLabel" fx:id="errorInputLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter only digits!" textAlignment="CENTER" textFill="RED">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="zeroErrorLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter positive value!" textFill="RED">
+                              <Label id="errorLabel" fx:id="zeroErrorLabel" alignment="CENTER" contentDisplay="CENTER" text="You must enter positive value!" textFill="RED">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="notIntegerErrorLabel" text="You must enter an integer!" textFill="RED">
+                              <Label id="errorLabel" fx:id="notIntegerErrorLabel" text="You must enter an integer!" textFill="RED">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -109,8 +109,8 @@
                         </VBox>
                         <HBox alignment="CENTER" spacing="10.0">
                            <children>
-                              <Label text="Cost:" />
-                              <Label fx:id="productCostLabel" text="[cost]" />
+                              <Label id="detailLabel" text="Cost:" />
+                              <Label id="detailLabel" fx:id="productCostLabel" text="[cost]" />
                            </children>
                            <opaqueInsets>
                               <Insets />

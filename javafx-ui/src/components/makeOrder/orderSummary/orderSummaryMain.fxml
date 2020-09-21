@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="orderSummaryMainScrollPane" minHeight="800.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.OrderSummaryMainController">
+<ScrollPane fx:id="orderSummaryMainScrollPane" minHeight="800.0" prefWidth="841.0" stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.orderSummary.OrderSummaryMainController">
    <content>
       <GridPane alignment="CENTER">
         <columnConstraints>
@@ -28,12 +28,12 @@
             <RowConstraints maxHeight="293.0" minHeight="44.0" prefHeight="35.0" valignment="CENTER" vgrow="NEVER" />
         </rowConstraints>
          <children>
-            <Label text="Order Summary" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+            <Label id="title" text="Order Summary" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
                <font>
                   <Font size="43.0" />
                </font>
             </Label>
-            <Label text="Stores and products participating:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label id="title" text="Stores and products participating:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="33.0" />
                </font>
@@ -63,19 +63,19 @@
                   <RowConstraints minHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Total products cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label fx:id="totalProductsCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label text="Total delivery cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <Label fx:id="totalDeliveryCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Label text="Total order cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                  <Label fx:id="totalOrderCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Label text="Customer made the order:" GridPane.halignment="RIGHT" />
-                  <Label fx:id="customerMadeTheOrderLabel" text="[customer]" GridPane.columnIndex="2" />
-                  <Label fx:id="dateLabel" text="[date]" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="Order date:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label id="detailLabel" text="Total products cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label id="detailLabel" fx:id="totalProductsCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label id="detailLabel" text="Total delivery cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Label id="detailLabel" fx:id="totalDeliveryCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label id="detailLabel" text="Total order cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <Label id="detailLabel" fx:id="totalOrderCostLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label id="detailLabel" text="Customer made the order:" GridPane.halignment="RIGHT" />
+                  <Label id="detailLabel" fx:id="customerMadeTheOrderLabel" text="[customer]" GridPane.columnIndex="2" />
+                  <Label id="detailLabel" fx:id="dateLabel" text="[date]" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label id="detailLabel" text="Order date:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Label text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Label id="title" text="Summary:" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="37.0" />
                </font>

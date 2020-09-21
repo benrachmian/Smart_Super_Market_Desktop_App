@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="284.0" prefWidth="586.0" stylesheets="@discountsInStoreDetailsStyle1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.discountsInStoreDetails.SingleDiscountController">
+<GridPane prefHeight="284.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.storeDetails.discountsInStoreDetails.SingleDiscountController">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" minWidth="8.0" prefWidth="8.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -20,14 +21,15 @@
       <RowConstraints minHeight="30.0" vgrow="NEVER" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
       <RowConstraints minHeight="220.0" vgrow="SOMETIMES" />
+      <RowConstraints />
    </rowConstraints>
    <children>
-      <Label fx:id="discountTitleLabel" text="If you buy [number to buy] [quantity/kilos] of [product name] (ID: [id])" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+      <Label id="detailLabel" fx:id="discountTitleLabel" text="If you buy [number to buy] [quantity/kilos] of [product name] (ID: [id])" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="whatYouGetLabel" prefWidth="623.0" text="you get [kind of discout]" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+      <Label id="detailLabel" fx:id="whatYouGetLabel" prefWidth="623.0" text="you get [kind of discout]" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
@@ -41,10 +43,14 @@
             </FlowPane>
          </content>
       </ScrollPane>
-      <Label fx:id="discountNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="558.0" text="Discount Name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label id="title" fx:id="discountNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="558.0" text="Discount Name" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets top="7.0" />
          </GridPane.margin>
       </Label>
    </children>
+   <stylesheets>
+      <URL value="@discountsInStoreDetailsStyle1.css" />
+      <URL value="@../../../../css/style1/style1.css" />
+   </stylesheets>
 </GridPane>

@@ -32,8 +32,30 @@
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
 
+#title{
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Rounded MT Bold";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-font-weight: bold;
+}
 
+#detailLabel{
+    -fx-font-size: 14px;
+    -fx-font-family: "Verdana";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
 
+#errorLabel{
+    -fx-font-size: 16px;
+    -fx-font-family: "Verdana";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-text-fill: #ff0000;
+    -fx-font-weight: bold;
+
+}
 
 /*
 #center-main{
