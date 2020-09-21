@@ -9,16 +9,28 @@ import SDMSystemDTO.store.DTOStore;
 import common.JavaFxHelper;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public class MakeStaticOrderController {
 
@@ -56,6 +68,9 @@ public class MakeStaticOrderController {
     @FXML private Label deliveryCostLabel;
     @FXML private Label productsCostLabel;
     @FXML private Label totalOrderCostLabel;
+    @FXML private GridPane orderGridPane;
+    @FXML private ImageView cartImage;
+
 
     public MakeStaticOrderController() {
         selectedProductPrice = new SimpleFloatProperty();
@@ -231,20 +246,47 @@ public class MakeStaticOrderController {
 
             totalProductsCost.set(totalProductsCost.get() + (chosenProduct.getPrice() * amountEntered));
             clearLabelsAfterAddingProductToCart();
+            startProductToCartAnimation(chosenProduct);
         }
     }
 
+    private void startProductToCartAnimation(DTOProductInStore chosenProduct) {
+        PathTransition transition = new PathTransition();
+        Label productNameLabel = new Label(chosenProduct.getProductName());
+        orderGridPane.add(productNameLabel,0,2);
+        transition.statusProperty().addListener(new ChangeListener<Animation.Status>() {
+            @Override
+            public void changed(ObservableValue<? extends Animation.Status> observable, Animation.Status oldValue, Animation.Status newValue) {
+                if(newValue == Animation.Status.STOPPED){
+                    orderGridPane.getChildren().remove(productNameLabel);
+                }
+            }
+        });
+        Path path = new Path();
+        path.getElements().add(new MoveTo(0,0));
+        path.getElements().add(new LineTo(574,370));
+        transition.setNode(productNameLabel);
+        transition.setDuration(Duration.seconds(1));
+        transition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        transition.setPath(path);
+        transition.setCycleCount(1);
+        transition.play();
+    }
+
     private void addProductToShoppingCart(IDTOProductInStore productToAdd, Float amountEntered) {
+        boolean newKindOfProductInCart = true;
         if(shoppingCart.size() > 0) {
             for (Pair<IDTOProductInStore, Float> productInCart : shoppingCart) {
                 //if already bought this product - need to update the amount bought
                 if (productInCart.getKey().equals(productToAdd)) {
                     shoppingCart.remove(productInCart);
                     shoppingCart.add(new Pair<IDTOProductInStore, Float>(productToAdd, productInCart.getValue() + amountEntered));
-
-                } else {
-                    shoppingCart.add(new Pair(productToAdd, amountEntered));
+                    newKindOfProductInCart = false;
+                    break;
                 }
+            }
+            if(newKindOfProductInCart){
+                shoppingCart.add(new Pair(productToAdd, amountEntered));
             }
         }
         else{
