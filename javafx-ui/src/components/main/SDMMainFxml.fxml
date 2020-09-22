@@ -66,15 +66,6 @@
               <MenuItem fx:id="loadSystemXmlMenuItem" mnemonicParsing="false" onAction="#loadSystemXmlMenuItemAction" text="Load System From XML" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View">
-               <items>
-                <Menu mnemonicParsing="false" text="Select skin">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-               </items>
-          </Menu>
         </menus>
       </MenuBar>
    </top>
@@ -93,6 +84,7 @@
                   <Button id="ipad-dark-grey" fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" stylesheets="@../../css/style1/style1.css" text="Make Order" />
                   <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
                   <Button fx:id="addNewStoreButton" mnemonicParsing="false" onAction="#onAddNewStore" text="Add New Store" />
+                  <Button fx:id="addNewProductButton" mnemonicParsing="false" onAction="#onAddNewProduct" text="Add New Product" />
                </children>
                <opaqueInsets>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

@@ -1,13 +1,12 @@
 package components.makeOrder.makeDynamicOrder;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import tasks.loadXmlTask.FindCheapestBasketTask;
+import tasks.FindCheapestBasketTask.FindCheapestBasketTask;
 
 public class FindingCheapestBasketController {
 

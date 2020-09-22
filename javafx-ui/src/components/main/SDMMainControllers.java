@@ -11,6 +11,7 @@ import common.JavaFxHelper;
 import components.details.customersDetails.CustomerDetailsController;
 import components.details.productsDetails.ProductDetailsController;
 import components.details.storeDetails.StoreDetailsController;
+import components.main.addNewProduct.AddNewProductController;
 import components.main.addNewStore.AddNewStoreInsertDetailsController;
 import components.main.loadingSystemBar.LoadingSystemBarController;
 import components.main.map.SingleSquareController;
@@ -60,6 +61,7 @@ public class SDMMainControllers {
     @FXML private TitledPane ordersTitledPane;
     @FXML private ToggleButton animationToggle;
     @FXML private Button addNewStoreButton;
+    @FXML private Button addNewProductButton;
 
 
     private SDMSystem sdmSystem;
@@ -94,7 +96,8 @@ public class SDMMainControllers {
     private SimpleBooleanProperty mapLoaded;
     private Map<GridPane,SingleSquareController> cellsControllersInMap;
     private SimpleBooleanProperty animationStatus;
-
+    private ScrollPane addNewProductScrollPane;
+    private AddNewProductController addNewProductController;
 
 
     public SDMMainControllers() {
@@ -119,6 +122,7 @@ public class SDMMainControllers {
         makeOrderButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         showMapButton.disableProperty().bind(fileLoaded.not().or(orderInProgress));
         addNewStoreButton.disableProperty().bind(showMapButton.disabledProperty());
+        addNewProductButton.disableProperty().bind(addNewStoreButton.disabledProperty());
         animationStatus.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -412,6 +416,20 @@ public class SDMMainControllers {
         mainBorderPane.setCenter(addNewStoreScrollPane);
         addNewStoreInsertDetailsController.initDetails(sdmSystem,mainBorderPane,startingFormScrollPane,this);
 
+    }
+
+    @FXML
+    void onAddNewProduct(ActionEvent event) {
+        loadAddNewProductForm();
+        JavaFxHelper.initMainScrollPane(addNewProductScrollPane);
+        mainBorderPane.setCenter(addNewProductScrollPane);
+        addNewProductController.initDetails(sdmSystem);
+    }
+
+    private void loadAddNewProductForm() {
+        FxmlLoader<ScrollPane, AddNewProductController> loaderAddNewProductForm = new FxmlLoader<>(AddNewProductController.NEW_PRODUCT_FXML_PATH);
+        addNewProductScrollPane = loaderAddNewProductForm.getFormBasePane();
+        addNewProductController = loaderAddNewProductForm.getFormController();
     }
 
     private void loadAddNewStoreForm() {

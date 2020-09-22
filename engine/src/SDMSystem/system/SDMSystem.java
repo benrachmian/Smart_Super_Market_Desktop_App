@@ -961,4 +961,8 @@ public class SDMSystem {
 
         addStoreToSystem(newStore);
     }
+
+    public boolean isAvailableProductId(int productId) {
+        return productsInSystem.get(productId) == null;
+    }
 }

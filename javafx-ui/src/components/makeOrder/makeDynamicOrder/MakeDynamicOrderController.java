@@ -8,7 +8,6 @@ import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import common.JavaFxHelper;
-import components.main.loadingSystemBar.LoadingSystemBarController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.StoresParticipatingInDynamicOrderController;
@@ -32,7 +31,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import tasks.loadXmlTask.FindCheapestBasketTask;
+import tasks.FindCheapestBasketTask.FindCheapestBasketTask;
 
 import java.util.Collection;
 import java.util.LinkedList;

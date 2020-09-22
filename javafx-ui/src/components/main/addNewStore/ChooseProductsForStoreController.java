@@ -138,7 +138,7 @@ public class ChooseProductsForStoreController {
     private void initErrorsLabel() {
         initErrorLabel(errorInputLabel);
         initErrorLabel(zeroErrorLabel);
-        initErrorLabel(notIntegerErrorLabel);
+        //initErrorLabel(notIntegerErrorLabel);
     }
 
     private void initErrorLabel(Label errorLabel) {
@@ -155,10 +155,10 @@ public class ChooseProductsForStoreController {
             zeroErrorLabel.visibleProperty().set(true);
             zeroErrorLabel.setManaged(true);
         }
-        else if(chosenProduct.getWayOfBuying() == WayOfBuying.BY_QUANTITY && !JavaFxHelper.isInteger(priceEntered)){
-            notIntegerErrorLabel.visibleProperty().set(true);
-            notIntegerErrorLabel.setManaged(true);
-        }
+//        else if(chosenProduct.getWayOfBuying() == WayOfBuying.BY_QUANTITY && !JavaFxHelper.isInteger(priceEntered)){
+//            notIntegerErrorLabel.visibleProperty().set(true);
+//            notIntegerErrorLabel.setManaged(true);
+//        }
         else {
             //add product to table
             addProductToTableAndRemoveFromAddTable(priceEntered, chosenProduct);
@@ -199,8 +199,8 @@ public class ChooseProductsForStoreController {
         chooseProductComboBox.getSelectionModel().clearSelection();
         zeroErrorLabel.visibleProperty().set(false);
         zeroErrorLabel.setManaged(false);
-        notIntegerErrorLabel.visibleProperty().set(false);
-        notIntegerErrorLabel.setManaged(false);
+//        notIntegerErrorLabel.visibleProperty().set(false);
+//        notIntegerErrorLabel.setManaged(false);
     }
 
     @FXML
@@ -211,9 +211,10 @@ public class ChooseProductsForStoreController {
     @FXML
     void onClickContinue(ActionEvent event) {
         sdmSystem.addStoreToSystem(storeID,storeName,x,y,ppk,productsInStore);
-        mainBorderPane.setCenter(startingFormScrollPane);
         sdmMainControllers.initStoresInAccordion();
+        sdmMainControllers.initMapThread();
         addStoreSuccessfullyMsg();
+        mainBorderPane.setCenter(startingFormScrollPane);
     }
 
 

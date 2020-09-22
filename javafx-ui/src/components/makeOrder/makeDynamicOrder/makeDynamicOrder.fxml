@@ -33,7 +33,7 @@
             <RowConstraints minHeight="120.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="200.0" minHeight="45.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="156.00003662109373" minHeight="220.0" prefHeight="132.80002441406248" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="30.0" prefHeight="65.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="45.0" prefHeight="65.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label id="title" text="Make Dynamic Order" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">

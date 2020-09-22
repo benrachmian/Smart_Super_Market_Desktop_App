@@ -40,6 +40,11 @@ public class AddNewStoreInsertDetailsController {
     private SimpleBooleanProperty validXandY;
     private SimpleBooleanProperty validPPK;
     private SDMSystem sdmSystem;
+    private BorderPane mainBorderPane;
+    private ScrollPane startingFormScrollPane;
+    private ScrollPane chooseProductsForStoreScrollPane;
+    private ChooseProductsForStoreController chooseProductsForStoreController;
+    private SDMMainControllers sdmMainControllers;
 
     @FXML private HBox errorHBox;
     @FXML private Label errorMsgLabel;
@@ -48,11 +53,6 @@ public class AddNewStoreInsertDetailsController {
     @FXML private TextField yTextField;
     @FXML private TextField ppkTextField;
     @FXML private TextField storeNameTextField;
-    private BorderPane mainBorderPane;
-    private ScrollPane startingFormScrollPane;
-    private ScrollPane chooseProductsForStoreScrollPane;
-    private ChooseProductsForStoreController chooseProductsForStoreController;
-    private SDMMainControllers sdmMainControllers;
 
 
     public AddNewStoreInsertDetailsController() {

@@ -97,11 +97,6 @@
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <Label id="errorLabel" fx:id="notIntegerErrorLabel" text="You must enter an integer!" textFill="RED">
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                              </Label>
                            </children>
                         </VBox>
                      </children>
