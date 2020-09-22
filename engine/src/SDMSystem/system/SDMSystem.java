@@ -66,7 +66,7 @@ public class SDMSystem {
         return customersAndStoresLocationMap;
     }
 
-    public void addStoreToSystem(Store newStore) {
+    private void addStoreToSystem(Store newStore) {
         Point newStoreLocation = newStore.getStoreLocation();
         //if the store doesn't exist
         if(!checkIfLocationIsUnique(newStoreLocation)){
@@ -938,5 +938,27 @@ public class SDMSystem {
 
     public boolean isAvailableStoreId(SimpleIntegerProperty storeID) {
         return storesInSystem.getStoresInSystemBySerialNumber().get(storeID.get()) == null;
+    }
+
+    public boolean isAvailableLocation(int x, int y) {
+        return customersAndStoresLocationMap.get(new Point(x,y)) == null;
+    }
+
+    public void addStoreToSystem(int storeID, String storeName, int x, int y, float ppk, Map<Integer, DTOProductInStore> productsInStore) {
+        Store newStore = new Store(
+                storeID,
+                new Point(x,y),
+                ppk,
+                storeName,
+                null
+        );
+        for(DTOProductInStore product : productsInStore.values()){
+            newStore.addNewProductToStore(
+                    productsInSystem.get(product.getSerialNumber()),
+                    product.getPrice()
+            );
+        }
+
+        addStoreToSystem(newStore);
     }
 }

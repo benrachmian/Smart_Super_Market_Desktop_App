@@ -160,7 +160,6 @@ public class OrderSummaryMainController {
         alert.setTitle("Great News");
         alert.setHeaderText(null);
         alert.setContentText("The order was made successfully!");
-
         alert.showAndWait();
     }
 

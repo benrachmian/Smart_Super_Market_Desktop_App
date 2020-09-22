@@ -410,7 +410,7 @@ public class SDMMainControllers {
         loadAddNewStoreForm();
         JavaFxHelper.initMainScrollPane(addNewStoreScrollPane);
         mainBorderPane.setCenter(addNewStoreScrollPane);
-        addNewStoreInsertDetailsController.initDetails(sdmSystem);
+        addNewStoreInsertDetailsController.initDetails(sdmSystem,mainBorderPane,startingFormScrollPane,this);
 
     }
 

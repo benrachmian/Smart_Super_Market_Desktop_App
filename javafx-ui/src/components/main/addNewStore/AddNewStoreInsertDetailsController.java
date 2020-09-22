@@ -1,17 +1,23 @@
 package components.main.addNewStore;
 
 import SDMSystem.system.SDMSystem;
+import SDMSystemDTO.store.DTOStore;
+import common.FxmlLoader;
 import common.JavaFxHelper;
+import components.main.SDMMainControllers;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import java.awt.*;
+import java.util.HashMap;
 
 
 public class AddNewStoreInsertDetailsController {
@@ -42,6 +48,11 @@ public class AddNewStoreInsertDetailsController {
     @FXML private TextField yTextField;
     @FXML private TextField ppkTextField;
     @FXML private TextField storeNameTextField;
+    private BorderPane mainBorderPane;
+    private ScrollPane startingFormScrollPane;
+    private ScrollPane chooseProductsForStoreScrollPane;
+    private ChooseProductsForStoreController chooseProductsForStoreController;
+    private SDMMainControllers sdmMainControllers;
 
 
     public AddNewStoreInsertDetailsController() {
@@ -79,17 +90,43 @@ public class AddNewStoreInsertDetailsController {
 
     }
 
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ScrollPane startingFormScrollPane, SDMMainControllers sdmMainControllers) {
+        this.sdmSystem = sdmSystem;
+        JavaFxHelper.makeTextFieldInputOnlyIntegerWithLimitValue(xTextField,errorHBox,errorMsgLabel,x,notIntError,limitValueError,sdmSystem.MAX_COORDINATE);
+        JavaFxHelper.makeTextFieldInputOnlyIntegerWithLimitValue(yTextField,errorHBox,errorMsgLabel,y,notIntError,limitValueError,sdmSystem.MAX_COORDINATE);
+        this.mainBorderPane = mainBorderPane;
+        this.startingFormScrollPane = startingFormScrollPane;
+        this.sdmMainControllers = sdmMainControllers;
+    }
+
     @FXML
     void onClickCancel(ActionEvent event) {
-
+        JavaFxHelper.cancelAddStoreAlert(mainBorderPane,startingFormScrollPane);
     }
 
     @FXML
     void onClickContinue(ActionEvent event) {
         if(checkIfAvailableId() && checkIfStoreNameIsValid() && checkIfXandYAreValid() && checkIfPpkIsValid()){
-
+            loadChooseProductsForStoreForm();
+            JavaFxHelper.initMainScrollPane(chooseProductsForStoreScrollPane);
+            mainBorderPane.setCenter(chooseProductsForStoreScrollPane);
+            chooseProductsForStoreController.initDetails(sdmSystem,
+                    storeID.get(),
+                    storeName,
+                    x.get(),
+                    y.get(),
+                    ppk.get(),
+                    mainBorderPane,
+                    startingFormScrollPane,
+                    sdmMainControllers);
         }
 
+    }
+
+    private void loadChooseProductsForStoreForm() {
+        FxmlLoader<ScrollPane, ChooseProductsForStoreController> loaderChooseProductsForStoreForm = new FxmlLoader<>(ChooseProductsForStoreController.ADD_PRODUCTS_TO_STORE_DETAILS_FXML_PATH);
+        chooseProductsForStoreScrollPane = loaderChooseProductsForStoreForm.getFormBasePane();
+        chooseProductsForStoreController = loaderChooseProductsForStoreForm.getFormController();
     }
 
     private boolean checkIfPpkIsValid() {
@@ -115,13 +152,23 @@ public class AddNewStoreInsertDetailsController {
             x.set(Integer.parseInt(xTextField.getText()));
             y.set(Integer.parseInt(yTextField.getText()));
             if(x.get() != 0 && y.get() != 0) {
-                validXandY.set(true);
-                answer = true;
+                if(sdmSystem.isAvailableLocation(x.get(),y.get())) {
+                    validXandY.set(true);
+                    answer = true;
+                }
+                else{
+                    validXandY.set(false);
+                    errorMsgLabel.setText("The location is already taken. Please try different location.");
+                }
+            }
+            else{
+                validXandY.set(false);
+                errorMsgLabel.setText("The x and y fields must be positive number!");
             }
         }
-        if(!answer) {
+        else {
             validXandY.set(false);
-            errorMsgLabel.setText("The x and y fields can't be empty / 0!");
+            errorMsgLabel.setText("The x and y fields can't be empty!");
         }
         return answer;
 
@@ -160,9 +207,4 @@ public class AddNewStoreInsertDetailsController {
     }
 
 
-    public void initDetails(SDMSystem sdmSystem) {
-        this.sdmSystem = sdmSystem;
-        JavaFxHelper.makeTextFieldInputOnlyIntegerWithLimitValue(xTextField,errorHBox,errorMsgLabel,x,notIntError,limitValueError,sdmSystem.MAX_COORDINATE);
-        JavaFxHelper.makeTextFieldInputOnlyIntegerWithLimitValue(yTextField,errorHBox,errorMsgLabel,y,notIntError,limitValueError,sdmSystem.MAX_COORDINATE);
-    }
 }

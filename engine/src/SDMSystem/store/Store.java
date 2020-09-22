@@ -36,17 +36,17 @@ public class Store implements Locationable, HasSerialNumber<Integer>, Serializab
     private float totalProfitFromDelivery;
     private final Collection<Discount> storeDiscounts;
 
-    public Store(Point storeLocation, float ppk, String storeName) { //ctor
-        this.productsInStore = new HashMap<>();
-        this.storeLocation = storeLocation;
-        this.ppk = ppk;
-        this.storeSerialNumber = generatedSerialNumber++;
-        this.storeName = storeName;
-        this.ordersFromStore = new HashSet<>();
-        //this.storeFeedbacks = null;
-        this.totalProfitFromDelivery = 0;
-        this.storeDiscounts = new LinkedList<>();
-    }
+//    public Store(Point storeLocation, float ppk, String storeName) { //ctor
+//        this.productsInStore = new HashMap<>();
+//        this.storeLocation = storeLocation;
+//        this.ppk = ppk;
+//        this.storeSerialNumber = generatedSerialNumber++;
+//        this.storeName = storeName;
+//        this.ordersFromStore = new HashSet<>();
+//        //this.storeFeedbacks = null;
+//        this.totalProfitFromDelivery = 0;
+//        this.storeDiscounts = new LinkedList<>();
+//    }
 
     public Collection<Discount> getStoreDiscounts() {
         return storeDiscounts;

@@ -158,7 +158,7 @@ public class JavaFxHelper {
         scrollPane.fitToHeightProperty().set(true);
     }
 
-    public static boolean cancelOrderAlert(BorderPane mainBorderPane, ScrollPane startingFormScrollPane, SimpleBooleanProperty orderInProgress) {
+    public static boolean cancelOrderAlert(BorderPane mainBorderPane, Node returnToForm, SimpleBooleanProperty orderInProgress) {
         boolean answer = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
@@ -167,8 +167,24 @@ public class JavaFxHelper {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            mainBorderPane.setCenter(startingFormScrollPane);
+            mainBorderPane.setCenter(returnToForm);
             orderInProgress.set(false);
+            answer = true;
+        }
+
+        return answer;
+    }
+
+    public static boolean cancelAddStoreAlert(BorderPane mainBorderPane, Node returnToForm ) {
+        boolean answer = false;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Warning");
+        alert.setHeaderText("You are in a middle of adding new store and you are about to cancel ");
+        alert.setContentText("You can't undo the action.\nAre you sure about it?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            mainBorderPane.setCenter(returnToForm);
             answer = true;
         }
 
