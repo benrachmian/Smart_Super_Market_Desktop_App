@@ -8,6 +8,7 @@ import SDMSystemDTO.product.WayOfBuying;
 import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import common.JavaFxHelper;
+import components.main.loadingSystemBar.LoadingSystemBarController;
 import components.makeOrder.MakeOrderMainController;
 import components.makeOrder.discountsInOrder.DiscountsInOrderController;
 import components.makeOrder.makeDynamicOrder.storesParticipatingInDyanmicOrder.StoresParticipatingInDynamicOrderController;
@@ -31,6 +32,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import tasks.loadXmlTask.FindCheapestBasketTask;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -77,6 +79,9 @@ public class MakeDynamicOrderController {
     @FXML private TableColumn<ProductInTable, String> wayOfBuyingCartTableCol;
     @FXML private TableColumn<ProductInTable, Float> amountCartTableCol;
     @FXML private GridPane orderGridPane;
+    private GridPane findingCheapestBasketGridPane;
+    private ScrollPane findingCheapestBasketScrollPane;
+    private FindingCheapestBasketController findingCheapestBasketController;
 
     public MakeDynamicOrderController() {
         productsInOrder = new LinkedList<>();
@@ -232,16 +237,40 @@ public class MakeDynamicOrderController {
 
     @FXML
     void onClickContinue(ActionEvent event) {
-        findCheapestBasketAndUpdateTotalPriceAndDeliveryCost();
-        createStoresParticipatingInDynamicOrderForm();
+        SimpleBooleanProperty done = new SimpleBooleanProperty(false);
+
+        loadFindingCheapestBasketForm();
+        FindCheapestBasketTask findCheapestBasketTask = new FindCheapestBasketTask(
+                sdmSystem,
+                cheapestBasket,
+                productsInOrder,
+                totalProductsCost,
+                totalDeliveryCost,
+                customerMakingTheOrder,
+                done);
+        findingCheapestBasketController.init(findCheapestBasketTask,done,this);
+        mainBorderPane.setCenter(findingCheapestBasketScrollPane);
+        findCheapestBasketAndUpdateTotalPriceAndDeliveryCost(findCheapestBasketTask);
+        //createStoresParticipatingInDynamicOrderForm();
     }
 
-    private void findCheapestBasketAndUpdateTotalPriceAndDeliveryCost() {
-        sdmSystem.makeCheapestBasket(cheapestBasket,productsInOrder);
-        calcTotalProductsPriceAndDeliveryCost();
+    private void loadFindingCheapestBasketForm() {
+        FxmlLoader<GridPane, FindingCheapestBasketController> loaderFindingCheapestBasketForm = new FxmlLoader<>(FindingCheapestBasketController.FINDING_CHEAPEST_BASKET_FORM_FXML_PATH);
+        findingCheapestBasketGridPane = loaderFindingCheapestBasketForm.getFormBasePane();
+        findingCheapestBasketController = loaderFindingCheapestBasketForm.getFormController();
+        findingCheapestBasketScrollPane = new ScrollPane();
+        JavaFxHelper.initMainScrollPane(findingCheapestBasketScrollPane);
+        findingCheapestBasketScrollPane.setContent(findingCheapestBasketGridPane);
     }
 
-    private void calcTotalProductsPriceAndDeliveryCost() {
+    private void findCheapestBasketAndUpdateTotalPriceAndDeliveryCost(FindCheapestBasketTask findCheapestBasketTask) {
+        //sdmSystem.makeCheapestBasket(cheapestBasket,productsInOrder);
+        //findCheapestBasketTask.run();
+        new Thread(findCheapestBasketTask).start();
+        //calcTotalProductsPriceAndDeliveryCost();
+    }
+
+    public void calcTotalProductsPriceAndDeliveryCost() {
         float deliveryCost;
         float costOfProductsInStore;
         for (Integer storeSerialNumber : cheapestBasket.keySet()) {
@@ -253,7 +282,7 @@ public class MakeDynamicOrderController {
         }
     }
 
-    private void createStoresParticipatingInDynamicOrderForm() {
+    public void createStoresParticipatingInDynamicOrderForm() {
         loadStoresParticipatingInDynamicOrderForm();
         mainBorderPane.setCenter(storesParticipatingInDynamicOrderScrollPane);
         storesParticipatingInDynamicOrderController.initDetails(sdmSystem,cheapestBasket,customerMakingTheOrder,makeOrderMainController,this);

@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" minHeight="113.0" minWidth="288.0" prefHeight="290.0" prefWidth="689.0" stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.loadingSystemBar.LoadingSystemBarController">
-   <content>
-      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" minHeight="184.0" minWidth="900.0" prefHeight="412.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" minWidth="130.0" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="70.0" vgrow="NEVER" />
-            <RowConstraints minHeight="35.0" vgrow="NEVER" />
-            <RowConstraints minHeight="25.0" vgrow="NEVER" />
-         </rowConstraints>
+<GridPane alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="662.0" prefWidth="973.0" stylesheets="@../../../css/style1/style1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.makeOrder.makeDynamicOrder.FindingCheapestBasketController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="130.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="70.0" vgrow="NEVER" />
+      <RowConstraints minHeight="35.0" vgrow="NEVER" />
+      <RowConstraints minHeight="25.0" vgrow="NEVER" />
+      <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="ALWAYS" />
+   </rowConstraints>
+   <children>
+      <Label id="title" text="Finding Cheapest Basket..." GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font size="52.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="loadingProgressBar" prefHeight="18.0" prefWidth="545.0" progress="0.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <HBox alignment="CENTER" spacing="15.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <children>
-            <Label id="title" text="Finding Cheapest Basket..." GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="52.0" />
-               </font>
-            </Label>
-            <ProgressBar fx:id="loadingProgressBar" prefHeight="18.0" prefWidth="545.0" progress="0.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label text="Status:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label id="error-label" text="Status:">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label fx:id="statusLabel" text="[status]" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label fx:id="statusLabel" text="[status]" textFill="RED">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
          </children>
-      </GridPane>
-   </content>
-</ScrollPane>
+      </HBox>
+      <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onContinue" prefHeight="57.0" prefWidth="162.0" text="Continue" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="20.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>
