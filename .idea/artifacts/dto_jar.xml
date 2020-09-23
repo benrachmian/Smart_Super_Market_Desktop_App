@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="dto:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/dto_jar</output-path>
+    <root id="root">
+      <element id="archive" name="dto.jar">
+        <element id="module-output" name="dto" />
+      </element>
+    </root>
+  </artifact>
+</component>

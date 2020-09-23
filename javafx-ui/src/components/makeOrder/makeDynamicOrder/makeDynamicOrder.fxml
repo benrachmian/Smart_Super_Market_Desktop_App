@@ -23,8 +23,8 @@
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="10.0" />
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="5.0" prefWidth="5.0" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" prefWidth="368.79999999999995" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" prefWidth="270.1999877929686" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="400.0" prefWidth="368.79999999999995" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="400.0" prefWidth="270.1999877929686" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
@@ -112,7 +112,7 @@
                   <Button fx:id="addToCartButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddToCart" prefHeight="82.0" text="Add To Cart" />
                </children>
             </HBox>
-            <TableView id="my-table" fx:id="productsToBuyTable" prefHeight="103.0" prefWidth="586.0" stylesheets="@../../main/tableStyle1.css" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+            <TableView id="my-table" fx:id="productsToBuyTable" minWidth="800.0" prefHeight="103.0" stylesheets="@../../main/tableStyle1.css" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
                <columns>
                   <TableColumn fx:id="productNameCol" minWidth="120.0" prefWidth="-1.0" text="Product Name" />
                   <TableColumn fx:id="productIdCol" minWidth="55.0" prefWidth="-1.0" text="ID" />

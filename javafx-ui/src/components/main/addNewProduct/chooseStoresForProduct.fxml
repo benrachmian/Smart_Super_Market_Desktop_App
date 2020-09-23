@@ -23,8 +23,8 @@
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="10.0" />
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="5.0" prefWidth="5.0" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" prefWidth="368.79999999999995" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="400.0" prefWidth="368.79999999999995" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="400.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />

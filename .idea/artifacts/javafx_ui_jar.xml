@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="javafx-ui:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/javafx_ui_jar</output-path>
+    <root id="root">
+      <element id="archive" name="javafx-ui.jar">
+        <element id="module-output" name="javafx-ui" />
+        <element id="module-output" name="dto" />
+        <element id="module-output" name="engine" />
+      </element>
+    </root>
+  </artifact>
+</component>

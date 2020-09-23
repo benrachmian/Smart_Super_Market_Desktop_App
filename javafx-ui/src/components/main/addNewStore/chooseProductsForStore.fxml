@@ -23,8 +23,8 @@
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="10.0" />
             <ColumnConstraints halignment="CENTER" maxWidth="283.000048828125" minWidth="5.0" prefWidth="5.0" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" prefWidth="368.79999999999995" />
-            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="350.0" prefWidth="368.79999999999995" />
+            <ColumnConstraints halignment="CENTER" maxWidth="450.19998779296867" minWidth="350.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
@@ -111,7 +111,7 @@
                <columns>
                   <TableColumn fx:id="productNameCol" minWidth="120.0" prefWidth="-1.0" text="Product Name" />
                   <TableColumn fx:id="productIdCol" minWidth="55.0" prefWidth="-1.0" text="ID" />
-                  <TableColumn fx:id="wayOfBuyingCol" minWidth="55.0" prefWidth="-1.0" text="Way Of Buying" />
+                  <TableColumn fx:id="wayOfBuyingCol" minWidth="100.0" prefWidth="-1.0" text="Way Of Buying" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -123,7 +123,7 @@
                      <columns>
                         <TableColumn fx:id="productNameCartTableCol" minWidth="120.0" prefWidth="-1.0" text="Product Name" />
                         <TableColumn fx:id="idCartTableCol" minWidth="55.0" prefWidth="-1.0" text="ID" />
-                        <TableColumn fx:id="wayOfBuyingCartTableCol" minWidth="55.0" prefWidth="-1.0" text="Way Of Buying" />
+                        <TableColumn fx:id="wayOfBuyingCartTableCol" minWidth="100.0" prefWidth="-1.0" text="Way Of Buying" />
                         <TableColumn fx:id="priceTableCol" minWidth="30.0" prefWidth="-1.0" text="Price" />
                      </columns>
                      <columnResizePolicy>

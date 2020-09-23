@@ -4,7 +4,9 @@ import components.main.SDMMainControllers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class SDMJavaFXMain extends Application {
         //load main fxml
         URL mainFXML = getClass().getResource(SDMResourcesConstants.MAIN_FXML_RESOURCE_IDENTIFIER);
         loader.setLocation(mainFXML);
-        BorderPane root = loader.load();
+        ScrollPane root = loader.load();
 
         //wire up controllers
         SDMMainControllers sdmMainControllers = loader.getController();

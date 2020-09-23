@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,97 +16,102 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane id="border-pane" fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.SDMMainControllers">
-   <left>
-      <Accordion fx:id="systemAccordion" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER">
-        <panes>
-          <TitledPane animated="false" text="Customers">
-            <content>
-              <AnchorPane fx:id="customerAccordionAnchorPane" minHeight="0.0" minWidth="0.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="Stores">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="storeListView" onMouseClicked="#storeItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" prefWidth="202.0" text="Products">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="productsListView" onMouseClicked="#productItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-            <TitledPane fx:id="ordersTitledPane" animated="false" text="Orders">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="ordersListView" onMouseClicked="#orderItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </TitledPane>
-        </panes>
-      </Accordion>
-   </left>
-   <top>
-      <MenuBar prefWidth="714.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem fx:id="loadSystemXmlMenuItem" mnemonicParsing="false" onAction="#loadSystemXmlMenuItemAction" text="Load System From XML" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-      <AnchorPane id="center-main" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER" />
-   </center>
-   <stylesheets>
-      <URL value="@SDMMaintyle1.css" />
-      <URL value="@../../css/style1/style1.css" />
-   </stylesheets>
-   <bottom>
-      <VBox prefHeight="116.0" prefWidth="852.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="746.0" spacing="8.0">
+
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.SDMMainControllers">
+   <content>
+      <BorderPane id="border-pane" fx:id="mainBorderPane">
+         <left>
+            <Accordion fx:id="systemAccordion" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER">
+              <panes>
+                <TitledPane animated="false" text="Customers">
+                  <content>
+                    <AnchorPane fx:id="customerAccordionAnchorPane" minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="customerListView" layoutY="-6.0" onMouseClicked="#customerItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Stores">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="storeListView" onMouseClicked="#storeItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane animated="false" prefWidth="202.0" text="Products">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="productsListView" onMouseClicked="#productItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                  <TitledPane fx:id="ordersTitledPane" animated="false" text="Orders">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="ordersListView" onMouseClicked="#orderItemClicked" prefHeight="188.8" prefWidth="200.8" stylesheets="@listStyle1.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+         </left>
+         <top>
+            <MenuBar prefWidth="714.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="loadSystemXmlMenuItem" mnemonicParsing="false" onAction="#loadSystemXmlMenuItemAction" text="Load System From XML" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <AnchorPane id="center-main" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/style1/style1.css" BorderPane.alignment="CENTER" />
+         </center>
+         <stylesheets>
+            <URL value="@SDMMaintyle1.css" />
+            <URL value="@../../css/style1/style1.css" />
+         </stylesheets>
+         <bottom>
+            <VBox prefHeight="116.0" prefWidth="852.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button id="ipad-dark-grey" fx:id="makeOrderButton" mnemonicParsing="false" onAction="#clickOnMakeOrder" stylesheets="@../../css/style1/style1.css" text="Make Order" />
-                  <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
-                  <Button fx:id="addNewStoreButton" mnemonicParsing="false" onAction="#onAddNewStore" text="Add New Store" />
-                  <Button fx:id="addNewProductButton" mnemonicParsing="false" onAction="#onAddNewProduct" text="Add New Product" />
-               </children>
-               <opaqueInsets>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </padding>
-            </HBox>
-            <HBox nodeOrientation="RIGHT_TO_LEFT">
-               <children>
-                  <ToggleButton fx:id="animationToggle" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAnimationToggle" text="Animation: OFF">
-                     <HBox.margin>
+                  <HBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="746.0" spacing="8.0">
+                     <children>
+                        <Button id="ipad-dark-grey" fx:id="makeOrderButton" minHeight="31.0" minWidth="150.0" mnemonicParsing="false" onAction="#clickOnMakeOrder" stylesheets="@../../css/style1/style1.css" text="Make Order" />
+                        <Button fx:id="showMapButton" alignment="CENTER" contentDisplay="CENTER" minHeight="31.0" minWidth="150.0" mnemonicParsing="false" onAction="#onShowMap" text="Show Map" />
+                        <Button fx:id="addNewStoreButton" minHeight="31.0" minWidth="150.0" mnemonicParsing="false" onAction="#onAddNewStore" text="Add New Store" />
+                        <Button fx:id="addNewProductButton" minHeight="31.0" minWidth="150.0" mnemonicParsing="false" onAction="#onAddNewProduct" text="Add New Product" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </HBox>
+                  <HBox nodeOrientation="RIGHT_TO_LEFT">
+                     <children>
+                        <ToggleButton fx:id="animationToggle" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAnimationToggle" text="Animation: OFF">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                     </children>
+                     <opaqueInsets>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </ToggleButton>
+                     </opaqueInsets>
+                  </HBox>
                </children>
-               <opaqueInsets>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </opaqueInsets>
-            </HBox>
-         </children>
-      </VBox>
-   </bottom>
-</BorderPane>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </content>
+</ScrollPane>

@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="customerDetailsScrollPane" fitToHeight="true" fitToWidth="true" minHeight="470.0" minWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.customersDetails.CustomerDetailsController">
+<ScrollPane fx:id="customerDetailsScrollPane" fitToHeight="true" fitToWidth="true" minHeight="383.0" minWidth="480.0" prefHeight="383.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.details.customersDetails.CustomerDetailsController">
    <content>
-      <GridPane id="accordion-details-grid-pain" fx:id="customerDetailsGridPane" alignment="CENTER" minHeight="470.0" minWidth="350.0" stylesheets="@../../../css/style1/style1.css">
+      <GridPane id="accordion-details-grid-pain" fx:id="customerDetailsGridPane" alignment="CENTER" stylesheets="@../../../css/style1/style1.css">
         <columnConstraints>
           <ColumnConstraints hgrow="NEVER" maxWidth="114.39996337890625" minWidth="4.799989223480225" prefWidth="6.399964809417725" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="200.0" />
@@ -41,18 +41,18 @@
                   <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="ID:" GridPane.halignment="CENTER" />
-                  <Label text="Customer's name:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label text="Location:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label text="Number of orders made:" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label text="Orders average products cost:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label text="Average orders delivery cost:" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="IdAnswerLabel" text="[ID]" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                  <Label fx:id="customerNameAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="customerLocationAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="numOfOrdersMadeAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="averageOrdersProductCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="averageOrdersDeliveryCostAnswerLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <Label alignment="CENTER" minWidth="230.0" text="ID:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" minWidth="230.0" text="Customer's name:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" minWidth="230.0" text="Location:" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" minWidth="230.0" text="Number of orders made:" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" minWidth="230.0" text="Orders average products cost:" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" minWidth="230.0" text="Average orders delivery cost:" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                  <Label fx:id="IdAnswerLabel" alignment="CENTER" minWidth="216.0" text="[ID]" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="customerNameAnswerLabel" alignment="CENTER" minWidth="216.0" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label fx:id="customerLocationAnswerLabel" alignment="CENTER" minWidth="216.0" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label fx:id="numOfOrdersMadeAnswerLabel" alignment="CENTER" minWidth="216.0" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label fx:id="averageOrdersProductCostAnswerLabel" alignment="CENTER" minWidth="216.0" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Label fx:id="averageOrdersDeliveryCostAnswerLabel" alignment="CENTER" minWidth="216.0" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </children>
