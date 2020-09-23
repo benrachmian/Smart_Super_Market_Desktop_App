@@ -3,13 +3,10 @@ package components.main.addNewStore;
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.product.DTOProduct;
 import SDMSystemDTO.product.DTOProductInStore;
-import SDMSystemDTO.product.WayOfBuying;
-import SDMSystemDTO.store.DTOStore;
 import common.JavaFxHelper;
 import components.main.SDMMainControllers;
 import components.makeOrder.makeStaticOrder.ProductInTable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -18,7 +15,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -205,7 +201,7 @@ public class ChooseProductsForStoreController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        JavaFxHelper.cancelAddStoreAlert(mainBorderPane,startingFormScrollPane);
+        JavaFxHelper.cancelAlert(mainBorderPane,startingFormScrollPane,"You are in a middle of adding new store and you are about to cancel");
     }
 
     @FXML

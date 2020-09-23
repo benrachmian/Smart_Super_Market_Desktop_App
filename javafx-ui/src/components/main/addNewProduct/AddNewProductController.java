@@ -2,13 +2,17 @@ package components.main.addNewProduct;
 
 import SDMSystem.system.SDMSystem;
 import SDMSystemDTO.product.WayOfBuying;
+import common.FxmlLoader;
 import common.JavaFxHelper;
+import components.main.SDMMainControllers;
+import components.main.addNewStore.ChooseProductsForStoreController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 public class AddNewProductController {
@@ -34,6 +38,11 @@ public class AddNewProductController {
     @FXML private Label errorMsgLabel;
     @FXML private ComboBox<WayOfBuying> wayOfBuyingComboBox;
     private SDMSystem sdmSystem;
+    private ScrollPane chooseStoresForProductScrollPane;
+    private ChooseStoresForProductController chooseStoresForProductController;
+    private BorderPane mainBorderPane;
+    private ScrollPane startingFormScrollPane;
+    private SDMMainControllers sdmMainController;
 
 
     public AddNewProductController() {
@@ -46,7 +55,7 @@ public class AddNewProductController {
     }
 
     @FXML
-    public void initialize(){
+    void initialize(){
         wayOfBuyingComboBox.getItems().add(WayOfBuying.BY_QUANTITY);
         wayOfBuyingComboBox.getItems().add(WayOfBuying.BY_WEIGHT);
         errorHBox.visibleProperty().bind(
@@ -61,23 +70,35 @@ public class AddNewProductController {
         JavaFxHelper.initTextFieldLimitCharsError(productIdTextField,errorHBox,errorMsgLabel,LIMIT_ID, limitCharsError);
     }
 
-    public void initDetails(SDMSystem sdmSystem) {
+    public void initDetails(SDMSystem sdmSystem, BorderPane mainBorderPane, ScrollPane startingFormScrollPane, SDMMainControllers sdmMainController) {
         this.sdmSystem = sdmSystem;
+        this.mainBorderPane = mainBorderPane;
+        this.startingFormScrollPane = startingFormScrollPane;
+        this.sdmMainController = sdmMainController;
 
     }
 
     @FXML
     void onClickCancel(ActionEvent event) {
-
+        JavaFxHelper.cancelAlert(mainBorderPane,startingFormScrollPane,"You are in a middle of adding new product and you are about to cancel");
     }
 
     @FXML
     void onClickContinue(ActionEvent event) {
         if(checkIfAvailableId() && checkIfProductNameIsValid() && checkIfWayOfBuyingWasSelected()){
 
-//            loadChooseProductsForStoreForm();
-//            JavaFxHelper.initMainScrollPane(chooseProductsForStoreScrollPane);
-//            mainBorderPane.setCenter(chooseProductsForStoreScrollPane);
+            loadChooseStoresForProductForm();
+            JavaFxHelper.initMainScrollPane(chooseStoresForProductScrollPane);
+            mainBorderPane.setCenter(chooseStoresForProductScrollPane);
+            chooseStoresForProductController.initDetails(
+                    sdmSystem,
+                    mainBorderPane,
+                    startingFormScrollPane,
+                    productId,
+                    productName,
+                    productWayOfBuying,
+                    sdmMainController
+                    );
 //            chooseProductsForStoreController.initDetails(sdmSystem,
 //                    storeID.get(),
 //                    storeName,
@@ -91,6 +112,12 @@ public class AddNewProductController {
 
     }
 
+    private void loadChooseStoresForProductForm() {
+        FxmlLoader<ScrollPane, ChooseStoresForProductController> loaderChooseStoresForProductForm = new FxmlLoader<>(ChooseStoresForProductController.ADD_STORES_FOR_PRODUCT_FXML_PATH);
+        chooseStoresForProductScrollPane = loaderChooseStoresForProductForm.getFormBasePane();
+        chooseStoresForProductController = loaderChooseStoresForProductForm.getFormController();
+    }
+
     private boolean checkIfWayOfBuyingWasSelected() {
         boolean answer = true;
         if(wayOfBuyingComboBox.getSelectionModel().getSelectedItem() == null){
@@ -100,6 +127,7 @@ public class AddNewProductController {
         }
         else{
             validWayOfBuying.set(true);
+            productWayOfBuying = wayOfBuyingComboBox.getValue();
         }
         return answer;
     }

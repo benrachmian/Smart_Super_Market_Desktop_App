@@ -12,6 +12,7 @@ public class StoreInTable {
     private final Point storeLocation;
     private final float storePPK;
     private final SimpleFloatProperty deliveryCost;
+    private float newProductPrice;
 
 
     public StoreInTable(String storeName, int storeId, Point storeLocation, float storePPK) {
@@ -22,12 +23,26 @@ public class StoreInTable {
         this.deliveryCost = new SimpleFloatProperty();
     }
 
+    //for add new product action
+    public StoreInTable(String storeName, int storeId, Point storeLocation, float storePPK, float newProductPrice) {
+        this.storeName = storeName;
+        this.storeId = storeId;
+        this.storeLocation = storeLocation;
+        this.storePPK = storePPK;
+        this.deliveryCost = new SimpleFloatProperty();
+        this.newProductPrice = newProductPrice;
+    }
+
     public String getStoreName() {
         return storeName;
     }
 
     public int getStoreId() {
         return storeId;
+    }
+
+    public float getNewProductPrice() {
+        return newProductPrice;
     }
 
     public String getStoreLocation() {

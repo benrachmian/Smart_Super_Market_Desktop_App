@@ -1,7 +1,6 @@
 package components.main.addNewStore;
 
 import SDMSystem.system.SDMSystem;
-import SDMSystemDTO.store.DTOStore;
 import common.FxmlLoader;
 import common.JavaFxHelper;
 import components.main.SDMMainControllers;
@@ -17,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import java.awt.*;
-import java.util.HashMap;
 
 
 public class AddNewStoreInsertDetailsController {
@@ -101,7 +99,7 @@ public class AddNewStoreInsertDetailsController {
 
     @FXML
     void onClickCancel(ActionEvent event) {
-        JavaFxHelper.cancelAddStoreAlert(mainBorderPane,startingFormScrollPane);
+        JavaFxHelper.cancelAlert(mainBorderPane,startingFormScrollPane,"You are in a middle of adding new store and you are about to cancel");
     }
 
     @FXML

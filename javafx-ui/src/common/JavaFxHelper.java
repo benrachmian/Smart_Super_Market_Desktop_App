@@ -175,11 +175,11 @@ public class JavaFxHelper {
         return answer;
     }
 
-    public static boolean cancelAddStoreAlert(BorderPane mainBorderPane, Node returnToForm ) {
+    public static boolean cancelAlert(BorderPane mainBorderPane, Node returnToForm, String cancelMsg ) {
         boolean answer = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel Warning");
-        alert.setHeaderText("You are in a middle of adding new store and you are about to cancel ");
+        alert.setHeaderText(cancelMsg);
         alert.setContentText("You can't undo the action.\nAre you sure about it?");
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -190,6 +190,8 @@ public class JavaFxHelper {
 
         return answer;
     }
+
+
 
 
 }

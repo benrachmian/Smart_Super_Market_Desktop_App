@@ -965,4 +965,14 @@ public class SDMSystem {
     public boolean isAvailableProductId(int productId) {
         return productsInSystem.get(productId) == null;
     }
+
+    public void addNewProductToSystem(int productId, String productName, WayOfBuying productWayOfBuying, Map<Integer, Float> storesSellingTheProductAndPrice) {
+        Product newProduct = new Product(productId,productName,productWayOfBuying);
+        addProductToSystem(newProduct);
+        for(Integer storeId : storesSellingTheProductAndPrice.keySet()){
+            Store storeWouldSellTheProduct = storesInSystem.getStoreInSystem(storeId);
+            storeWouldSellTheProduct.addNewProductToStore(newProduct,storesSellingTheProductAndPrice.get(storeId));
+        }
+
+    }
 }
