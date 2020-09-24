@@ -460,6 +460,7 @@ public class SDMMainControllers {
     }
 
     public void initMap() {
+        map.getChildren().clear();
         Image customerImage =new Image("/components/main/map/customer.png");
         Image storeImage =new Image("/components/main/map/store.png");
 

@@ -208,9 +208,11 @@ public class ChooseProductsForStoreController {
     void onClickContinue(ActionEvent event) {
         sdmSystem.addStoreToSystem(storeID,storeName,x,y,ppk,productsInStore);
         sdmMainControllers.initStoresInAccordion();
-        sdmMainControllers.initMapThread();
+        sdmMainControllers.maxXCoordinateProperty().set(Math.max(sdmMainControllers.getMaxXCoordinate(), x));
+        sdmMainControllers.maxYCoordinateProperty().set(Math.max(sdmMainControllers.getMaxYCoordinate(), y));
         addStoreSuccessfullyMsg();
         mainBorderPane.setCenter(startingFormScrollPane);
+        sdmMainControllers.initMapThread();
     }
 
 

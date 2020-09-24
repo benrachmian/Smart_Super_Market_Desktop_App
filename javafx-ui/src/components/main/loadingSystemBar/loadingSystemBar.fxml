@@ -12,8 +12,8 @@
    <content>
       <GridPane alignment="TOP_CENTER" minHeight="200.0" minWidth="850.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" maxWidth="125.60001220703126" minWidth="92.00000610351563" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="785.5999877929687" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="125.60001220703126" minWidth="200.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="300.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="70.0" vgrow="NEVER" />
