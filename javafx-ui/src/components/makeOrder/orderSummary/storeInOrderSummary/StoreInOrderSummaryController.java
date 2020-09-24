@@ -36,7 +36,7 @@ public class StoreInOrderSummaryController {
 
     public void initDetails(DTOStore storeInOrder, float distanceFromCustomer, Collection<Pair<IDTOProductInStore, Float>> productsBoughtFromStore) {
         storeNameLabel.setText(storeInOrder.getStoreName());
-        storeIdLabel.setText(storeInOrder.getStoreName());
+        storeIdLabel.setText(String.valueOf(storeInOrder.getStoreSerialNumber()));
         PpkLabel.setText(String.format("%.2f",storeInOrder.getPpk()));
         distanceFromCustomerLabel.setText(String.format("%.2f",distanceFromCustomer));
         deliveryCostLabel.setText(String.format("%.2f",distanceFromCustomer * storeInOrder.getPpk()));
