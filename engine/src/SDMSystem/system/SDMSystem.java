@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
+//Use it as Singleton
 public class SDMSystem {
     public static final int MAX_COORDINATE = 50;
     public static final int MIN_COORDINATE = 1;
@@ -43,15 +44,22 @@ public class SDMSystem {
     private Map<Integer, Order> ordersInSystem;
     private Map<Point, Locationable> customersAndStoresLocationMap;
     private Map<String,Discount> discountsInSystem;
-    //private Map<Integer, Customer> customersInSystem;
+    private static SDMSystem single_Instance = null;
 
-    public SDMSystem() {
+    private SDMSystem() {
         storesInSystem = new StoresInSystem();
         productsInSystem = new HashMap<>();
         ordersInSystem = new HashMap<>();
         customersInSystem = new CustomersInSystem();
         customersAndStoresLocationMap = new HashMap<>();
         discountsInSystem = new HashMap<>();
+    }
+
+    public static SDMSystem getInstance(){
+        if(single_Instance == null){
+            single_Instance = new SDMSystem();
+        }
+        return single_Instance;
     }
 
 

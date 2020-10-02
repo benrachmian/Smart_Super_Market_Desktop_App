@@ -26,7 +26,7 @@ public class SDMJavaFXMain extends Application {
 
         //wire up controllers
         SDMMainControllers sdmMainControllers = loader.getController();
-        SDMSystem sdmSystem = new SDMSystem();
+        SDMSystem sdmSystem = SDMSystem.getInstance();
         sdmMainControllers.setSdmSystem(sdmSystem);
         sdmMainControllers.setPrimaryStage(primaryStage);
 
